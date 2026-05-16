@@ -455,7 +455,7 @@ const productos = [
     {
         id: 46,
         sku: "INT1-8985",
-        nombre: "Abridor de latas pl�stico �COMFORTGRIP�",
+        nombre: "Abridor de latas plástico \"COMFORTGRIP\"",
         precio: 160,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -1755,7 +1755,7 @@ const productos = [
     {
         id: 176,
         sku: "INT1-584",
-        nombre: "alfombra lisa para ba�o antideslizante 38x58cm",
+        nombre: "alfombra lisa para baño antideslizante 38x58cm",
         precio: 271,
         categoria_principal: "hogar",
         subcategoria: "alfombras",
@@ -1765,7 +1765,7 @@ const productos = [
     {
         id: 177,
         sku: "INT1-6937779500148",
-        nombre: "alfombra peluda para ba�o 60x40 FLOOR  MAT",
+        nombre: "alfombra peluda para baño 60x40 FLOOR  MAT",
         precio: 115,
         categoria_principal: "hogar",
         subcategoria: "alfombras",
@@ -2235,7 +2235,7 @@ const productos = [
     {
         id: 224,
         sku: "INT1-1092",
-        nombre: "anzuelo mosquita n�20",
+        nombre: "anzuelo mosquita n°20",
         precio: 2,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2245,7 +2245,7 @@ const productos = [
     {
         id: 225,
         sku: "INT1-40079229",
-        nombre: "anzuelo n� 9 39mm TRUPER 100 uni",
+        nombre: "anzuelo n° 9 39mm TRUPER 100 uni",
         precio: 435,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2255,7 +2255,7 @@ const productos = [
     {
         id: 226,
         sku: "INT1-7506240639435",
-        nombre: "anzuelo n�10 36mm TRUPER 100 uni",
+        nombre: "anzuelo n°10 36mm TRUPER 100 uni",
         precio: 370,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2265,7 +2265,7 @@ const productos = [
     {
         id: 227,
         sku: "INT1-7506240639442",
-        nombre: "anzuelo n�11 33mm TRUPER 100 uni",
+        nombre: "anzuelo n°11 33mm TRUPER 100 uni",
         precio: 335,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2275,7 +2275,7 @@ const productos = [
     {
         id: 228,
         sku: "INT1-7506240639459",
-        nombre: "anzuelo n�12 29mm TRUPER 100 uni",
+        nombre: "anzuelo n°12 29mm TRUPER 100 uni",
         precio: 285,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2285,7 +2285,7 @@ const productos = [
     {
         id: 229,
         sku: "INT1-7506240639466",
-        nombre: "anzuelo n�13 27mm TRUPER 100 uni",
+        nombre: "anzuelo n°13 27mm TRUPER 100 uni",
         precio: 260,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2295,7 +2295,7 @@ const productos = [
     {
         id: 230,
         sku: "INT1-7506240639473",
-        nombre: "anzuelo n�14 24mm TRUPER 100 uni",
+        nombre: "anzuelo n°14 24mm TRUPER 100 uni",
         precio: 250,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2305,7 +2305,7 @@ const productos = [
     {
         id: 231,
         sku: "INT1-7506240639480",
-        nombre: "anzuelo n�15 22mm TRUPER 100 uni",
+        nombre: "anzuelo n°15 22mm TRUPER 100 uni",
         precio: 245,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2315,7 +2315,7 @@ const productos = [
     {
         id: 232,
         sku: "INT1-7506240639497",
-        nombre: "anzuelo n�16 20mm TRUPER 100 uni",
+        nombre: "anzuelo n°16 20mm TRUPER 100 uni",
         precio: 240,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2325,7 +2325,7 @@ const productos = [
     {
         id: 233,
         sku: "INT1-7506240639503",
-        nombre: "anzuelo n�18 18mm TRUPER 100 uni",
+        nombre: "anzuelo n°18 18mm TRUPER 100 uni",
         precio: 230,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2335,7 +2335,7 @@ const productos = [
     {
         id: 234,
         sku: "INT1-7506240639510",
-        nombre: "anzuelo n�20 15mm TRUPER 100 uni",
+        nombre: "anzuelo n°20 15mm TRUPER 100 uni",
         precio: 220,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2345,7 +2345,7 @@ const productos = [
     {
         id: 235,
         sku: "INT1-120",
-        nombre: "anzuelo n�2",
+        nombre: "anzuelo n°2",
         precio: 3,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2355,7 +2355,7 @@ const productos = [
     {
         id: 236,
         sku: "INT1-119",
-        nombre: "anzuelo n�8",
+        nombre: "anzuelo n°8",
         precio: 8,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -2385,7 +2385,7 @@ const productos = [
     {
         id: 239,
         sku: "INT1-6927766076923",
-        nombre: "aplique cilindro pared media ca�a 1xGU10 VYBA",
+        nombre: "aplique cilindro pared media caña 1xGU10 VYBA",
         precio: 725,
         categoria_principal: "cerrajeria",
         subcategoria: "cilindros",
@@ -2395,7 +2395,7 @@ const productos = [
     {
         id: 240,
         sku: "INT1-6927766076930",
-        nombre: "aplique cilindro pared media ca�a 2xGU10 VYBA",
+        nombre: "aplique cilindro pared media caña 2xGU10 VYBA",
         precio: 990,
         categoria_principal: "cerrajeria",
         subcategoria: "cilindros",
@@ -3255,7 +3255,7 @@ const productos = [
     {
         id: 326,
         sku: "INT1-7891117074786",
-        nombre: "balde para alba�il 8L TRAMONTINA",
+        nombre: "balde para albañil 8L TRAMONTINA",
         precio: 185,
         categoria_principal: "almacenamiento",
         subcategoria: "baldes",
@@ -3385,7 +3385,7 @@ const productos = [
     {
         id: 339,
         sku: "INT1-7891260025840",
-        nombre: "Barniz  ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz  tiñe y protege 0.9Lt SUVINIL",
         precio: 626,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3395,7 +3395,7 @@ const productos = [
     {
         id: 340,
         sku: "INT1-7891260233948",
-        nombre: "Barniz  ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz  tiñe y protege 0.9Lt SUVINIL",
         precio: 626,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3405,7 +3405,7 @@ const productos = [
     {
         id: 341,
         sku: "INT1-7891260025925",
-        nombre: "Barniz  ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz  tiñe y protege 0.9Lt SUVINIL",
         precio: 626,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3415,7 +3415,7 @@ const productos = [
     {
         id: 342,
         sku: "INT1-7891260179918",
-        nombre: "Barniz  ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz  tiñe y protege 0.9Lt SUVINIL",
         precio: 626,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3475,7 +3475,7 @@ const productos = [
     {
         id: 348,
         sku: "INT1-7891260059715",
-        nombre: "Barniz Premium  ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz Premium  tiñe y protege 0.9Lt SUVINIL",
         precio: 805,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3485,7 +3485,7 @@ const productos = [
     {
         id: 349,
         sku: "INT1-7891260059661",
-        nombre: "Barniz Premium ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz Premium tiñe y protege 0.9Lt SUVINIL",
         precio: 805,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3555,7 +3555,7 @@ const productos = [
     {
         id: 356,
         sku: "INT1-7891260234143",
-        nombre: "Barniz ti�e y protege 0.9Lt SUVINIL",
+        nombre: "Barniz tiñe y protege 0.9Lt SUVINIL",
         precio: 626,
         categoria_principal: "pintura",
         subcategoria: "barnices",
@@ -3575,7 +3575,7 @@ const productos = [
     {
         id: 358,
         sku: "INT1-7896205216291",
-        nombre: "barrote cortina ba�o 1.20 a 1.33m SECALUX",
+        nombre: "barrote cortina baño 1.20 a 1.33m SECALUX",
         precio: 238,
         categoria_principal: "construccion",
         subcategoria: "cal",
@@ -3635,7 +3635,7 @@ const productos = [
     {
         id: 364,
         sku: "INT1-LH-1898",
-        nombre: "barrote metalico para ba�o 30cm",
+        nombre: "barrote metalico para baño 30cm",
         precio: 250,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -3645,7 +3645,7 @@ const productos = [
     {
         id: 365,
         sku: "INT1-LH-1899",
-        nombre: "barrote metalico para ba�o 40cm",
+        nombre: "barrote metalico para baño 40cm",
         precio: 280,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -3655,7 +3655,7 @@ const productos = [
     {
         id: 366,
         sku: "INT1-50553",
-        nombre: "barrote metalico para ba�o 40cm RIMONTTI",
+        nombre: "barrote metalico para baño 40cm RIMONTTI",
         precio: 982,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -3665,7 +3665,7 @@ const productos = [
     {
         id: 367,
         sku: "INT1-LH-2392",
-        nombre: "barrote metalico para ba�o 50cm",
+        nombre: "barrote metalico para baño 50cm",
         precio: 315,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -3675,7 +3675,7 @@ const productos = [
     {
         id: 368,
         sku: "INT1-50588",
-        nombre: "barrote metalico para ba�o articulado RIMONTTI",
+        nombre: "barrote metalico para baño articulado RIMONTTI",
         precio: 1005,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -3685,7 +3685,7 @@ const productos = [
     {
         id: 369,
         sku: "INT1-50997",
-        nombre: "barrote p/cortina de ba�o ac inox \"U\" 90cm",
+        nombre: "barrote p/cortina de baño ac inox \"U\" 90cm",
         precio: 670,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -3695,7 +3695,7 @@ const productos = [
     {
         id: 370,
         sku: "INT1-50594",
-        nombre: "barrote p/cortina de ba�o ac inox 110-200cm Rimontti",
+        nombre: "barrote p/cortina de baño ac inox 110-200cm Rimontti",
         precio: 495,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -3705,7 +3705,7 @@ const productos = [
     {
         id: 371,
         sku: "INT1-50595",
-        nombre: "barrote p/cortina de ba�o ac inox 130-240cm Rimontti",
+        nombre: "barrote p/cortina de baño ac inox 130-240cm Rimontti",
         precio: 625,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -3715,7 +3715,7 @@ const productos = [
     {
         id: 372,
         sku: "INT1-50596",
-        nombre: "barrote p/cortina de ba�o ac inox angulo 80x80",
+        nombre: "barrote p/cortina de baño ac inox angulo 80x80",
         precio: 542,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -3725,7 +3725,7 @@ const productos = [
     {
         id: 373,
         sku: "INT1-50996",
-        nombre: "barrote p/cortina de ba�o ac inox angulo 90x90",
+        nombre: "barrote p/cortina de baño ac inox angulo 90x90",
         precio: 609,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -3875,7 +3875,7 @@ const productos = [
     {
         id: 388,
         sku: "INT1-7841000",
-        nombre: "batidor mezclador pintura para taladro com�n/SDS",
+        nombre: "batidor mezclador pintura para taladro común/SDS",
         precio: 337,
         categoria_principal: "herramientas",
         subcategoria: "taladros",
@@ -4385,7 +4385,7 @@ const productos = [
     {
         id: 439,
         sku: "INT1-072013211296101",
-        nombre: "bombillo lampara auto 12v 21W W�RTH",
+        nombre: "bombillo lampara auto 12v 21W WÜRTH",
         precio: 25,
         categoria_principal: "electricidad",
         subcategoria: "lamparas",
@@ -4785,7 +4785,7 @@ const productos = [
     {
         id: 479,
         sku: "INT1-6954275000019",
-        nombre: "bowl ceramica dise�os varios",
+        nombre: "bowl ceramica diseños varios",
         precio: 80,
         categoria_principal: "construccion",
         subcategoria: "ceramicas",
@@ -6485,7 +6485,7 @@ const productos = [
     {
         id: 649,
         sku: "INT1-78753-003",
-        nombre: "cabo mango para pala empu�adura madera 74cm TRAMONTINA",
+        nombre: "cabo mango para pala empuñadura madera 74cm TRAMONTINA",
         precio: 340,
         categoria_principal: "construccion",
         subcategoria: "palas",
@@ -6495,7 +6495,7 @@ const productos = [
     {
         id: 650,
         sku: "INT1-78753-025",
-        nombre: "cabo mango para pala empu�adura plastico 71cm TRAMONTINA",
+        nombre: "cabo mango para pala empuñadura plastico 71cm TRAMONTINA",
         precio: 120,
         categoria_principal: "construccion",
         subcategoria: "palas",
@@ -6555,7 +6555,7 @@ const productos = [
     {
         id: 656,
         sku: "INT1-40324096",
-        nombre: "cadena bronce n�1 semilla de melon",
+        nombre: "cadena bronce n°1 semilla de melon",
         precio: 382,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9055,7 +9055,7 @@ const productos = [
     {
         id: 906,
         sku: "INT1-pesca2",
-        nombre: "ca�a APOLO 3m",
+        nombre: "caña APOLO 3m",
         precio: 1750,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9065,7 +9065,7 @@ const productos = [
     {
         id: 907,
         sku: "INT1-0300",
-        nombre: "ca�a MASTER 3mts",
+        nombre: "caña MASTER 3mts",
         precio: 2067,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9075,7 +9075,7 @@ const productos = [
     {
         id: 908,
         sku: "INT1-mojarra1",
-        nombre: "ca�a telescopica mojarrero 3mt",
+        nombre: "caña telescopica mojarrero 3mt",
         precio: 510,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9085,7 +9085,7 @@ const productos = [
     {
         id: 909,
         sku: "INT1-mojarra2",
-        nombre: "ca�a telescopica mojarrero 4mt",
+        nombre: "caña telescopica mojarrero 4mt",
         precio: 725,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9095,7 +9095,7 @@ const productos = [
     {
         id: 910,
         sku: "INT1-LOO1015/2m",
-        nombre: "ca�o 1/2\" PPL fraccion",
+        nombre: "caño 1/2\" PPL fraccion",
         precio: 90,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9105,7 +9105,7 @@ const productos = [
     {
         id: 911,
         sku: "INT1-7730568152813",
-        nombre: "ca�o corrugado 16mm 50m",
+        nombre: "caño corrugado 16mm 50m",
         precio: 745,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9115,7 +9115,7 @@ const productos = [
     {
         id: 912,
         sku: "INT1-7730568117058",
-        nombre: "ca�o corrugado 20mm 50m",
+        nombre: "caño corrugado 20mm 50m",
         precio: 775,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9125,7 +9125,7 @@ const productos = [
     {
         id: 913,
         sku: "INT1-C808000062",
-        nombre: "ca�o corrugado 20mm anti llama azul",
+        nombre: "caño corrugado 20mm anti llama azul",
         precio: 1295,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9135,7 +9135,7 @@ const productos = [
     {
         id: 914,
         sku: "INT1-7730568117065",
-        nombre: "ca�o corrugado 25mm 50m",
+        nombre: "caño corrugado 25mm 50m",
         precio: 945,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9145,7 +9145,7 @@ const productos = [
     {
         id: 915,
         sku: "INT1-C808000078",
-        nombre: "ca�o corrugado 25mm anti llama azul",
+        nombre: "caño corrugado 25mm anti llama azul",
         precio: 1599,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9155,7 +9155,7 @@ const productos = [
     {
         id: 916,
         sku: "INT1-808.000.034",
-        nombre: "ca�o corrugado 32mm 50m",
+        nombre: "caño corrugado 32mm 50m",
         precio: 1735,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9165,7 +9165,7 @@ const productos = [
     {
         id: 917,
         sku: "INT1-808.000.084",
-        nombre: "ca�o corrugado 32mm anti llama azul",
+        nombre: "caño corrugado 32mm anti llama azul",
         precio: 2367,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9175,7 +9175,7 @@ const productos = [
     {
         id: 918,
         sku: "INT1-808.000.040",
-        nombre: "ca�o corrugado 40mm 25m",
+        nombre: "caño corrugado 40mm 25m",
         precio: 2700,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -9185,7 +9185,7 @@ const productos = [
     {
         id: 919,
         sku: "INT1-D88.59",
-        nombre: "ca�o Daisa 1 1/2\" (38cm)",
+        nombre: "caño Daisa 1 1/2\" (38cm)",
         precio: 950,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9195,7 +9195,7 @@ const productos = [
     {
         id: 920,
         sku: "INT1-D8856",
-        nombre: "ca�o Daisa 1 1/4\" 3m (32mm)",
+        nombre: "caño Daisa 1 1/4\" 3m (32mm)",
         precio: 575,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9205,7 +9205,7 @@ const productos = [
     {
         id: 921,
         sku: "INT1-306-3",
-        nombre: "ca�o Daisa 1\" 3m (25mm)",
+        nombre: "caño Daisa 1\" 3m (25mm)",
         precio: 440,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9215,7 +9215,7 @@ const productos = [
     {
         id: 922,
         sku: "INT1-D8857",
-        nombre: "ca�o Daisa 3/4 3m (20mm)",
+        nombre: "caño Daisa 3/4 3m (20mm)",
         precio: 315,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9225,7 +9225,7 @@ const productos = [
     {
         id: 923,
         sku: "INT1-10064631",
-        nombre: "ca�o plastiducto 1/2\" azul TIGRE",
+        nombre: "caño plastiducto 1/2\" azul TIGRE",
         precio: 26,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9235,7 +9235,7 @@ const productos = [
     {
         id: 924,
         sku: "INT1-1323",
-        nombre: "ca�o plastiducto 3/4",
+        nombre: "caño plastiducto 3/4",
         precio: 38,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9245,7 +9245,7 @@ const productos = [
     {
         id: 925,
         sku: "INT1-LOO1015",
-        nombre: "ca�o PPL 1/2\" 6m",
+        nombre: "caño PPL 1/2\" 6m",
         precio: 455,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9255,7 +9255,7 @@ const productos = [
     {
         id: 926,
         sku: "INT1-DOJS3110T",
-        nombre: "ca�o PVC 110 x 3m (1.8) liviano",
+        nombre: "caño PVC 110 x 3m (1.8) liviano",
         precio: 605,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9265,7 +9265,7 @@ const productos = [
     {
         id: 927,
         sku: "INT1-DOJS6110T",
-        nombre: "ca�o pvc 110 x 6m (1.8) liviano",
+        nombre: "caño pvc 110 x 6m (1.8) liviano",
         precio: 1168,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9275,7 +9275,7 @@ const productos = [
     {
         id: 928,
         sku: "INT1-ducPVC11",
-        nombre: "ca�o PVC 11mm 3m",
+        nombre: "caño PVC 11mm 3m",
         precio: 77,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9285,7 +9285,7 @@ const productos = [
     {
         id: 929,
         sku: "INT1-ducPVC16",
-        nombre: "ca�o PVC 16mm 3m",
+        nombre: "caño PVC 16mm 3m",
         precio: 93,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9295,7 +9295,7 @@ const productos = [
     {
         id: 930,
         sku: "INT1-ducPVC20",
-        nombre: "ca�o pvc 20mm 3m",
+        nombre: "caño pvc 20mm 3m",
         precio: 117,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9305,7 +9305,7 @@ const productos = [
     {
         id: 931,
         sku: "INT1-ducPVC25",
-        nombre: "ca�o PVC 25mm 3m",
+        nombre: "caño PVC 25mm 3m",
         precio: 184,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9315,7 +9315,7 @@ const productos = [
     {
         id: 932,
         sku: "INT1-DOJS3050T",
-        nombre: "ca�o PVC 50 x 3m (1.8) liviano",
+        nombre: "caño PVC 50 x 3m (1.8) liviano",
         precio: 295,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9325,7 +9325,7 @@ const productos = [
     {
         id: 933,
         sku: "INT1-11131352",
-        nombre: "ca�o PVC 50 x 3m (3.2) pesado",
+        nombre: "caño PVC 50 x 3m (3.2) pesado",
         precio: 495,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9335,7 +9335,7 @@ const productos = [
     {
         id: 934,
         sku: "INT1-587946",
-        nombre: "ca�o PVC 63 x 3m (1.8) liviano",
+        nombre: "caño PVC 63 x 3m (1.8) liviano",
         precio: 395,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9345,7 +9345,7 @@ const productos = [
     {
         id: 935,
         sku: "INT1-TR20SD",
-        nombre: "ca�o rigido SD 3m 20mm MYLSA",
+        nombre: "caño rigido SD 3m 20mm MYLSA",
         precio: 105,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9355,7 +9355,7 @@ const productos = [
     {
         id: 936,
         sku: "INT1-TR25SD",
-        nombre: "ca�o rigido SD 3m 25mm MYLSA",
+        nombre: "caño rigido SD 3m 25mm MYLSA",
         precio: 145,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9365,7 +9365,7 @@ const productos = [
     {
         id: 937,
         sku: "INT1-TR32SD",
-        nombre: "ca�o rigido SD 3m 32mm MYLSA",
+        nombre: "caño rigido SD 3m 32mm MYLSA",
         precio: 200,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9375,7 +9375,7 @@ const productos = [
     {
         id: 938,
         sku: "INT1-C001",
-        nombre: "ca�o roscado 10x1 de 1m",
+        nombre: "caño roscado 10x1 de 1m",
         precio: 244,
         categoria_principal: "tornilleria",
         subcategoria: "roscados",
@@ -9385,7 +9385,7 @@ const productos = [
     {
         id: 939,
         sku: "INT1-CEQ671",
-        nombre: "ca�o Tee PVC camara MH 110",
+        nombre: "caño Tee PVC camara MH 110",
         precio: 676,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9395,7 +9395,7 @@ const productos = [
     {
         id: 940,
         sku: "INT1-37050038",
-        nombre: "ca�o termofusion 4m 20mm (1/2)",
+        nombre: "caño termofusion 4m 20mm (1/2)",
         precio: 240,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9405,7 +9405,7 @@ const productos = [
     {
         id: 941,
         sku: "INT1-37050039",
-        nombre: "ca�o termofusion 4m 25mm (3/4)",
+        nombre: "caño termofusion 4m 25mm (3/4)",
         precio: 430,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9525,7 +9525,7 @@ const productos = [
     {
         id: 953,
         sku: "INT1-MPL32CAP",
-        nombre: "capuchon  para ca�o rigido 32mm MYLSA",
+        nombre: "capuchon  para caño rigido 32mm MYLSA",
         precio: 75,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -9545,7 +9545,7 @@ const productos = [
     {
         id: 955,
         sku: "INT1-LH-671",
-        nombre: "carama�ola 400cc metalica",
+        nombre: "caramañola 400cc metalica",
         precio: 150,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -11205,7 +11205,7 @@ const productos = [
     {
         id: 1121,
         sku: "INT1-11919",
-        nombre: "chaura de algodon n�0",
+        nombre: "chaura de algodon n°0",
         precio: 115,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -11215,7 +11215,7 @@ const productos = [
     {
         id: 1122,
         sku: "INT1-11920",
-        nombre: "chaura de algodon n�1",
+        nombre: "chaura de algodon n°1",
         precio: 137,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -11225,7 +11225,7 @@ const productos = [
     {
         id: 1123,
         sku: "INT1-11921",
-        nombre: "chaura de algodon n�2",
+        nombre: "chaura de algodon n°2",
         precio: 174,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -11875,7 +11875,7 @@ const productos = [
     {
         id: 1188,
         sku: "INT1-4096",
-        nombre: "cinta destapa ca�o 3m",
+        nombre: "cinta destapa caño 3m",
         precio: 135,
         categoria_principal: "varios",
         subcategoria: "cintas",
@@ -11885,7 +11885,7 @@ const productos = [
     {
         id: 1189,
         sku: "INT1-7506240609230",
-        nombre: "cinta destapa ca�o acero 1.8m PRETUL",
+        nombre: "cinta destapa caño acero 1.8m PRETUL",
         precio: 427,
         categoria_principal: "construccion",
         subcategoria: "acero",
@@ -12905,7 +12905,7 @@ const productos = [
     {
         id: 1291,
         sku: "INT1-LF009320",
-        nombre: "codo 45� HH termofusion 20mm",
+        nombre: "codo 45° HH termofusion 20mm",
         precio: 14,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -12915,7 +12915,7 @@ const productos = [
     {
         id: 1292,
         sku: "INT1-37050010",
-        nombre: "codo 45� HH termofusion 25mm",
+        nombre: "codo 45° HH termofusion 25mm",
         precio: 25,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -12925,7 +12925,7 @@ const productos = [
     {
         id: 1293,
         sku: "INT1-LF009020",
-        nombre: "codo 90� HH termofusion 20mm (1/2\")",
+        nombre: "codo 90° HH termofusion 20mm (1/2\")",
         precio: 14,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -12935,7 +12935,7 @@ const productos = [
     {
         id: 1294,
         sku: "INT1-50004",
-        nombre: "codo 90� HH termofusion 25mm (3/4\")",
+        nombre: "codo 90° HH termofusion 25mm (3/4\")",
         precio: 25,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13085,7 +13085,7 @@ const productos = [
     {
         id: 1309,
         sku: "INT1-26211000",
-        nombre: "codo PVC 100 45� MH",
+        nombre: "codo PVC 100 45° MH",
         precio: 145,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13095,7 +13095,7 @@ const productos = [
     {
         id: 1310,
         sku: "INT1-26241006",
-        nombre: "codo PVC 100 90� MH",
+        nombre: "codo PVC 100 90° MH",
         precio: 180,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13105,7 +13105,7 @@ const productos = [
     {
         id: 1311,
         sku: "INT1-PB313010712",
-        nombre: "codo PVC 100 90� HH",
+        nombre: "codo PVC 100 90° HH",
         precio: 208,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13115,7 +13115,7 @@ const productos = [
     {
         id: 1312,
         sku: "INT1-CEA631",
-        nombre: "codo PVC 110 45� HH",
+        nombre: "codo PVC 110 45° HH",
         precio: 271,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13125,7 +13125,7 @@ const productos = [
     {
         id: 1313,
         sku: "INT1-cea631*",
-        nombre: "codo PVC 110 45� MH",
+        nombre: "codo PVC 110 45° MH",
         precio: 255,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13135,7 +13135,7 @@ const productos = [
     {
         id: 1314,
         sku: "INT1-CEA621",
-        nombre: "codo PVC 110 90� HH",
+        nombre: "codo PVC 110 90° HH",
         precio: 275,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13145,7 +13145,7 @@ const productos = [
     {
         id: 1315,
         sku: "INT1-20215380",
-        nombre: "codo PVC 110 90� MH",
+        nombre: "codo PVC 110 90° MH",
         precio: 255,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13195,7 +13195,7 @@ const productos = [
     {
         id: 1320,
         sku: "INT1-CEA131",
-        nombre: "codo PVC 40 45� HH liviano",
+        nombre: "codo PVC 40 45° HH liviano",
         precio: 25,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13205,7 +13205,7 @@ const productos = [
     {
         id: 1321,
         sku: "INT1-PB313020605",
-        nombre: "codo PVC 40 90� HH liviano",
+        nombre: "codo PVC 40 90° HH liviano",
         precio: 25,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13215,7 +13215,7 @@ const productos = [
     {
         id: 1322,
         sku: "INT1-9867541",
-        nombre: "codo PVC 40 pesado 90� MH",
+        nombre: "codo PVC 40 pesado 90° MH",
         precio: 75,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13225,7 +13225,7 @@ const productos = [
     {
         id: 1323,
         sku: "INT1-C403.2",
-        nombre: "codo PVC 40 pesado 90� HH",
+        nombre: "codo PVC 40 pesado 90° HH",
         precio: 75,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13235,7 +13235,7 @@ const productos = [
     {
         id: 1324,
         sku: "INT1-PB313010605",
-        nombre: "codo PVC 50 45� MH liviano",
+        nombre: "codo PVC 50 45° MH liviano",
         precio: 40,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13245,7 +13245,7 @@ const productos = [
     {
         id: 1325,
         sku: "INT1-26240506",
-        nombre: "codo PVC 50 90� MH liviano",
+        nombre: "codo PVC 50 90° MH liviano",
         precio: 45,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13255,7 +13255,7 @@ const productos = [
     {
         id: 1326,
         sku: "INT1-CEA221",
-        nombre: "codo PVC 50 90� HH pesado",
+        nombre: "codo PVC 50 90° HH pesado",
         precio: 95,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13265,7 +13265,7 @@ const productos = [
     {
         id: 1327,
         sku: "INT1-20215232",
-        nombre: "codo PVC 63 45� MH",
+        nombre: "codo PVC 63 45° MH",
         precio: 135,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13275,7 +13275,7 @@ const productos = [
     {
         id: 1328,
         sku: "INT1-784578",
-        nombre: "codo PVC 63 90� HH",
+        nombre: "codo PVC 63 90° HH",
         precio: 155,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -13785,7 +13785,7 @@ const productos = [
     {
         id: 1379,
         sku: "INT1-0012",
-        nombre: "conector n�5",
+        nombre: "conector n°5",
         precio: 4,
         categoria_principal: "electricidad",
         subcategoria: "conectores",
@@ -14005,7 +14005,7 @@ const productos = [
     {
         id: 1401,
         sku: "INT1-4058794956818",
-        nombre: "conexion rapida codo 90� 5/16-1/4\" WURTH",
+        nombre: "conexion rapida codo 90° 5/16-1/4\" WURTH",
         precio: 112,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14015,7 +14015,7 @@ const productos = [
     {
         id: 1402,
         sku: "INT1-4058794956825",
-        nombre: "conexion rapida codo 90� 5/16-1/8\" WURTH",
+        nombre: "conexion rapida codo 90° 5/16-1/8\" WURTH",
         precio: 105,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14025,7 +14025,7 @@ const productos = [
     {
         id: 1403,
         sku: "INT1-4058794956757",
-        nombre: "conexion rapida codo 90� 6mm-1/4 WURTH",
+        nombre: "conexion rapida codo 90° 6mm-1/4 WURTH",
         precio: 99,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14035,7 +14035,7 @@ const productos = [
     {
         id: 1404,
         sku: "INT1-4058794956740",
-        nombre: "conexion rapida codo 90� 6mm-1/8 WURTH",
+        nombre: "conexion rapida codo 90° 6mm-1/8 WURTH",
         precio: 75,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14045,7 +14045,7 @@ const productos = [
     {
         id: 1405,
         sku: "INT1-4058794956771",
-        nombre: "conexion rapida codo 90� 8mm-1/4 WURTH",
+        nombre: "conexion rapida codo 90° 8mm-1/4 WURTH",
         precio: 105,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14055,7 +14055,7 @@ const productos = [
     {
         id: 1406,
         sku: "INT1-4058794956764",
-        nombre: "conexion rapida codo 90� 8mm-1/8 WURTH",
+        nombre: "conexion rapida codo 90° 8mm-1/8 WURTH",
         precio: 95,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14425,7 +14425,7 @@ const productos = [
     {
         id: 1443,
         sku: "INT1-50250",
-        nombre: "corrugado desag�e lavarropa gris",
+        nombre: "corrugado desagüe lavarropa gris",
         precio: 200,
         categoria_principal: "automotriz",
         subcategoria: "corrugados",
@@ -14465,7 +14465,7 @@ const productos = [
     {
         id: 1447,
         sku: "INT1-241",
-        nombre: "corta fierro 10\" con pu�o de goma",
+        nombre: "corta fierro 10\" con puño de goma",
         precio: 135,
         categoria_principal: "herramientas",
         subcategoria: "cortadores",
@@ -14475,7 +14475,7 @@ const productos = [
     {
         id: 1448,
         sku: "INT1-242",
-        nombre: "corta fierro 12\" con pu�o de goma",
+        nombre: "corta fierro 12\" con puño de goma",
         precio: 140,
         categoria_principal: "herramientas",
         subcategoria: "cortadores",
@@ -14485,7 +14485,7 @@ const productos = [
     {
         id: 1449,
         sku: "INT1-552",
-        nombre: "corta fierro 12\" pu�o anaranjado",
+        nombre: "corta fierro 12\" puño anaranjado",
         precio: 165,
         categoria_principal: "herramientas",
         subcategoria: "cortadores",
@@ -14585,7 +14585,7 @@ const productos = [
     {
         id: 1459,
         sku: "INT1-6978317491337",
-        nombre: "cortina de ba�o azul 180x180 BESTLOVE",
+        nombre: "cortina de baño azul 180x180 BESTLOVE",
         precio: 369,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -14595,7 +14595,7 @@ const productos = [
     {
         id: 1460,
         sku: "INT1-6978317491290",
-        nombre: "cortina de ba�o beig 180x180 BESTLOVE",
+        nombre: "cortina de baño beig 180x180 BESTLOVE",
         precio: 315,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -14605,7 +14605,7 @@ const productos = [
     {
         id: 1461,
         sku: "INT1-6978317491283",
-        nombre: "cortina de ba�o blanca 180x180 BESTLOVE",
+        nombre: "cortina de baño blanca 180x180 BESTLOVE",
         precio: 315,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -14615,7 +14615,7 @@ const productos = [
     {
         id: 1462,
         sku: "INT1-6978317491306",
-        nombre: "cortina de ba�o gris 180x180 BESTLOVE",
+        nombre: "cortina de baño gris 180x180 BESTLOVE",
         precio: 315,
         categoria_principal: "hogar",
         subcategoria: "cortinas",
@@ -14695,7 +14695,7 @@ const productos = [
     {
         id: 1470,
         sku: "INT1-SKU-1470",
-        nombre: "cubierta para bicicleta rod 26 monta�a",
+        nombre: "cubierta para bicicleta rod 26 montaña",
         precio: 625,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14725,7 +14725,7 @@ const productos = [
     {
         id: 1473,
         sku: "INT1-7891116000410",
-        nombre: "cubiertos para ni�os 3pz TRAMONTINA",
+        nombre: "cubiertos para niños 3pz TRAMONTINA",
         precio: 295,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14735,7 +14735,7 @@ const productos = [
     {
         id: 1474,
         sku: "INT1-6931598255821",
-        nombre: "cuchara alba�il 5\" mango goma UYUSTOOLS",
+        nombre: "cuchara albañil 5\" mango goma UYUSTOOLS",
         precio: 180,
         categoria_principal: "varios",
         subcategoria: "gomas",
@@ -14745,7 +14745,7 @@ const productos = [
     {
         id: 1475,
         sku: "INT1-6931598250901",
-        nombre: "cuchara alba�il 5\" mango madera UYUSTOOLS",
+        nombre: "cuchara albañil 5\" mango madera UYUSTOOLS",
         precio: 135,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14755,7 +14755,7 @@ const productos = [
     {
         id: 1476,
         sku: "INT1-LH-269",
-        nombre: "cuchara alba�il 6\" punta red",
+        nombre: "cuchara albañil 6\" punta red",
         precio: 118,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14765,7 +14765,7 @@ const productos = [
     {
         id: 1477,
         sku: "INT1-270",
-        nombre: "cuchara alba�il 7\"",
+        nombre: "cuchara albañil 7\"",
         precio: 125,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14775,7 +14775,7 @@ const productos = [
     {
         id: 1478,
         sku: "INT1-LH-780",
-        nombre: "cuchara alba�il 7\" mango forrado goma",
+        nombre: "cuchara albañil 7\" mango forrado goma",
         precio: 165,
         categoria_principal: "varios",
         subcategoria: "gomas",
@@ -14785,7 +14785,7 @@ const productos = [
     {
         id: 1479,
         sku: "INT1-6931598250925",
-        nombre: "cuchara alba�il 7\" mango madera UYUSTOOLS",
+        nombre: "cuchara albañil 7\" mango madera UYUSTOOLS",
         precio: 145,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14795,7 +14795,7 @@ const productos = [
     {
         id: 1480,
         sku: "INT1-7891117004400",
-        nombre: "cuchara alba�il 7\" TRAMONTINA",
+        nombre: "cuchara albañil 7\" TRAMONTINA",
         precio: 158,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14805,7 +14805,7 @@ const productos = [
     {
         id: 1481,
         sku: "INT1-LH-271",
-        nombre: "cuchara alba�il 8\"",
+        nombre: "cuchara albañil 8\"",
         precio: 150,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14815,7 +14815,7 @@ const productos = [
     {
         id: 1482,
         sku: "INT1-7891117004417",
-        nombre: "cuchara alba�il 8\" TRAMONTINA",
+        nombre: "cuchara albañil 8\" TRAMONTINA",
         precio: 185,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14825,7 +14825,7 @@ const productos = [
     {
         id: 1483,
         sku: "INT1-7506240614432",
-        nombre: "cuchara alba�il PRETUL 6\"",
+        nombre: "cuchara albañil PRETUL 6\"",
         precio: 309,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14835,7 +14835,7 @@ const productos = [
     {
         id: 1484,
         sku: "INT1-7506240614449",
-        nombre: "cuchara alba�il PRETUL 7\"",
+        nombre: "cuchara albañil PRETUL 7\"",
         precio: 338,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -14845,7 +14845,7 @@ const productos = [
     {
         id: 1485,
         sku: "INT1-7506240614456",
-        nombre: "cuchara alba�il PRETUL 8\"",
+        nombre: "cuchara albañil PRETUL 8\"",
         precio: 350,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15025,7 +15025,7 @@ const productos = [
     {
         id: 1503,
         sku: "INT1-7898188098635",
-        nombre: "cu�a nivelacion para piso  50uni METASUL",
+        nombre: "cuña nivelacion para piso  50uni METASUL",
         precio: 125,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15035,7 +15035,7 @@ const productos = [
     {
         id: 1504,
         sku: "INT1-1037100",
-        nombre: "cu�a nivelacion reutilizables 100uni CROWNMAN",
+        nombre: "cuña nivelacion reutilizables 100uni CROWNMAN",
         precio: 585,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15045,7 +15045,7 @@ const productos = [
     {
         id: 1505,
         sku: "INT1-6938951202843",
-        nombre: "cu�a para puerta 2pz en blister",
+        nombre: "cuña para puerta 2pz en blister",
         precio: 50,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15135,7 +15135,7 @@ const productos = [
     {
         id: 1514,
         sku: "INT1-UTR020E",
-        nombre: "cupla para ca�o rigido 20mm MYLSA",
+        nombre: "cupla para caño rigido 20mm MYLSA",
         precio: 20,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15145,7 +15145,7 @@ const productos = [
     {
         id: 1515,
         sku: "INT1-UTR025E",
-        nombre: "cupla para ca�o rigido 25mm MYLSA",
+        nombre: "cupla para caño rigido 25mm MYLSA",
         precio: 28,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15155,7 +15155,7 @@ const productos = [
     {
         id: 1516,
         sku: "INT1-UTR032E",
-        nombre: "cupla para ca�o rigido 32mm MYLSA",
+        nombre: "cupla para caño rigido 32mm MYLSA",
         precio: 30,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15305,7 +15305,7 @@ const productos = [
     {
         id: 1531,
         sku: "INT1-VTR020E",
-        nombre: "curva para ca�o rigido 20mm MYLSA",
+        nombre: "curva para caño rigido 20mm MYLSA",
         precio: 30,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15315,7 +15315,7 @@ const productos = [
     {
         id: 1532,
         sku: "INT1-VTR025E",
-        nombre: "curva para ca�o rigido 25mm MYLSA",
+        nombre: "curva para caño rigido 25mm MYLSA",
         precio: 45,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -15325,7 +15325,7 @@ const productos = [
     {
         id: 1533,
         sku: "INT1-VTR032E",
-        nombre: "curva para ca�o rigido 32mm MYLSA",
+        nombre: "curva para caño rigido 32mm MYLSA",
         precio: 75,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -16025,7 +16025,7 @@ const productos = [
     {
         id: 1603,
         sku: "INT1-8789666",
-        nombre: "Davidson cinta destapa ca�o 3m con manija",
+        nombre: "Davidson cinta destapa caño 3m con manija",
         precio: 255,
         categoria_principal: "hogar",
         subcategoria: "manijas",
@@ -16045,7 +16045,7 @@ const productos = [
     {
         id: 1605,
         sku: "INT1-R1",
-        nombre: "desag�e de patio embudo vertical 21x21cm TIGRE",
+        nombre: "desagüe de patio embudo vertical 21x21cm TIGRE",
         precio: 405,
         categoria_principal: "construccion",
         subcategoria: "cal",
@@ -16105,7 +16105,7 @@ const productos = [
     {
         id: 1611,
         sku: "INT1-13.13.13",
-        nombre: "desoldador por succion quita esta�o",
+        nombre: "desoldador por succion quita estaño",
         precio: 210,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -18585,7 +18585,7 @@ const productos = [
     {
         id: 1859,
         sku: "INT1-33-66",
-        nombre: "escobilla cepillo ba�o dif colores",
+        nombre: "escobilla cepillo baño dif colores",
         precio: 150,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -18595,7 +18595,7 @@ const productos = [
     {
         id: 1860,
         sku: "INT1-4050",
-        nombre: "escobilla cepillo ba�o metalico cromado",
+        nombre: "escobilla cepillo baño metalico cromado",
         precio: 478,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -19155,7 +19155,7 @@ const productos = [
     {
         id: 1916,
         sku: "INT1-7891260024645",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19165,7 +19165,7 @@ const productos = [
     {
         id: 1917,
         sku: "INT1-7891260026878",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19175,7 +19175,7 @@ const productos = [
     {
         id: 1918,
         sku: "INT1-7891260022917",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL amarillo oscuro",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL amarillo oscuro",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19185,7 +19185,7 @@ const productos = [
     {
         id: 1919,
         sku: "INT1-7891260024812",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL azul francia",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL azul francia",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19195,7 +19195,7 @@ const productos = [
     {
         id: 1920,
         sku: "INT1-7891260023198",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL azul rey",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL azul rey",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19205,7 +19205,7 @@ const productos = [
     {
         id: 1921,
         sku: "INT1-7891260022672",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL blanco brill",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL blanco brill",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19215,7 +19215,7 @@ const productos = [
     {
         id: 1922,
         sku: "INT1-7891260024560",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL gris medio",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL gris medio",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19225,7 +19225,7 @@ const productos = [
     {
         id: 1923,
         sku: "INT1-7891260024218",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL marron",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL marron",
         precio: 815,
         categoria_principal: "construccion",
         subcategoria: "marrones",
@@ -19235,7 +19235,7 @@ const productos = [
     {
         id: 1924,
         sku: "INT1-7891260024478",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL marron cognac",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL marron cognac",
         precio: 815,
         categoria_principal: "construccion",
         subcategoria: "marrones",
@@ -19245,7 +19245,7 @@ const productos = [
     {
         id: 1925,
         sku: "INT1-7891260023143",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL naranja",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL naranja",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19255,7 +19255,7 @@ const productos = [
     {
         id: 1926,
         sku: "INT1-7891260022764",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL negro brill",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL negro brill",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19265,7 +19265,7 @@ const productos = [
     {
         id: 1927,
         sku: "INT1-7891260129661",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL negro mate",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL negro mate",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19275,7 +19275,7 @@ const productos = [
     {
         id: 1928,
         sku: "INT1-7891260023686",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL platina brill",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL platina brill",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19285,7 +19285,7 @@ const productos = [
     {
         id: 1929,
         sku: "INT1-7891260022849",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL verde colonial",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL verde colonial",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19295,7 +19295,7 @@ const productos = [
     {
         id: 1930,
         sku: "INT1-7891260023419",
-        nombre: "Esmalte color y protecci�n 0.9Lt SUVINIL verde hoja",
+        nombre: "Esmalte color y protección 0.9Lt SUVINIL verde hoja",
         precio: 815,
         categoria_principal: "pintura",
         subcategoria: "esmaltes",
@@ -19545,7 +19545,7 @@ const productos = [
     {
         id: 1955,
         sku: "INT1-0098",
-        nombre: "esmerilon triple negro n�7",
+        nombre: "esmerilon triple negro n°7",
         precio: 7,
         categoria_principal: "herramientas",
         subcategoria: "esmeriles",
@@ -19895,7 +19895,7 @@ const productos = [
     {
         id: 1990,
         sku: "INT1-LH-1700",
-        nombre: "esta�o 0.8mm FLUX 20% 60/40 SOLDER WIRE",
+        nombre: "estaño 0.8mm FLUX 20% 60/40 SOLDER WIRE",
         precio: 30,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -19905,7 +19905,7 @@ const productos = [
     {
         id: 1991,
         sku: "INT1-14366",
-        nombre: "esta�o 1mm TRUPER sin pasta",
+        nombre: "estaño 1mm TRUPER sin pasta",
         precio: 72,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -19915,7 +19915,7 @@ const productos = [
     {
         id: 1992,
         sku: "INT1-14365",
-        nombre: "esta�o 3mm TRUPER con pasta",
+        nombre: "estaño 3mm TRUPER con pasta",
         precio: 385,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -20235,7 +20235,7 @@ const productos = [
     {
         id: 2024,
         sku: "INT1-7790400017243",
-        nombre: "fastix rojo alta temp hasta 24�C",
+        nombre: "fastix rojo alta temp hasta 24°C",
         precio: 205,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -20665,7 +20665,7 @@ const productos = [
     {
         id: 2067,
         sku: "INT1-43236492",
-        nombre: "ficha pomela herrero SIN MANO n�2 FUMACA",
+        nombre: "ficha pomela herrero SIN MANO n°2 FUMACA",
         precio: 75,
         categoria_principal: "electricidad",
         subcategoria: "fichas",
@@ -20675,7 +20675,7 @@ const productos = [
     {
         id: 2068,
         sku: "INT1-43236494",
-        nombre: "ficha pomela herrero SIN MANO n�4 FUMACA",
+        nombre: "ficha pomela herrero SIN MANO n°4 FUMACA",
         precio: 128,
         categoria_principal: "electricidad",
         subcategoria: "fichas",
@@ -21995,7 +21995,7 @@ const productos = [
     {
         id: 2200,
         sku: "INT1-GRP11/4E",
-        nombre: "grampa daisa con cu�a 1 1/4\"",
+        nombre: "grampa daisa con cuña 1 1/4\"",
         precio: 55,
         categoria_principal: "tornilleria",
         subcategoria: "grampas",
@@ -22205,7 +22205,7 @@ const productos = [
     {
         id: 2221,
         sku: "INT1-GRA020E",
-        nombre: "grampa para ca�o rigido 20mm MYLSA",
+        nombre: "grampa para caño rigido 20mm MYLSA",
         precio: 18,
         categoria_principal: "tornilleria",
         subcategoria: "grampas",
@@ -22215,7 +22215,7 @@ const productos = [
     {
         id: 2222,
         sku: "INT1-GRA025E",
-        nombre: "grampa para ca�o rigido 25mm MYLSA",
+        nombre: "grampa para caño rigido 25mm MYLSA",
         precio: 25,
         categoria_principal: "tornilleria",
         subcategoria: "grampas",
@@ -22225,7 +22225,7 @@ const productos = [
     {
         id: 2223,
         sku: "INT1-GRA032E",
-        nombre: "grampa para ca�o rigido 32mm MYLSA",
+        nombre: "grampa para caño rigido 32mm MYLSA",
         precio: 30,
         categoria_principal: "tornilleria",
         subcategoria: "grampas",
@@ -23245,7 +23245,7 @@ const productos = [
     {
         id: 2325,
         sku: "INT1-1231234508614",
-        nombre: "guirnalda navide�a LED 5mt farolitos",
+        nombre: "guirnalda navideña LED 5mt farolitos",
         precio: 1925,
         categoria_principal: "electricidad",
         subcategoria: "iluminacion_led",
@@ -23265,7 +23265,7 @@ const productos = [
     {
         id: 2327,
         sku: "INT1-7891114003024",
-        nombre: "hacha de mano con cu�a 450gr TRAMONTINA",
+        nombre: "hacha de mano con cuña 450gr TRAMONTINA",
         precio: 482,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -23275,7 +23275,7 @@ const productos = [
     {
         id: 2328,
         sku: "INT1-7897937402143",
-        nombre: "hacha de mano con cu�a 500gr MOMFORT",
+        nombre: "hacha de mano con cuña 500gr MOMFORT",
         precio: 585,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -24945,7 +24945,7 @@ const productos = [
     {
         id: 2495,
         sku: "INT1-7506240681441",
-        nombre: "juego 2 cinta destapa ca�o polip  50cm PRETUL",
+        nombre: "juego 2 cinta destapa caño polip  50cm PRETUL",
         precio: 138,
         categoria_principal: "varios",
         subcategoria: "cintas",
@@ -25855,7 +25855,7 @@ const productos = [
     {
         id: 2586,
         sku: "INT1-7290100842324",
-        nombre: "KAPRO nivel para ca�eria 5 pzs",
+        nombre: "KAPRO nivel para cañería 5 pzs",
         precio: 740,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -26015,7 +26015,7 @@ const productos = [
     {
         id: 2602,
         sku: "INT1-7908027007817",
-        nombre: "kit para ba�o 5pz blanco con cromado DURIN",
+        nombre: "kit para baño 5pz blanco con cromado DURIN",
         precio: 1020,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -26025,7 +26025,7 @@ const productos = [
     {
         id: 2603,
         sku: "INT1-7898737700453",
-        nombre: "kit para ba�o 5pz cromado TWISTER",
+        nombre: "kit para baño 5pz cromado TWISTER",
         precio: 815,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -26035,7 +26035,7 @@ const productos = [
     {
         id: 2604,
         sku: "INT1-7898188095450",
-        nombre: "kit para ba�o 5pz METASUL",
+        nombre: "kit para baño 5pz METASUL",
         precio: 511,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -26045,7 +26045,7 @@ const productos = [
     {
         id: 2605,
         sku: "INT1-50888",
-        nombre: "kit para ba�o acc 6 pz economico",
+        nombre: "kit para baño acc 6 pz economico",
         precio: 1774,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -27075,7 +27075,7 @@ const productos = [
     {
         id: 2708,
         sku: "INT1-8523",
-        nombre: "lampara p/horno 15w 300�c",
+        nombre: "lampara p/horno 15w 300°C",
         precio: 162,
         categoria_principal: "electricidad",
         subcategoria: "lamparas",
@@ -27155,7 +27155,7 @@ const productos = [
     {
         id: 2716,
         sku: "INT1-7891055585801",
-        nombre: "lampazo vidrio peque�o multiuso CONDOR",
+        nombre: "lampazo vidrio pequeño multiuso CONDOR",
         precio: 85,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -27296,7 +27296,7 @@ const productos = [
     {
         id: 2735,
         sku: "INT1-7506240690702",
-        nombre: "lentes de seguridad tranp protec UV anti- empa�ante TRUPER",
+        nombre: "lentes de seguridad tranp protec UV anti- empañante TRUPER",
         precio: 275,
         categoria_principal: "proteccion",
         subcategoria: "lentes",
@@ -27306,7 +27306,7 @@ const productos = [
     {
         id: 2736,
         sku: "INT1-7506240619543",
-        nombre: "lentes depor espejo azul TRUPER",
+        nombre: "lentes deportivos espejo azul TRUPER",
         precio: 260,
         categoria_principal: "proteccion",
         subcategoria: "lentes",
@@ -27326,7 +27326,7 @@ const productos = [
     {
         id: 2738,
         sku: "INT1-7506240690689",
-        nombre: "lentes panoramico transp anti empa�o TRUPER",
+        nombre: "lentes panoramico transp anti empaño TRUPER",
         precio: 165,
         categoria_principal: "proteccion",
         subcategoria: "lentes",
@@ -27906,7 +27906,7 @@ const productos = [
     {
         id: 2796,
         sku: "INT1-6931598237919",
-        nombre: "lima media ca�a 6\" UYUSTOOLS",
+        nombre: "lima media caña 6\" UYUSTOOLS",
         precio: 250,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -27916,7 +27916,7 @@ const productos = [
     {
         id: 2797,
         sku: "INT1-6973960889418",
-        nombre: "lima media ca�a 8\" MAKAWA",
+        nombre: "lima media caña 8\" MAKAWA",
         precio: 210,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28326,7 +28326,7 @@ const productos = [
     {
         id: 2838,
         sku: "INT1-7897937409395",
-        nombre: "llana alba�il dentada 12x24cm cabo pvc MOMFORT",
+        nombre: "llana albañil dentada 12x24cm cabo pvc MOMFORT",
         precio: 235,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28336,7 +28336,7 @@ const productos = [
     {
         id: 2839,
         sku: "INT1-41880027",
-        nombre: "llana alba�il dentada 12x26cm cabo pvc MOMFORT",
+        nombre: "llana albañil dentada 12x26cm cabo pvc MOMFORT",
         precio: 250,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28346,7 +28346,7 @@ const productos = [
     {
         id: 2840,
         sku: "INT1-7897937460075",
-        nombre: "llana alba�il lisa 12x24cm cabo pvc MOMFORT",
+        nombre: "llana albañil lisa 12x24cm cabo pvc MOMFORT",
         precio: 240,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28356,7 +28356,7 @@ const productos = [
     {
         id: 2841,
         sku: "INT1-7891595003131",
-        nombre: "llana alba�il lisa 12x26cm cabo pvc ROMA",
+        nombre: "llana albañil lisa 12x26cm cabo pvc ROMA",
         precio: 225,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28366,7 +28366,7 @@ const productos = [
     {
         id: 2842,
         sku: "INT1-SKU-2842",
-        nombre: "llana alba�il lisa mango madera 13x28cm TRUPER",
+        nombre: "llana albañil lisa mango madera 13x28cm TRUPER",
         precio: 295,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -28676,7 +28676,7 @@ const productos = [
     {
         id: 2873,
         sku: "INT1-2686",
-        nombre: "llave de ca�o 10\" MAKAWA",
+        nombre: "llave de caño 10\" MAKAWA",
         precio: 460,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28686,7 +28686,7 @@ const productos = [
     {
         id: 2874,
         sku: "INT1-W102019",
-        nombre: "llave de ca�o 12\" mordaza recta Workpro",
+        nombre: "llave de caño 12\" mordaza recta Workpro",
         precio: 660,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28696,7 +28696,7 @@ const productos = [
     {
         id: 2875,
         sku: "INT1-7501206643259",
-        nombre: "llave de ca�o 12\" PRETUL",
+        nombre: "llave de caño 12\" PRETUL",
         precio: 1075,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28706,7 +28706,7 @@ const productos = [
     {
         id: 2876,
         sku: "INT1-0570118",
-        nombre: "llave de ca�o 18\" CROWNMAN",
+        nombre: "llave de caño 18\" CROWNMAN",
         precio: 1170,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28716,7 +28716,7 @@ const productos = [
     {
         id: 2877,
         sku: "INT1-6971281761093",
-        nombre: "llave de ca�o 24\" CROWNMAN",
+        nombre: "llave de caño 24\" CROWNMAN",
         precio: 1690,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28726,7 +28726,7 @@ const productos = [
     {
         id: 2878,
         sku: "INT1-7501206643242",
-        nombre: "llave de ca�o PRETUL 10\"",
+        nombre: "llave de caño PRETUL 10\"",
         precio: 792,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28736,7 +28736,7 @@ const productos = [
     {
         id: 2879,
         sku: "INT1-22012",
-        nombre: "llave de ca�o PRETUL 12\"",
+        nombre: "llave de caño PRETUL 12\"",
         precio: 1050,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -28746,7 +28746,7 @@ const productos = [
     {
         id: 2880,
         sku: "INT1-22010",
-        nombre: "llave de ca�o PRETUL 8\"",
+        nombre: "llave de caño PRETUL 8\"",
         precio: 499,
         categoria_principal: "herramientas",
         subcategoria: "llaves",
@@ -29506,7 +29506,7 @@ const productos = [
     {
         id: 2956,
         sku: "INT1-6998554126939",
-        nombre: "luces navide�as colores varios",
+        nombre: "luces navideñas colores varios",
         precio: 355,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -30296,7 +30296,7 @@ const productos = [
     {
         id: 3035,
         sku: "INT1-7501206625200",
-        nombre: "martillo PRETUL galponero con u�a mango acero 16Oz",
+        nombre: "martillo PRETUL galponero con uña mango acero 16Oz",
         precio: 778,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -30386,7 +30386,7 @@ const productos = [
     {
         id: 3044,
         sku: "INT1-7891114000658",
-        nombre: "martillo TRAMONTINA de u�a 27mm",
+        nombre: "martillo TRAMONTINA de uña 27mm",
         precio: 335,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -30396,7 +30396,7 @@ const productos = [
     {
         id: 3045,
         sku: "INT1-7891114159431",
-        nombre: "martillo TRAMONTINA de u�a 29mm mango polimero",
+        nombre: "martillo TRAMONTINA de uña 29mm mango polimero",
         precio: 355,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -30406,7 +30406,7 @@ const productos = [
     {
         id: 3046,
         sku: "INT1-7501206624128",
-        nombre: "martillo TRUPER galponero con u�a 220gr 23mm",
+        nombre: "martillo TRUPER galponero con uña 220gr 23mm",
         precio: 550,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -30416,7 +30416,7 @@ const productos = [
     {
         id: 3047,
         sku: "INT1-7506240617976",
-        nombre: "martillo TRUPER u�a curva 16Oz",
+        nombre: "martillo TRUPER uña curva 16Oz",
         precio: 705,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -30426,7 +30426,7 @@ const productos = [
     {
         id: 3048,
         sku: "INT1-7501206620540",
-        nombre: "martillo TRUPER u�a recta 16Oz",
+        nombre: "martillo TRUPER uña recta 16Oz",
         precio: 695,
         categoria_principal: "herramientas",
         subcategoria: "martillos",
@@ -33496,7 +33496,7 @@ const productos = [
     {
         id: 3355,
         sku: "INT1-630456755997",
-        nombre: "nivel laser verde 50m autonivelante 360� con trip y acc EQUUS",
+        nombre: "nivel laser verde 50m autonivelante 360° con trip y acc EQUUS",
         precio: 4360,
         categoria_principal: "automotriz",
         subcategoria: "automotriz",
@@ -34726,7 +34726,7 @@ const productos = [
     {
         id: 3478,
         sku: "INT1-0912",
-        nombre: "perlas plasticas n�5",
+        nombre: "perlas plasticas n°5",
         precio: 706,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -34766,7 +34766,7 @@ const productos = [
     {
         id: 3482,
         sku: "INT1-n�15",
-        nombre: "pesca boya plast n�15",
+        nombre: "pesca boya plast n°15",
         precio: 12,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -34776,7 +34776,7 @@ const productos = [
     {
         id: 3483,
         sku: "INT1-n�20",
-        nombre: "pesca boya plast n�20",
+        nombre: "pesca boya plast n°20",
         precio: 18,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -35846,7 +35846,7 @@ const productos = [
     {
         id: 3590,
         sku: "INT1-4320740000006",
-        nombre: "pintura aerosol negro alta temp 600�C SLENDER 400ml",
+        nombre: "pintura aerosol negro alta temp 600°C SLENDER 400ml",
         precio: 370,
         categoria_principal: "pintura",
         subcategoria: "pinturas",
@@ -36736,7 +36736,7 @@ const productos = [
     {
         id: 3679,
         sku: "INT1-7891114009859",
-        nombre: "pinza punta fina media ca�a 6\" TRAMONTINA",
+        nombre: "pinza punta fina media caña 6\" TRAMONTINA",
         precio: 365,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -36806,7 +36806,7 @@ const productos = [
     {
         id: 3686,
         sku: "INT1-7891114075588",
-        nombre: "pinza universal 8� doble aislacion Tramontina",
+        nombre: "pinza universal 8\" doble aislacion Tramontina",
         precio: 385,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -36816,7 +36816,7 @@ const productos = [
     {
         id: 3687,
         sku: "INT1-820909713838",
-        nombre: "pinza universal 8� doble aislacion Workpro",
+        nombre: "pinza universal 8\" doble aislacion Workpro",
         precio: 340,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -36826,7 +36826,7 @@ const productos = [
     {
         id: 3688,
         sku: "INT1-40563",
-        nombre: "pinza universal 9� aislacion liviana Workpro",
+        nombre: "pinza universal 9\" aislacion liviana Workpro",
         precio: 425,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -36906,7 +36906,7 @@ const productos = [
     {
         id: 3696,
         sku: "INT1-42101912",
-        nombre: "pistola de calor prof 2000w (45-500�C) TRUPER",
+        nombre: "pistola de calor prof 2000w (45-500°C) TRUPER",
         precio: 4880,
         categoria_principal: "herramientas",
         subcategoria: "pistolas",
@@ -38266,7 +38266,7 @@ const productos = [
     {
         id: 3832,
         sku: "INT1-43181/501",
-        nombre: "plomada alba�il 400gr c/punta TRAMONTINA",
+        nombre: "plomada albañil 400gr c/punta TRAMONTINA",
         precio: 335,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -38276,7 +38276,7 @@ const productos = [
     {
         id: 3833,
         sku: "INT1-7891114013405",
-        nombre: "plomada alba�il TRAMONTINA",
+        nombre: "plomada albañil TRAMONTINA",
         precio: 290,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -38286,7 +38286,7 @@ const productos = [
     {
         id: 3834,
         sku: "INT1-7501206679135",
-        nombre: "plomada de alba�il de punto 2 en 1 310gr PRETUL",
+        nombre: "plomada de albañil de punto 2 en 1 310gr PRETUL",
         precio: 730,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -38316,7 +38316,7 @@ const productos = [
     {
         id: 3837,
         sku: "INT1-PLOM-2Z",
-        nombre: "plomada de punto para alba�il 310gr PRETUL",
+        nombre: "plomada de punto para albañil 310gr PRETUL",
         precio: 539,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -38826,7 +38826,7 @@ const productos = [
     {
         id: 3888,
         sku: "INT1-6938951206063",
-        nombre: "prensa esquinero 90� 68-95mm CORNER CLAMP",
+        nombre: "prensa esquinero 90° 68-95mm CORNER CLAMP",
         precio: 950,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -39416,7 +39416,7 @@ const productos = [
     {
         id: 3947,
         sku: "INT1-551",
-        nombre: "punta hierro 12\" con pu�o goma anaranjado",
+        nombre: "punta hierro 12\" con puño goma anaranjado",
         precio: 160,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -39426,7 +39426,7 @@ const productos = [
     {
         id: 3948,
         sku: "INT1-1615",
-        nombre: "punta hierro 12\"con pu�o de goma",
+        nombre: "punta hierro 12\"con puño de goma",
         precio: 145,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -39446,7 +39446,7 @@ const productos = [
     {
         id: 3950,
         sku: "INT1-7891114048209",
-        nombre: "punta para alba�il 10\" TRAMONTINA",
+        nombre: "punta para albañil 10\" TRAMONTINA",
         precio: 330,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -39456,7 +39456,7 @@ const productos = [
     {
         id: 3951,
         sku: "INT1-7891114048216",
-        nombre: "punta para alba�il 12\" TRAMONTINA",
+        nombre: "punta para albañil 12\" TRAMONTINA",
         precio: 385,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -39496,7 +39496,7 @@ const productos = [
     {
         id: 3955,
         sku: "INT1-7506240675365",
-        nombre: "punta para tornilladora phillips n�2 25mm TRUPER 15uni",
+        nombre: "punta para tornilladora phillips n°2 25mm TRUPER 15uni",
         precio: 486,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -39516,7 +39516,7 @@ const productos = [
     {
         id: 3957,
         sku: "INT1-136905",
-        nombre: "punta phillips 1/4x25 n�2",
+        nombre: "punta phillips 1/4x25 n°2",
         precio: 28,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -39526,7 +39526,7 @@ const productos = [
     {
         id: 3958,
         sku: "INT1-136920",
-        nombre: "punta phillips 1/4x50 n�2",
+        nombre: "punta phillips 1/4x50 n°2",
         precio: 42,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -40926,7 +40926,7 @@ const productos = [
     {
         id: 4098,
         sku: "INT1-ZBM-9822",
-        nombre: "reloj de pared 30cm dise�o copa",
+        nombre: "reloj de pared 30cm diseño copa",
         precio: 345,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -41856,7 +41856,7 @@ const productos = [
     {
         id: 4191,
         sku: "INT1-1104",
-        nombre: "roseta n�8",
+        nombre: "roseta n°8",
         precio: 11,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -41916,7 +41916,7 @@ const productos = [
     {
         id: 4197,
         sku: "INT1-7890",
-        nombre: "rotor plastico n�2",
+        nombre: "rotor plastico n°2",
         precio: 3,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -41926,7 +41926,7 @@ const productos = [
     {
         id: 4198,
         sku: "INT1-7891",
-        nombre: "rotor plastico n�3",
+        nombre: "rotor plastico n°3",
         precio: 4,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42306,7 +42306,7 @@ const productos = [
     {
         id: 4236,
         sku: "INT1-SKU-4236",
-        nombre: "se�uelo feile",
+        nombre: "señuelo feile",
         precio: 225,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42316,7 +42316,7 @@ const productos = [
     {
         id: 4237,
         sku: "INT1-6940351148768",
-        nombre: "se�uelo safari",
+        nombre: "señuelo safari",
         precio: 188,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42326,7 +42326,7 @@ const productos = [
     {
         id: 4238,
         sku: "INT1-6972539104877",
-        nombre: "se�uelo safari",
+        nombre: "señuelo safari",
         precio: 188,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42336,7 +42336,7 @@ const productos = [
     {
         id: 4239,
         sku: "INT1-6940351148775",
-        nombre: "se�uelo safari",
+        nombre: "señuelo safari",
         precio: 188,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42346,7 +42346,7 @@ const productos = [
     {
         id: 4240,
         sku: "INT1-CLIPS",
-        nombre: "separador de ceramica 1.5mm para cu�a 100 uni",
+        nombre: "separador de ceramica 1.5mm para cuña 100 uni",
         precio: 95,
         categoria_principal: "construccion",
         subcategoria: "ceramicas",
@@ -42356,7 +42356,7 @@ const productos = [
     {
         id: 4241,
         sku: "INT1-7898188098901",
-        nombre: "separador de ceramica 1.5mm para cu�a METASUL",
+        nombre: "separador de ceramica 1.5mm para cuña METASUL",
         precio: 160,
         categoria_principal: "construccion",
         subcategoria: "ceramicas",
@@ -42366,7 +42366,7 @@ const productos = [
     {
         id: 4242,
         sku: "INT1-7898188098925",
-        nombre: "separador de ceramica 2mm para cu�a METASUL",
+        nombre: "separador de ceramica 2mm para cuña METASUL",
         precio: 185,
         categoria_principal: "construccion",
         subcategoria: "ceramicas",
@@ -42376,7 +42376,7 @@ const productos = [
     {
         id: 4243,
         sku: "INT1-7898188098932",
-        nombre: "separador de ceramica 3mm para cu�a METASUL",
+        nombre: "separador de ceramica 3mm para cuña METASUL",
         precio: 170,
         categoria_principal: "construccion",
         subcategoria: "ceramicas",
@@ -42386,7 +42386,7 @@ const productos = [
     {
         id: 4244,
         sku: "INT1-LH-3862",
-        nombre: "separador de ceramicha p/cu�o 2mm 1OOpz CLIP",
+        nombre: "separador de ceramicha p/cuño 2mm 1OOpz CLIP",
         precio: 160,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -42956,7 +42956,7 @@ const productos = [
     {
         id: 4301,
         sku: "INT2-7891799499204",
-        nombre: "silicona alta temp gris 315� 85gr W-MAX",
+        nombre: "silicona alta temp gris 315° 85gr W-MAX",
         precio: 305,
         categoria_principal: "varios",
         subcategoria: "siliconas",
@@ -42966,7 +42966,7 @@ const productos = [
     {
         id: 4302,
         sku: "INT1-7501206608449",
-        nombre: "silicona alta temp(-65�a+300�) 85gr azul TRUPER",
+        nombre: "silicona alta temp(-65°a+300°) 85gr azul TRUPER",
         precio: 260,
         categoria_principal: "varios",
         subcategoria: "siliconas",
@@ -42976,7 +42976,7 @@ const productos = [
     {
         id: 4303,
         sku: "INT1-7501206608432",
-        nombre: "silicona alta temp(-65�a+300�) 85gr negro TRUPER",
+        nombre: "silicona alta temp(-65°a+300°) 85gr negro TRUPER",
         precio: 260,
         categoria_principal: "varios",
         subcategoria: "siliconas",
@@ -42986,7 +42986,7 @@ const productos = [
     {
         id: 4304,
         sku: "INT1-7501206608425",
-        nombre: "silicona alta temp(-65�a+300�) 85gr rojo TRUPER",
+        nombre: "silicona alta temp(-65°a+300°) 85gr rojo TRUPER",
         precio: 260,
         categoria_principal: "varios",
         subcategoria: "siliconas",
@@ -44516,7 +44516,7 @@ const productos = [
     {
         id: 4457,
         sku: "INT1-2170312",
-        nombre: "taco c/tope n�12",
+        nombre: "taco c/tope n°12",
         precio: 3,
         categoria_principal: "hogar",
         subcategoria: "topes",
@@ -44526,7 +44526,7 @@ const productos = [
     {
         id: 4458,
         sku: "INT1-2170310",
-        nombre: "taco c/tope n�10",
+        nombre: "taco c/tope n°10",
         precio: 2,
         categoria_principal: "hogar",
         subcategoria: "topes",
@@ -44536,7 +44536,7 @@ const productos = [
     {
         id: 4459,
         sku: "INT1-2170306",
-        nombre: "taco c/tope n�6",
+        nombre: "taco c/tope n°6",
         precio: 1,
         categoria_principal: "hogar",
         subcategoria: "topes",
@@ -44546,7 +44546,7 @@ const productos = [
     {
         id: 4460,
         sku: "INT1-2170308",
-        nombre: "taco c/tope n�8",
+        nombre: "taco c/tope n°8",
         precio: 2,
         categoria_principal: "hogar",
         subcategoria: "topes",
@@ -44556,7 +44556,7 @@ const productos = [
     {
         id: 4461,
         sku: "INT1-2170110",
-        nombre: "taco comun n�10",
+        nombre: "taco comun n°10",
         precio: 2,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44566,7 +44566,7 @@ const productos = [
     {
         id: 4462,
         sku: "INT1-2170112",
-        nombre: "taco comun n�12",
+        nombre: "taco comun n°12",
         precio: 3,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44576,7 +44576,7 @@ const productos = [
     {
         id: 4463,
         sku: "INT1-2170105",
-        nombre: "taco comun n�5",
+        nombre: "taco comun n°5",
         precio: 1,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44586,7 +44586,7 @@ const productos = [
     {
         id: 4464,
         sku: "INT1-2170106",
-        nombre: "taco comun n�6",
+        nombre: "taco comun n°6",
         precio: 1,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44596,7 +44596,7 @@ const productos = [
     {
         id: 4465,
         sku: "INT1-2170108",
-        nombre: "taco comun n�8",
+        nombre: "taco comun n°8",
         precio: 1,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44706,7 +44706,7 @@ const productos = [
     {
         id: 4476,
         sku: "INT1-90679",
-        nombre: "taco multiuso pared hueca y hormigon n�6 USAF",
+        nombre: "taco multiuso pared hueca y hormigon n°6 USAF",
         precio: 2,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44716,7 +44716,7 @@ const productos = [
     {
         id: 4477,
         sku: "INT1-90680",
-        nombre: "taco multiuso pared hueca y hormigon n�8 USAF",
+        nombre: "taco multiuso pared hueca y hormigon n°8 USAF",
         precio: 2,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44726,7 +44726,7 @@ const productos = [
     {
         id: 4478,
         sku: "INT1-2170210",
-        nombre: "taco p/bloque n�10",
+        nombre: "taco p/bloque n°10",
         precio: 4,
         categoria_principal: "construccion",
         subcategoria: "bloques",
@@ -44736,7 +44736,7 @@ const productos = [
     {
         id: 4479,
         sku: "INT1-2170206",
-        nombre: "taco p/bloque n�6",
+        nombre: "taco p/bloque n°6",
         precio: 2,
         categoria_principal: "construccion",
         subcategoria: "bloques",
@@ -44746,7 +44746,7 @@ const productos = [
     {
         id: 4480,
         sku: "INT1-2170208",
-        nombre: "taco p/bloque n�8",
+        nombre: "taco p/bloque n°8",
         precio: 3,
         categoria_principal: "construccion",
         subcategoria: "bloques",
@@ -44756,7 +44756,7 @@ const productos = [
     {
         id: 4481,
         sku: "INT1-785",
-        nombre: "taco p/precinto n�6",
+        nombre: "taco p/precinto n°6",
         precio: 2,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -44766,7 +44766,7 @@ const productos = [
     {
         id: 4482,
         sku: "INT1-500",
-        nombre: "taco p/precinto n�8",
+        nombre: "taco p/precinto n°8",
         precio: 3,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -45026,7 +45026,7 @@ const productos = [
     {
         id: 4508,
         sku: "INT1-7734352300503",
-        nombre: "tanza alba�il 0.80mm x 100m SLENDER",
+        nombre: "tanza albañil 0.80mm x 100m SLENDER",
         precio: 115,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -45036,7 +45036,7 @@ const productos = [
     {
         id: 4509,
         sku: "INT1-43523010",
-        nombre: "tanza alba�il nar 0.80mm carrete 100m NITANYL",
+        nombre: "tanza albañil nar 0.80mm carrete 100m NITANYL",
         precio: 180,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -45046,7 +45046,7 @@ const productos = [
     {
         id: 4510,
         sku: "INT1-43523011",
-        nombre: "tanza alba�il nar 1mm carrete 100m NITANYL",
+        nombre: "tanza albañil nar 1mm carrete 100m NITANYL",
         precio: 380,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -45446,7 +45446,7 @@ const productos = [
     {
         id: 4550,
         sku: "INT1-955280",
-        nombre: "tapa pl�stica \"tortuga\" p/isopanel",
+        nombre: "tapa plástica \"tortuga\" p/isopanel",
         precio: 41,
         categoria_principal: "electricidad",
         subcategoria: "tortugas",
@@ -46076,7 +46076,7 @@ const productos = [
     {
         id: 4613,
         sku: "INT1-642001",
-        nombre: "tejido plastico negro n�2 1m",
+        nombre: "tejido plastico negro n°2 1m",
         precio: 87,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -46086,7 +46086,7 @@ const productos = [
     {
         id: 4614,
         sku: "INT1-642021",
-        nombre: "tejido plastico verde n�2 1m",
+        nombre: "tejido plastico verde n°2 1m",
         precio: 97,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -46246,7 +46246,7 @@ const productos = [
     {
         id: 4630,
         sku: "INT1-963.258",
-        nombre: "tensor de vi�a",
+        nombre: "tensor de viña",
         precio: 95,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -46256,7 +46256,7 @@ const productos = [
     {
         id: 4631,
         sku: "INT1-5596",
-        nombre: "tensor hierro galv n�10",
+        nombre: "tensor hierro galv n°10",
         precio: 92,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -46266,7 +46266,7 @@ const productos = [
     {
         id: 4632,
         sku: "INT1-5593",
-        nombre: "tensor hierro galv n�5",
+        nombre: "tensor hierro galv n°5",
         precio: 36,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -46276,7 +46276,7 @@ const productos = [
     {
         id: 4633,
         sku: "INT1-5594",
-        nombre: "tensor hierro galv n�6",
+        nombre: "tensor hierro galv n°6",
         precio: 50,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -46286,7 +46286,7 @@ const productos = [
     {
         id: 4634,
         sku: "INT1-43605058",
-        nombre: "tensor hierro galv n�8",
+        nombre: "tensor hierro galv n°8",
         precio: 85,
         categoria_principal: "construccion",
         subcategoria: "hierro",
@@ -46296,7 +46296,7 @@ const productos = [
     {
         id: 4635,
         sku: "INT1-2373",
-        nombre: "tensor rosca n�16",
+        nombre: "tensor rosca n°16",
         precio: 190,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -47086,7 +47086,7 @@ const productos = [
     {
         id: 4714,
         sku: "INT1-966",
-        nombre: "termostato p/calefon 30-75�",
+        nombre: "termostato p/calefon 30-75°",
         precio: 245,
         categoria_principal: "construccion",
         subcategoria: "cal",
@@ -47396,7 +47396,7 @@ const productos = [
     {
         id: 4745,
         sku: "INT1-40798",
-        nombre: "tijera chapista 10� derecha Workpro",
+        nombre: "tijera chapista 10\" derecha Workpro",
         precio: 470,
         categoria_principal: "herramientas",
         subcategoria: "tijeras",
@@ -47406,7 +47406,7 @@ const productos = [
     {
         id: 4746,
         sku: "INT1-40797",
-        nombre: "tijera chapista 10� izquierda Workpro",
+        nombre: "tijera chapista 10\" izquierda Workpro",
         precio: 470,
         categoria_principal: "herramientas",
         subcategoria: "tijeras",
@@ -47426,7 +47426,7 @@ const productos = [
     {
         id: 4748,
         sku: "INT1-999",
-        nombre: "tijera corta tubo ca�o pvc ppl termofusion",
+        nombre: "tijera corta tubo caño pvc ppl termofusion",
         precio: 352,
         categoria_principal: "electricidad",
         subcategoria: "tubos_led",
@@ -47966,7 +47966,7 @@ const productos = [
     {
         id: 4802,
         sku: "INT1-3094",
-        nombre: "tiza para alba�il rojo MICASA",
+        nombre: "tiza para albañil rojo MICASA",
         precio: 80,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -47986,7 +47986,7 @@ const productos = [
     {
         id: 4804,
         sku: "INT1-SKU-4804",
-        nombre: "toallero doble negro 57cm para ba�o",
+        nombre: "toallero doble negro 57cm para baño",
         precio: 445,
         categoria_principal: "hogar",
         subcategoria: "toalleros",
@@ -49896,7 +49896,7 @@ const productos = [
     {
         id: 4995,
         sku: "INT1-493380",
-        nombre: "tuerca hexagonal zincada n�10",
+        nombre: "tuerca hexagonal zincada n°10",
         precio: 5,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -49906,7 +49906,7 @@ const productos = [
     {
         id: 4996,
         sku: "INT1-493410",
-        nombre: "tuerca hexagonal zincada n�12",
+        nombre: "tuerca hexagonal zincada n°12",
         precio: 6,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -49916,7 +49916,7 @@ const productos = [
     {
         id: 4997,
         sku: "INT1-493300",
-        nombre: "tuerca hexagonal zincada n�4",
+        nombre: "tuerca hexagonal zincada n°4",
         precio: 1,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -49926,7 +49926,7 @@ const productos = [
     {
         id: 4998,
         sku: "INT1-493310",
-        nombre: "tuerca hexagonal zincada n�5",
+        nombre: "tuerca hexagonal zincada n°5",
         precio: 2,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -49936,7 +49936,7 @@ const productos = [
     {
         id: 4999,
         sku: "INT1-493320",
-        nombre: "tuerca hexagonal zincada n�6",
+        nombre: "tuerca hexagonal zincada n°6",
         precio: 2,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -49946,7 +49946,7 @@ const productos = [
     {
         id: 5000,
         sku: "INT1-493350",
-        nombre: "tuerca hexagonal zincada n�8",
+        nombre: "tuerca hexagonal zincada n°8",
         precio: 3,
         categoria_principal: "tornilleria",
         subcategoria: "tuercas",
@@ -50156,7 +50156,7 @@ const productos = [
     {
         id: 5021,
         sku: "INT1-744",
-        nombre: "u�a met 12\" con pu�o de goma",
+        nombre: "uña met 12\" con puño de goma",
         precio: 175,
         categoria_principal: "varios",
         subcategoria: "gomas",
@@ -50166,7 +50166,7 @@ const productos = [
     {
         id: 5022,
         sku: "INT1-4193",
-        nombre: "u�a met 15\"",
+        nombre: "uña met 15\"",
         precio: 255,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -50176,7 +50176,7 @@ const productos = [
     {
         id: 5023,
         sku: "INT1-8022882550246",
-        nombre: "u�a met 24\" CHALIMEX",
+        nombre: "uña met 24\" CHALIMEX",
         precio: 520,
         categoria_principal: "varios",
         subcategoria: "general",
@@ -50616,7 +50616,7 @@ const productos = [
     {
         id: 5067,
         sku: "INT1-C001Z",
-        nombre: "varilla ca�o roscado p/portalamparas",
+        nombre: "varilla caño roscado p/portalamparas",
         precio: 256,
         categoria_principal: "electricidad",
         subcategoria: "lamparas",
@@ -51046,7 +51046,7 @@ const productos = [
     {
         id: 5110,
         sku: "INT1-7798008163300",
-        nombre: "viruta acero para piso n�1 100gr",
+        nombre: "viruta acero para piso n°1 100gr",
         precio: 160,
         categoria_principal: "construccion",
         subcategoria: "viruta_acero",
@@ -51056,7 +51056,7 @@ const productos = [
     {
         id: 5111,
         sku: "INT1-7798008163317",
-        nombre: "viruta acero para piso n�2 100gr",
+        nombre: "viruta acero para piso n°2 100gr",
         precio: 160,
         categoria_principal: "construccion",
         subcategoria: "viruta_acero",
@@ -51066,7 +51066,7 @@ const productos = [
     {
         id: 5112,
         sku: "INT1-7798008163324",
-        nombre: "viruta acero para piso n�3 100gr",
+        nombre: "viruta acero para piso n°3 100gr",
         precio: 160,
         categoria_principal: "construccion",
         subcategoria: "viruta_acero",
@@ -51146,7 +51146,7 @@ const productos = [
     {
         id: 5120,
         sku: "INT1-4061975996121",
-        nombre: "zapato de seguridad W�RTH n�37",
+        nombre: "zapato de seguridad WÜRTH n°37",
         precio: 3210,
         categoria_principal: "proteccion",
         subcategoria: "zapatos",
@@ -51186,7 +51186,7 @@ const productos = [
     {
         id: 5124,
         sku: "INT1-7893963022409",
-        nombre: "zapatos botin nobuck s/puntera n�40 WORKLINE",
+        nombre: "zapatos botin nobuck s/puntera n°40 WORKLINE",
         precio: 2074,
         categoria_principal: "proteccion",
         subcategoria: "zapatos",
@@ -51196,7 +51196,7 @@ const productos = [
     {
         id: 5125,
         sku: "INT1-7893963022418",
-        nombre: "zapatos botin nobuck s/puntera n�41 WORKLINE",
+        nombre: "zapatos botin nobuck s/puntera n°41 WORKLINE",
         precio: 2074,
         categoria_principal: "proteccion",
         subcategoria: "zapatos",
@@ -51206,7 +51206,7 @@ const productos = [
     {
         id: 5126,
         sku: "INT1-7893963022423",
-        nombre: "zapatos botin nobuck s/puntera n�42 WORKLINE",
+        nombre: "zapatos botin nobuck s/puntera n°42 WORKLINE",
         precio: 2074,
         categoria_principal: "proteccion",
         subcategoria: "zapatos",
@@ -51216,7 +51216,7 @@ const productos = [
     {
         id: 5127,
         sku: "INT1-4398396143903",
-        nombre: "zapatos champion n�39 de seguridad suela anti clavo SLENDER",
+        nombre: "zapatos champion n°39 de seguridad suela anti clavo SLENDER",
         precio: 2783,
         categoria_principal: "tornilleria",
         subcategoria: "clavos",
@@ -51226,7 +51226,7 @@ const productos = [
     {
         id: 5128,
         sku: "INT1-4398396144009",
-        nombre: "zapatos champion n�40 de seguridad suela anti clavo SLENDER",
+        nombre: "zapatos champion n°40 de seguridad suela anti clavo SLENDER",
         precio: 2783,
         categoria_principal: "tornilleria",
         subcategoria: "clavos",
@@ -51236,7 +51236,7 @@ const productos = [
     {
         id: 5129,
         sku: "INT1-4398396144108",
-        nombre: "zapatos champion n�41 de seguridad suela anti clavo SLENDER",
+        nombre: "zapatos champion n°41 de seguridad suela anti clavo SLENDER",
         precio: 2783,
         categoria_principal: "tornilleria",
         subcategoria: "clavos",
@@ -51246,7 +51246,7 @@ const productos = [
     {
         id: 5130,
         sku: "INT1-4398396144207",
-        nombre: "zapatos champion n�42 de seguridad suela anti clavo SLENDER",
+        nombre: "zapatos champion n°42 de seguridad suela anti clavo SLENDER",
         precio: 2783,
         categoria_principal: "tornilleria",
         subcategoria: "clavos",
@@ -51256,7 +51256,7 @@ const productos = [
     {
         id: 5131,
         sku: "INT1-4398396144306",
-        nombre: "zapatos champion n�43 de seguridad suela anti clavo SLENDER",
+        nombre: "zapatos champion n°43 de seguridad suela anti clavo SLENDER",
         precio: 2783,
         categoria_principal: "tornilleria",
         subcategoria: "clavos",

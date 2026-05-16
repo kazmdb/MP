@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/catalogo-estilos.css">
+    <link rel="icon" type="image/png" href="assets/icons/mplogo.png">
     <link rel="preload" href="data/productos.js" as="script">
     <style>
         /* ============================================
@@ -514,6 +515,12 @@
                     </button>
                 </div>
                 <div id="mobileMenuContainer"></div>
+                <div class="header__mobile-menu__ofertas">
+                    <a href="catalogo.html?ofertas=1" class="header__mobile-menu__ofertas-link">
+                        <span class="header__mobile-menu__ofertas-icon">🔥</span>
+                        Ofertas Especiales
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -536,6 +543,30 @@
                 <li class="nav__category" data-menu="pintura">
                     <a href="catalogo.html?categoria=pintura" class="nav__category-link">Pintura</a>
                 </li>
+                <li class="nav__category" data-menu="construccion">
+                    <a href="catalogo.html?categoria=construccion" class="nav__category-link">Construcción</a>
+                </li>
+                <li class="nav__category" data-menu="proteccion">
+                    <a href="catalogo.html?categoria=proteccion" class="nav__category-link">Protección</a>
+                </li>
+                <li class="nav__category" data-menu="jardin">
+                    <a href="catalogo.html?categoria=jardin" class="nav__category-link">Jardín</a>
+                </li>
+                <li class="nav__category" data-menu="agricola">
+                    <a href="catalogo.html?categoria=agricola" class="nav__category-link">Agrícola</a>
+                </li>
+                <li class="nav__category" data-menu="automotriz">
+                    <a href="catalogo.html?categoria=automotriz" class="nav__category-link">Automotriz</a>
+                </li>
+                <li class="nav__category" data-menu="almacenamiento">
+                    <a href="catalogo.html?categoria=almacenamiento" class="nav__category-link">Almacenamiento</a>
+                </li>
+                <li class="nav__category" data-menu="cocina">
+                    <a href="catalogo.html?categoria=cocina" class="nav__category-link">Cocina</a>
+                </li>
+                <li class="nav__category" data-menu="soldadura">
+                    <a href="catalogo.html?categoria=soldadura" class="nav__category-link">Soldadura</a>
+                </li>
                 <li class="nav__category" data-menu="hogar">
                     <a href="catalogo.html?categoria=hogar" class="nav__category-link">Hogar</a>
                 </li>
@@ -555,6 +586,16 @@
 
             <h2 class="catalog-sidebar__title" id="categoryTitle">Todos los Productos</h2>
 
+            <!-- CTA de Ofertas -->
+            <button class="catalog-sidebar__ofertas" id="ofertasToggle" aria-label="Ver ofertas">
+                <span class="catalog-sidebar__ofertas-icon">🔥</span>
+                <span class="catalog-sidebar__ofertas-info">
+                    <span class="catalog-sidebar__ofertas-text">Ofertas Especiales</span>
+                    <span class="catalog-sidebar__ofertas-count" id="ofertasCount">(0)</span>
+                </span>
+                <span class="catalog-sidebar__ofertas-arrow">›</span>
+            </button>
+
             <!-- Filtro de Subcategorías -->
             <div class="catalog-filter">
                 <h3 class="catalog-filter__title">Subcategorías</h3>
@@ -567,12 +608,34 @@
             <div class="catalog-filter">
                 <h3 class="catalog-filter__title">Rango de Precios</h3>
                 <div class="catalog-filter__price-range">
+                    <div class="catalog-filter__price-display" id="priceDisplay">$0 — $100,000</div>
                     <div class="catalog-filter__price-inputs">
                         <input type="number" class="catalog-filter__price-input" id="priceMin" placeholder="Mín" min="0">
                         <input type="number" class="catalog-filter__price-input" id="priceMax" placeholder="Máx" min="0">
                     </div>
-                    <input type="range" class="catalog-filter__price-slider" id="priceSlider" min="0" max="10000" step="100">
-                    <button class="catalog-filter__price-button" id="applyPriceFilter">Aplicar Filtro</button>
+                    <input type="range" class="catalog-filter__price-slider" id="priceSlider" min="0" max="100000" step="100">
+                </div>
+            </div>
+
+            <!-- Filtro de Stock -->
+            <div class="catalog-filter">
+                <h3 class="catalog-filter__title">Disponibilidad</h3>
+                <div class="catalog-filter__stock">
+                    <label class="catalog-filter__stock-label">
+                        <input type="checkbox" class="catalog-filter__stock-checkbox" id="stockCheckbox">
+                        Solo productos en stock
+                    </label>
+                </div>
+            </div>
+
+            <!-- Filtro de Marca -->
+            <div class="catalog-filter">
+                <h3 class="catalog-filter__title">Marca</h3>
+                <div class="catalog-filter__brand">
+                    <input type="text" class="catalog-filter__brand-input" id="brandSearchInput" placeholder="Buscar marca..." autocomplete="off">
+                    <div class="catalog-filter__brand-list" id="brandList">
+                        <!-- Se genera dinámicamente -->
+                    </div>
                 </div>
             </div>
         </aside>
@@ -607,6 +670,9 @@
                     </select>
                 </div>
             </div>
+
+            <!-- Filtros activos (chips) -->
+            <div class="catalog-active-filters catalog-active-filters--empty" id="activeFilters"></div>
 
             <!-- Grid de Productos -->
             <div class="catalog__grid" id="catalogo-grid">
@@ -1403,6 +1469,123 @@
         let precioMax = 10000;
         let ordenActual = 'default';
         let busquedaActual = '';
+        let soloStock = false;
+        let mostrarOfertas = false;
+        let marcasSeleccionadas = [];
+
+        // ============================================
+        // LISTA DE MARCAS CONOCIDAS Y DETECCIÓN
+        // ============================================
+        const MARCAS_CONOCIDAS = [
+            'TRUPER','PRETUL','TRAMONTINA','SLENDER','UYUSTOOLS','EQUUS',
+            'WURTH','WURTHMAX','RIMONTTI','MAKAWA','VYBA','PPL','VITRO',
+            'PENNSYLVANIA','CROWNMAN','CORO','TOYOKI','HERMEX','WICO',
+            'ARCAL','MYLSA','NORTESUR','DEKO','MIG','FIERO','BLUKIT',
+            'KUALOX','KAMASA','CISER','METASUL','BAHCO','ROMA','ECEF',
+            'BRASCOLA','GOLDEX','DURIN','WELLMAX','BECUSA','MOMFORT',
+            'SUVINIL','TIGRE','IDE','COFLEX','ATENEA','TERMOLAR','WMAX',
+            'KWB','WORKPRO','AMI','ROTEL','CONDOR','AIRWAY','FRANCA',
+            'AVE','LOTH','NITANYL','WORKLINE','SKYWIM','MH','HH',
+            'FERRAWYY','NADIR','LUXON','ABB','KAPRO','MALVAR','SAROO',
+            'DAISA','HYDERON','OREGON','ACEITODO','BATA','LUCONI','CNC',
+            'GRAP','VOLTECK','VIVION','ULTRACRAFT','DENSE','GLASU',
+            'TABLEPLAST','MOLVENO','KRONA','CARBOCALCIO','JIMO','XYLASOL',
+            'COFLEX','FOSET','ECOGUARD','FUPESA','GINYPLAS',
+            'BESTWAY','PLASBOHN','CORZANA','CHALIMEX','BESTLOVE','LAVOR',
+            'FUMACA','CLORPOOL','HORTAL','TATU','SULPEN','MICASA','FRONTEC',
+            'RUDDY','WORKSAFE','QUIMEX','ROKER','SCAME','FLEXPOWER',
+            'GARDENTEC','MILEVA','TASCHIBRA','FUNGOFIN','RETRACUA','SPARK',
+            'YATO','PALASID','USAF','WORTHIT','NICOLL','SECALUX','SILVANO',
+            'HIGHPOWER','ROLAND','HORUSDY','CARABA','BETAX','NEVA','SILVANA',
+            'EUROLUX','ADELBRAS','AGRITEC','DAVIDSON','BOTRIC','KORFF',
+            'KANGDA','NANTE','GIANNI','THEAOSON','FORTLEV','OPTIMUS','LAMPO',
+            'CAFINI','ECOCUARD','KLINTEK','ITALOMIX','FEILONG','MILENA',
+            'ECOLIGHT','HOTECHE','JIECTE','LEMAN','ALUDAX','CLIMAX','HOFFNER',
+            'AOLONG','BLANPLAST','POITNER','GRILON','TOPOOLOS','ACHA',
+            'SHARKMJ','BOPULAR','STABILA','COMFORTGRIP'
+        ];
+
+        function detectarMarca(nombre) {
+            const upper = nombre.toUpperCase();
+            const words = upper.split(/[^A-Z0-9]+/).filter(w => w.length > 0);
+            if (words.length > 0) {
+                const last = words[words.length - 1];
+                if (MARCAS_CONOCIDAS.includes(last)) return last;
+            }
+            for (const w of words) {
+                if (MARCAS_CONOCIDAS.includes(w)) return w;
+            }
+            return null;
+        }
+
+        function obtenerMarcasEnProductos(productos) {
+            const marcas = new Set();
+            productos.forEach(p => {
+                const m = detectarMarca(p.nombre);
+                if (m) marcas.add(m);
+            });
+            return [...marcas].sort();
+        }
+
+        function obtenerProductosPreFiltro() {
+            let productos = window.productos || [];
+            if (subcategoriasSeleccionadas.length > 0) {
+                productos = productos.filter(p => subcategoriasSeleccionadas.includes(p.subcategoria));
+            } else if (categoriaActual !== 'todos') {
+                productos = productos.filter(p => p.categoria_principal === categoriaActual);
+            }
+            productos = productos.filter(p => p.precio >= precioMin && p.precio <= precioMax);
+            if (busquedaActual) {
+                productos = productos.filter(p =>
+                    p.nombre.toLowerCase().includes(busquedaActual.toLowerCase()) ||
+                    p.sku.toLowerCase().includes(busquedaActual.toLowerCase())
+                );
+            }
+            if (soloStock) {
+                productos = productos.filter(p => p.stock > 0);
+            }
+            return productos;
+        }
+
+        function renderizarListaMarcas(productosFiltrados) {
+            const list = document.getElementById('brandList');
+            const input = document.getElementById('brandSearchInput');
+            if (!list) return;
+
+            const query = (input.value || '').toUpperCase().trim();
+            const marcasDisponibles = obtenerMarcasEnProductos(productosFiltrados);
+            const counts = {};
+            productosFiltrados.forEach(p => {
+                const m = detectarMarca(p.nombre);
+                if (m) counts[m] = (counts[m] || 0) + 1;
+            });
+
+            // Ordenar: primero las seleccionadas, luego por frecuencia descendente
+            const ordenadas = marcasDisponibles
+                .filter(m => !query || m.includes(query))
+                .sort((a, b) => {
+                    const aSel = marcasSeleccionadas.includes(a) ? -1 : 1;
+                    const bSel = marcasSeleccionadas.includes(b) ? -1 : 1;
+                    if (aSel !== bSel) return aSel - bSel;
+                    return (counts[b] || 0) - (counts[a] || 0);
+                });
+
+            if (ordenadas.length === 0) {
+                list.innerHTML = '<div class="catalog-filter__brand-empty">Sin resultados</div>';
+                return;
+            }
+
+            list.innerHTML = ordenadas.map(marca => {
+                const checked = marcasSeleccionadas.includes(marca) ? 'checked' : '';
+                return `
+                    <label class="catalog-filter__brand-item">
+                        <input type="checkbox" class="catalog-filter__brand-checkbox" value="${marca}" ${checked}>
+                        <span class="catalog-filter__brand-label">${marca}</span>
+                        <span class="catalog-filter__brand-count">(${counts[marca] || 0})</span>
+                    </label>
+                `;
+            }).join('');
+        }
 
         // Variables para lazy loading
         let productosCargados = 0;
@@ -1598,18 +1781,17 @@
                 overlay.classList.remove('catalog-sidebar__overlay--active');
             });
 
-            // Checkboxes de subcategorías
-            document.querySelectorAll('.catalog-filter__checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const subcategoria = this.value;
-                    const categoria = this.getAttribute('data-categoria');
+            // Delegación de eventos para checkboxes de subcategorías
+            document.getElementById('subcategoryAccordion').addEventListener('change', function(e) {
+                if (e.target.matches('.catalog-filter__checkbox')) {
+                    const subcategoria = e.target.value;
+                    const categoria = e.target.getAttribute('data-categoria');
 
-                    if (this.checked) {
+                    if (e.target.checked) {
                         if (!subcategoriasSeleccionadas.includes(subcategoria)) {
                             subcategoriasSeleccionadas.push(subcategoria);
                         }
 
-                        // Actualizar la categoría principal si es la primera selección
                         if (subcategoriasSeleccionadas.length === 1) {
                             categoriaActual = categoria;
                             const categoryTitle = document.getElementById('categoryTitle');
@@ -1620,7 +1802,6 @@
                     } else {
                         subcategoriasSeleccionadas = subcategoriasSeleccionadas.filter(s => s !== subcategoria);
 
-                        // Si no hay más subcategorías seleccionadas, volver a "todos"
                         if (subcategoriasSeleccionadas.length === 0) {
                             categoriaActual = 'todos';
                             const categoryTitle = document.getElementById('categoryTitle');
@@ -1630,7 +1811,6 @@
                         }
                     }
 
-                    // Limpiar el filtro de búsqueda por nombre al elegir una subcategoría
                     busquedaActual = '';
                     const searchInputDesktop = document.querySelector('.header__search-input');
                     const searchInputMobile = document.querySelector('.header__search-mobile__input');
@@ -1638,23 +1818,83 @@
                     if (searchInputMobile) searchInputMobile.value = '';
 
                     renderizarCatalogo();
-                });
+                }
             });
 
-            // Filtro de precio
+            // Filtro de stock
+            document.getElementById('stockCheckbox').addEventListener('change', function() {
+                soloStock = this.checked;
+                renderizarCatalogo();
+            });
+
+            // Toggle de Ofertas
+            document.getElementById('ofertasToggle').addEventListener('click', function() {
+                mostrarOfertas = !mostrarOfertas;
+                renderizarCatalogo();
+            });
+
+            // Delegación de eventos para checkboxes de marca
+            document.getElementById('brandList').addEventListener('change', function(e) {
+                if (e.target.matches('.catalog-filter__brand-checkbox')) {
+                    const marca = e.target.value;
+                    if (e.target.checked) {
+                        if (!marcasSeleccionadas.includes(marca)) {
+                            marcasSeleccionadas.push(marca);
+                        }
+                    } else {
+                        marcasSeleccionadas = marcasSeleccionadas.filter(m => m !== marca);
+                    }
+                    renderizarCatalogo();
+                }
+            });
+
+            // Búsqueda de marca con debounce
+            let brandSearchTimeout;
+            document.getElementById('brandSearchInput').addEventListener('input', function() {
+                clearTimeout(brandSearchTimeout);
+                brandSearchTimeout = setTimeout(() => {
+                    const productosPreFiltro = obtenerProductosPreFiltro();
+                    renderizarListaMarcas(productosPreFiltro);
+                }, 200);
+            });
+
+            // Filtro de precio en tiempo real
             const priceSlider = document.getElementById('priceSlider');
-            const priceMin = document.getElementById('priceMin');
-            const priceMax = document.getElementById('priceMax');
-            const applyPriceFilter = document.getElementById('applyPriceFilter');
+            const priceMinInput = document.getElementById('priceMin');
+            const priceMaxInput = document.getElementById('priceMax');
+            const priceDisplay = document.getElementById('priceDisplay');
+            let priceTimeout;
+
+            function aplicarPrecio() {
+                const min = parseInt(priceMinInput.value) || 0;
+                const max = parseInt(priceMaxInput.value) || parseInt(priceSlider.value) || 100000;
+                precioMin = Math.min(min, max);
+                precioMax = Math.max(min, max);
+                priceSlider.value = precioMax;
+                priceMinInput.value = precioMin || '';
+                priceMaxInput.value = precioMax;
+                priceDisplay.textContent = `$${precioMin.toLocaleString()} — $${precioMax.toLocaleString()}`;
+                renderizarCatalogo();
+            }
 
             priceSlider.addEventListener('input', function() {
-                priceMax.value = this.value;
+                priceMaxInput.value = this.value;
+                const min = parseInt(priceMinInput.value) || 0;
+                priceDisplay.textContent = `$${min.toLocaleString()} — $${parseInt(this.value).toLocaleString()}`;
+                clearTimeout(priceTimeout);
+                priceTimeout = setTimeout(aplicarPrecio, 300);
             });
 
-            applyPriceFilter.addEventListener('click', function() {
-                precioMin = parseInt(priceMin.value) || 0;
-                precioMax = parseInt(priceMax.value) || 10000;
-                renderizarCatalogo();
+            priceMinInput.addEventListener('input', function() {
+                clearTimeout(priceTimeout);
+                priceTimeout = setTimeout(aplicarPrecio, 300);
+            });
+
+            priceMaxInput.addEventListener('input', function() {
+                const val = parseInt(this.value) || 0;
+                priceSlider.value = val;
+                clearTimeout(priceTimeout);
+                priceTimeout = setTimeout(aplicarPrecio, 300);
             });
 
             // Ordenamiento
@@ -1844,7 +2084,7 @@
 
         // Función para ordenar productos
         function ordenarProductos(productos, criterio) {
-            const productosOrdenados = [...(window.productos || [])]; // Crear copia para no mutar el original
+            const productosOrdenados = [...productos]; // Crear copia para no mutar el original
 
             switch (criterio) {
                 case 'precio-asc':
@@ -1860,6 +2100,177 @@
                 default:
                     return productosOrdenados;
             }
+        }
+
+        // ============================================
+        // ACTUALIZAR URL CON ESTADO DE FILTROS
+        // ============================================
+        function actualizarURL() {
+            const params = new URLSearchParams();
+            if (categoriaActual !== 'todos') params.set('categoria', categoriaActual);
+            if (subcategoriasSeleccionadas.length > 0) {
+                params.set('subcategoria', subcategoriasSeleccionadas.join(','));
+            }
+            if (precioMin > 0) params.set('precio_min', precioMin);
+            if (precioMax < 100000) params.set('precio_max', precioMax);
+            if (ordenActual !== 'default') params.set('orden', ordenActual);
+            if (busquedaActual) params.set('busqueda', busquedaActual);
+            if (soloStock) params.set('stock', '1');
+            if (marcasSeleccionadas.length > 0) params.set('marca', marcasSeleccionadas.join(','));
+            if (mostrarOfertas) params.set('ofertas', '1');
+            const newURL = window.location.pathname + '?' + params.toString();
+            window.history.replaceState({}, '', params.toString() ? newURL : window.location.pathname);
+        }
+
+        // ============================================
+        // ACTUALIZAR CHIPS DE FILTROS ACTIVOS
+        // ============================================
+        function actualizarChipsFiltros() {
+            const container = document.getElementById('activeFilters');
+            if (!container) return;
+
+            let chips = [];
+
+            // Chips de subcategorías
+            subcategoriasSeleccionadas.forEach(subSlug => {
+                // Buscar el texto legible de la subcategoría
+                let texto = subSlug;
+                for (const cat of Object.values(CATEGORIAS)) {
+                    for (const grupo of cat.subcategorias) {
+                        const found = grupo.items.find(i => i.slug === subSlug);
+                        if (found) { texto = found.texto; break; }
+                    }
+                    if (texto !== subSlug) break;
+                }
+                chips.push({ type: 'subcategoria', label: texto, value: subSlug });
+            });
+
+            // Chip de precio
+            if (precioMin > 0 || precioMax < 100000) {
+                chips.push({ type: 'precio', label: `$${precioMin} — $${precioMax}`, value: '' });
+            }
+
+            // Chip de stock
+            if (soloStock) {
+                chips.push({ type: 'stock', label: 'Solo en stock', value: '' });
+            }
+
+            // Chip de búsqueda
+            if (busquedaActual) {
+                chips.push({ type: 'busqueda', label: `"${busquedaActual}"`, value: busquedaActual });
+            }
+
+            // Chips de marca
+            marcasSeleccionadas.forEach(m => {
+                chips.push({ type: 'marca', label: m, value: m });
+            });
+
+            // Chip de ofertas
+            if (mostrarOfertas) {
+                chips.push({ type: 'ofertas', label: '🔥 Ofertas', value: '' });
+            }
+
+            container.innerHTML = '';
+
+            if (chips.length === 0) {
+                container.classList.add('catalog-active-filters--empty');
+                return;
+            }
+
+            container.classList.remove('catalog-active-filters--empty');
+
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'catalog-active-filters__label';
+            labelSpan.textContent = 'Filtros:';
+            container.appendChild(labelSpan);
+
+            chips.forEach(chip => {
+                const chipEl = document.createElement('button');
+                chipEl.className = 'catalog-filter-chip';
+                chipEl.setAttribute('data-chip-type', chip.type);
+                if (chip.value) chipEl.setAttribute('data-chip-value', chip.value);
+                chipEl.innerHTML = `${chip.label} <span class="catalog-filter-chip__remove">×</span>`;
+                chipEl.addEventListener('click', function() {
+                    const type = this.getAttribute('data-chip-type');
+                    const value = this.getAttribute('data-chip-value');
+                    switch (type) {
+                        case 'subcategoria':
+                            subcategoriasSeleccionadas = subcategoriasSeleccionadas.filter(s => s !== value);
+                            if (subcategoriasSeleccionadas.length === 0) {
+                                categoriaActual = 'todos';
+                                document.getElementById('categoryTitle').textContent = 'Todos los Productos';
+                            }
+                            // Desmarcar checkbox
+                            const cb = document.querySelector(`.catalog-filter__checkbox[value="${value}"]`);
+                            if (cb) cb.checked = false;
+                            break;
+                        case 'precio':
+                            precioMin = 0;
+                            precioMax = 100000;
+                            document.getElementById('priceMin').value = '';
+                            document.getElementById('priceMax').value = '';
+                            document.getElementById('priceSlider').value = 100000;
+                            document.getElementById('priceDisplay').textContent = '$0 — $100,000';
+                            break;
+                        case 'stock':
+                            soloStock = false;
+                            const stockCb = document.getElementById('stockCheckbox');
+                            if (stockCb) stockCb.checked = false;
+                            break;
+                        case 'busqueda':
+                            busquedaActual = '';
+                            const searchDesktop = document.querySelector('.header__search-input');
+                            const searchMobile = document.querySelector('.header__search-mobile__input');
+                            if (searchDesktop) searchDesktop.value = '';
+                            if (searchMobile) searchMobile.value = '';
+                            break;
+                        case 'ofertas':
+                            mostrarOfertas = false;
+                            break;
+                        case 'marca':
+                            const brandVal = this.getAttribute('data-chip-value');
+                            marcasSeleccionadas = marcasSeleccionadas.filter(s => s !== brandVal);
+                            // Desmarcar checkbox
+                            const brandCb = document.querySelector(`.catalog-filter__brand-checkbox[value="${brandVal}"]`);
+                            if (brandCb) brandCb.checked = false;
+                            break;
+                    }
+                    renderizarCatalogo();
+                });
+                container.appendChild(chipEl);
+            });
+
+            // Botón limpiar todos
+            const clearAll = document.createElement('button');
+            clearAll.className = 'catalog-filter-chip__clear-all';
+            clearAll.textContent = 'Limpiar todos';
+            clearAll.addEventListener('click', function() {
+                subcategoriasSeleccionadas = [];
+                categoriaActual = 'todos';
+                precioMin = 0;
+                precioMax = 100000;
+                ordenActual = 'default';
+                busquedaActual = '';
+                soloStock = false;
+                mostrarOfertas = false;
+                marcasSeleccionadas = [];
+                document.getElementById('categoryTitle').textContent = 'Todos los Productos';
+                document.getElementById('priceMin').value = '';
+                document.getElementById('priceMax').value = '';
+                document.getElementById('priceSlider').value = 100000;
+                document.getElementById('priceDisplay').textContent = '$0 — $100,000';
+                document.getElementById('sortSelect').value = 'default';
+                const stockCb = document.getElementById('stockCheckbox');
+                if (stockCb) stockCb.checked = false;
+                document.querySelectorAll('.catalog-filter__checkbox').forEach(cb => cb.checked = false);
+                document.querySelectorAll('.catalog-filter__brand-checkbox').forEach(cb => cb.checked = false);
+                const searchDesktop2 = document.querySelector('.header__search-input');
+                const searchMobile2 = document.querySelector('.header__search-mobile__input');
+                if (searchDesktop2) searchDesktop2.value = '';
+                if (searchMobile2) searchMobile2.value = '';
+                renderizarCatalogo();
+            });
+            container.appendChild(clearAll);
         }
 
         // Renderizar catálogo
@@ -1904,9 +2315,53 @@
                 console.log('📦 Después de filtro búsqueda:', productosFiltrados.length);
             }
 
+            // Filtrar por stock
+            if (soloStock) {
+                productosFiltrados = productosFiltrados.filter(p => p.stock > 0);
+            }
+
+            // Filtrar por ofertas
+            if (mostrarOfertas) {
+                productosFiltrados = productosFiltrados.filter(p => window.getOferta(p.id) !== null);
+            }
+
+            // Renderizar lista de marcas con contadores dinámicos
+            // (antes de filtrar por marca para que se vean todas las disponibles)
+            renderizarListaMarcas(productosFiltrados);
+
+            // Filtrar por marca
+            if (marcasSeleccionadas.length > 0) {
+                productosFiltrados = productosFiltrados.filter(p => {
+                    const m = detectarMarca(p.nombre);
+                    return m && marcasSeleccionadas.includes(m);
+                });
+            }
+
             // Ordenar productos
             if (ordenActual !== 'default') {
                 productosFiltrados = ordenarProductos(productosFiltrados, ordenActual);
+            }
+
+            // Actualizar título y contador de ofertas
+            const totalOfertas = (window.productos || []).filter(p => window.getOferta(p.id) !== null).length;
+            const ofertasCount = document.getElementById('ofertasCount');
+            const ofertasToggle = document.getElementById('ofertasToggle');
+            if (ofertasCount) ofertasCount.textContent = `(${totalOfertas})`;
+            if (ofertasToggle) {
+                ofertasToggle.classList.toggle('catalog-sidebar__ofertas--active', mostrarOfertas);
+            }
+            const categoryTitleEl = document.getElementById('categoryTitle');
+            if (mostrarOfertas) {
+                if (categoryTitleEl) categoryTitleEl.textContent = `🔥 Ofertas Especiales (${productosFiltrados.length})`;
+            } else {
+                // Restaurar título según categoría actual
+                if (categoryTitleEl) {
+                    if (categoriaActual === 'todos') {
+                        categoryTitleEl.textContent = 'Todos los Productos';
+                    } else {
+                        categoryTitleEl.textContent = categoriaActual.charAt(0).toUpperCase() + categoriaActual.slice(1);
+                    }
+                }
             }
 
             // Actualizar contador
@@ -1919,6 +2374,10 @@
             // Limpiar contenedor y cargar primeros productos
             catalogGrid.innerHTML = '';
             cargarMasProductos();
+
+            // Actualizar URL y chips de filtros activos
+            actualizarURL();
+            actualizarChipsFiltros();
         }
 
         // Inicializar catálogo
@@ -1956,20 +2415,82 @@
             // Aplicar parámetros de búsqueda
             if (busquedaParam) {
                 busquedaActual = busquedaParam;
+                const searchDesktop = document.querySelector('.header__search-input');
+                const searchMobile = document.querySelector('.header__search-mobile__input');
+                if (searchDesktop) searchDesktop.value = busquedaParam;
+                if (searchMobile) searchMobile.value = busquedaParam;
+            }
+
+            // Aplicar parámetros de precio
+            const precioMinParam = urlParams.get('precio_min');
+            const precioMaxParam = urlParams.get('precio_max');
+            if (precioMinParam) {
+                precioMin = parseInt(precioMinParam);
+                document.getElementById('priceMin').value = precioMin;
+            }
+            if (precioMaxParam) {
+                precioMax = parseInt(precioMaxParam);
+                document.getElementById('priceMax').value = precioMax;
+                document.getElementById('priceSlider').value = precioMax;
+                const display = document.getElementById('priceDisplay');
+                if (display) display.textContent = `$${precioMin.toLocaleString()} — $${precioMax.toLocaleString()}`;
+            }
+
+            // Aplicar parámetros de orden
+            const ordenParam = urlParams.get('orden');
+            if (ordenParam) {
+                ordenActual = ordenParam;
+                const sortSelect = document.getElementById('sortSelect');
+                if (sortSelect) sortSelect.value = ordenParam;
+            }
+
+            // Aplicar parámetros de stock
+            const stockParam = urlParams.get('stock');
+            if (stockParam === '1') {
+                soloStock = true;
+                const stockCb = document.getElementById('stockCheckbox');
+                if (stockCb) stockCb.checked = true;
+            }
+
+            // Aplicar parámetros de ofertas
+            const ofertasParam = urlParams.get('ofertas');
+            if (ofertasParam === '1') {
+                mostrarOfertas = true;
+            }
+
+            // Aplicar parámetros de marca
+            const marcaParam = urlParams.get('marca');
+            if (marcaParam) {
+                marcasSeleccionadas = marcaParam.split(',').filter(m => MARCAS_CONOCIDAS.includes(m));
+            }
+
+            // Aplicar parámetros de subcategorías múltiples (separadas por coma)
+            if (subcategoriaParam && subcategoriaParam.includes(',')) {
+                subcategoriasSeleccionadas = subcategoriaParam.split(',');
+                const prodEncontrado = productos.find(p => subcategoriasSeleccionadas.includes(p.subcategoria));
+                if (prodEncontrado) {
+                    categoriaActual = prodEncontrado.categoria_principal;
+                    const categoryTitle = document.getElementById('categoryTitle');
+                    if (categoryTitle) {
+                        categoryTitle.textContent = categoriaActual.charAt(0).toUpperCase() + categoriaActual.slice(1);
+                    }
+                }
             }
 
             inicializarFiltros();
             inicializarEventListeners();
 
-            // Marcar checkboxes de subcategorías seleccionadas
-            if (subcategoriasSeleccionadas.length > 0) {
+            // Marcar checkboxes de subcategorías y marcas seleccionadas (post-inicialización)
+            setTimeout(() => {
                 subcategoriasSeleccionadas.forEach(subcategoria => {
                     const checkbox = document.querySelector(`.catalog-filter__checkbox[value="${subcategoria}"]`);
-                    if (checkbox) {
-                        checkbox.checked = true;
-                    }
+                    if (checkbox) checkbox.checked = true;
                 });
-            }
+                marcasSeleccionadas.forEach(marca => {
+                    const checkbox = document.querySelector(`.catalog-filter__brand-checkbox[value="${marca}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }, 0);
 
             renderizarCatalogo();
         });
