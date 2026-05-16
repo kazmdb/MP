@@ -6,12 +6,14 @@
 /**
  * Devuelve el objeto de oferta para un producto dado su ID,
  * o null si el producto no está en oferta.
- * @param {number} productoId
- * @returns {{ id: number, descuento: number } | null}
+ * Lee el campo `descuento` directamente del producto en window.productos.
+ * @param {number|string} productoId
+ * @returns {{ id: number|string, descuento: number } | null}
  */
 window.getOferta = function(productoId) {
-    if (!window.ofertas || !Array.isArray(window.ofertas)) return null;
-    return window.ofertas.find(o => o.id === Number(productoId)) || null;
+    if (!window.productos) return null;
+    const product = window.productos.find(p => p.id == productoId);
+    return (product && product.descuento) ? { id: product.id, descuento: product.descuento } : null;
 };
 
 /**

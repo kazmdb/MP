@@ -1,0 +1,205 @@
+/* ============================================
+   ORDERS PANEL STYLES
+   ============================================ */
+
+.orders-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    background: var(--color-white);
+    z-index: 10002;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.orders-panel--active {
+    right: 0;
+}
+
+.orders-panel__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.orders-panel__overlay--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.orders-panel__header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-white);
+}
+
+.orders-panel__title {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.orders-panel__close {
+    background: var(--color-neutral);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.orders-panel__close:hover {
+    background: var(--color-accent);
+    color: white;
+}
+
+.orders-panel__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+}
+
+/* Lista de Pedidos */
+.order-card {
+    background: #f9f9fb;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.order-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px dashed var(--color-border);
+}
+
+.order-card__date {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.order-card__status {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.order-card__status--completed { background: #e6f4ea; color: #1e7e34; }
+.order-card__status--pending { background: #fff4e5; color: #b7791f; }
+
+.order-card__items {
+    display: flex;
+    gap: 8px;
+    margin-bottom: var(--spacing-md);
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.order-card__item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.order-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-card__total {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.order-card__total span {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
+}
+
+.order-card__btn {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.order-card__btn:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* Empty State */
+.orders-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #888;
+}
+
+.orders-empty svg {
+    margin-bottom: 1rem;
+    color: #ddd;
+}
+
+.orders-empty p {
+    margin-bottom: 1.5rem;
+}
+
+.orders-empty__btn {
+    background: var(--color-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}

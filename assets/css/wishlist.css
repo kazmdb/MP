@@ -1,0 +1,106 @@
+/* ============================================
+   WISHLIST (FAVORITOS) STYLES
+   ============================================ */
+
+/* Ocultar botón del header en móvil (ahora accesible desde el menú de Mi Cuenta) */
+@media (max-width: 767px) {
+    .header__btn--wishlist-mobile {
+        display: none !important;
+    }
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-btn:hover {
+    transform: scale(1.15);
+    background: #fff;
+}
+
+.wishlist-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+/* Estado Activo (Favorito) */
+.wishlist-btn--active {
+    background: #fff;
+}
+
+.wishlist-btn--active svg {
+    fill: #ff0000;
+    stroke: #ff0000;
+    transform: scale(1.1);
+}
+
+/* Animación de "pop" al hacer clic */
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+.wishlist-btn--active svg {
+    animation: heartPop 0.4s ease-out;
+}
+
+/* Items en el panel lateral */
+.wishlist-remove-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 12px;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 5px;
+}
+
+.cart-panel__item-add {
+    background: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: fit-content;
+}
+
+.cart-panel__item-add:hover {
+    background: #27ae60;
+}
+
+.wishlist-panel .cart-item {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-item__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.cart-item__link:hover .cart-item__name {
+    color: var(--color-primary);
+}
+

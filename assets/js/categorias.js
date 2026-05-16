@@ -181,6 +181,240 @@ const CATEGORIAS = {
             }
         ]
     },
+    construccion: {
+        nombre: 'Construcción',
+        dataMenu: 'construccion',
+        subcategorias: [
+            {
+                nombre: 'Acero y metales',
+                items: [
+                    { slug: 'acero', texto: 'Acero' },
+                    { slug: 'hierro', texto: 'Hierro' },
+                    { slug: 'varillas', texto: 'Varillas' },
+                    { slug: 'viruta_acero', texto: 'Viruta de acero' }
+                ]
+            },
+            {
+                nombre: 'Mallas y termocontraíble',
+                items: [
+                    { slug: 'mallas', texto: 'Mallas' },
+                    { slug: 'termocontraible', texto: 'Termocontraíble' }
+                ]
+            },
+            {
+                nombre: 'Materiales de obra',
+                items: [
+                    { slug: 'cal', texto: 'Cal' },
+                    { slug: 'cemento', texto: 'Cemento' },
+                    { slug: 'bloques', texto: 'Bloques' },
+                    { slug: 'ladrillos', texto: 'Ladrillos' }
+                ]
+            },
+            {
+                nombre: 'Herramientas de obra',
+                items: [
+                    { slug: 'palas', texto: 'Palas' },
+                    { slug: 'picos', texto: 'Picos' },
+                    { slug: 'azadas', texto: 'Azadas' }
+                ]
+            },
+            {
+                nombre: 'Terminaciones',
+                items: [
+                    { slug: 'ceramicas', texto: 'Cerámicas' },
+                    { slug: 'porcelanatos', texto: 'Porcelanatos' },
+                    { slug: 'yeso', texto: 'Yeso' }
+                ]
+            },
+            {
+                nombre: 'Impermeabilización',
+                items: [
+                    { slug: 'marrones', texto: 'Burletes' }
+                ]
+            }
+        ]
+    },
+    proteccion: {
+        nombre: 'Protección',
+        dataMenu: 'proteccion',
+        subcategorias: [
+            {
+                nombre: 'Protección personal',
+                items: [
+                    { slug: 'guantes', texto: 'Guantes' },
+                    { slug: 'lentes', texto: 'Lentes' },
+                    { slug: 'mascaras', texto: 'Máscaras' },
+                    { slug: 'protectores', texto: 'Protectores auditivos' }
+                ]
+            },
+            {
+                nombre: 'Calzado de seguridad',
+                items: [
+                    { slug: 'botas', texto: 'Botas' },
+                    { slug: 'zapatos', texto: 'Zapatos' }
+                ]
+            },
+            {
+                nombre: 'Seguridad corporal',
+                items: [
+                    { slug: 'chalecos', texto: 'Chalecos' },
+                    { slug: 'arneses', texto: 'Arneses' },
+                    { slug: 'cinturones', texto: 'Cinturones' },
+                    { slug: 'rodilleras', texto: 'Rodilleras' }
+                ]
+            }
+        ]
+    },
+    jardin: {
+        nombre: 'Jardín',
+        dataMenu: 'jardin',
+        subcategorias: [
+            {
+                nombre: 'Riego',
+                items: [
+                    { slug: 'mangueras', texto: 'Mangueras' },
+                    { slug: 'regadores', texto: 'Regadores' },
+                    { slug: 'aspersores', texto: 'Aspersores' },
+                    { slug: 'riego', texto: 'Riego por goteo' }
+                ]
+            },
+            {
+                nombre: 'Jardinería',
+                items: [
+                    { slug: 'jardin', texto: 'Herramientas de jardín' },
+                    { slug: 'rastrillos', texto: 'Rastrillos' }
+                ]
+            },
+            {
+                nombre: 'Piscinas',
+                items: [
+                    { slug: 'filtros', texto: 'Filtros' },
+                    { slug: 'bombas', texto: 'Bombas' }
+                ]
+            }
+        ]
+    },
+    agricola: {
+        nombre: 'Agrícola',
+        dataMenu: 'agricola',
+        subcategorias: [
+            {
+                nombre: 'Control de plagas',
+                items: [
+                    { slug: 'trampas', texto: 'Trampas' },
+                    { slug: 'hormiguicidas', texto: 'Hormiguicidas' },
+                    { slug: 'insecticidas', texto: 'Insecticidas' },
+                    { slug: 'cucarachas', texto: 'Cucarachicidas' },
+                    { slug: 'moscas', texto: 'Moscicidas' },
+                    { slug: 'raticidas', texto: 'Raticidas' }
+                ]
+            },
+            {
+                nombre: 'Fungicidas y venenos',
+                items: [
+                    { slug: 'fungicidas', texto: 'Fungicidas' },
+                    { slug: 'venenos', texto: 'Venenos' }
+                ]
+            },
+            {
+                nombre: 'Piscinas',
+                items: [
+                    { slug: 'piscinas', texto: 'Acc. para piscinas' }
+                ]
+            }
+        ]
+    },
+    automotriz: {
+        nombre: 'Automotriz',
+        dataMenu: 'automotriz',
+        subcategorias: [
+            {
+                nombre: 'Accesorios',
+                items: [
+                    { slug: 'corrugados', texto: 'Corrugados' },
+                    { slug: 'automotriz', texto: 'Acc. automotrices' }
+                ]
+            },
+            {
+                nombre: 'Baterías y bujías',
+                items: [
+                    { slug: 'baterias', texto: 'Baterías' },
+                    { slug: 'bujias', texto: 'Bujías' }
+                ]
+            }
+        ]
+    },
+    almacenamiento: {
+        nombre: 'Almacenamiento',
+        dataMenu: 'almacenamiento',
+        subcategorias: [
+            {
+                nombre: 'Organización',
+                items: [
+                    { slug: 'valijas', texto: 'Valijas' },
+                    { slug: 'organizadores', texto: 'Organizadores' }
+                ]
+            },
+            {
+                nombre: 'Contenedores',
+                items: [
+                    { slug: 'baldes', texto: 'Baldes' }
+                ]
+            }
+        ]
+    },
+    cocina: {
+        nombre: 'Cocina',
+        dataMenu: 'cocina',
+        subcategorias: [
+            {
+                nombre: 'Utensilios',
+                items: [
+                    { slug: 'cocina', texto: 'Utensilios de cocina' },
+                    { slug: 'tablas', texto: 'Tablas' },
+                    { slug: 'cuchillos', texto: 'Cuchillos' }
+                ]
+            },
+            {
+                nombre: 'Vajilla',
+                items: [
+                    { slug: 'ollas', texto: 'Ollas' },
+                    { slug: 'sartenes', texto: 'Sartenes' },
+                    { slug: 'woks', texto: 'Woks' }
+                ]
+            },
+            {
+                nombre: 'Electrodomésticos',
+                items: [
+                    { slug: 'cafeteras', texto: 'Cafeteras' }
+                ]
+            }
+        ]
+    },
+    soldadura: {
+        nombre: 'Soldadura',
+        dataMenu: 'soldadura',
+        subcategorias: [
+            {
+                nombre: 'Equipos',
+                items: [
+                    { slug: 'gases', texto: 'Gases' }
+                ]
+            },
+            {
+                nombre: 'Soldadura',
+                items: [
+                    { slug: 'soldadura', texto: 'Soldadura' }
+                ]
+            },
+            {
+                nombre: 'Insumos',
+                items: [
+                    { slug: 'electrodos', texto: 'Electrodos' }
+                ]
+            }
+        ]
+    },
     hogar: {
         nombre: 'Hogar',
         dataMenu: 'hogar',
