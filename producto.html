@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalle de producto - Ferretería profesional">
+    <title>Detalle de Producto - Ferretería Profesional</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/producto.css">
+    <link rel="preload" href="data/productos.js" as="script">
+
+    <style>
+        /* ============================================
+           OVERRIDES: NAV ROJO FIJO (difiere de base.css)
+        ============================================ */
+        .nav {
+            background: #ff0000;
+            color: var(--color-white);
+            border-bottom: 1px solid #16213e;
+            position: fixed;
+            top: 123px;
+            left: 0;
+            right: 0;
+            z-index: 1020;
+            width: 100%;
+        }
+
+        .nav__container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .nav__categories {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0;
+        }
+
+        .nav__category {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__category:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav__category-link {
+            display: block;
+            padding: 0.5rem var(--spacing-lg);
+            color: var(--color-white);
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: background-color var(--transition-fast), color var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .nav__category-link:hover {
+            background: #eb6302;
+            color: #ffffff;
+        }
+
+        /* ============================================
+           OVERRIDES: FOOTER ROJO (difiere de base.css)
+        ============================================ */
+        .footer {
+            background: #ff2600f1;
+            color: var(--color-white);
+            padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-xl);
+        }
+
+        .footer__container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .footer__section-title {
+            font-family: var(--font-display);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer__link {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-sm);
+            transition: color var(--transition-fast);
+        }
+
+        .footer__link:hover {
+            color: var(--color-white);
+        }
+
+        .footer__bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--spacing-xl);
+            text-align: center;
+            font-size: var(--font-size-sm);
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <!-- Nivel Superior: Logo (Solo Móvil) -->
+        <div class="header__top-row">
+            <div class="header__top-row__container">
+                <!-- Logo -->
+                <a href="index.html" class="header__logo" aria-label="Ir a inicio">
+                    <img src="assets/icons/mplogo.png" alt="MP Ferretería Logo" class="header__logo-icon">
+                    <span class="header__logo-text">Materiales Eléctricos</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Nivel Medio: Iconos y Acción (Solo Móvil) -->
+        <div class="header__middle-row">
+            <div class="header__middle-row__container">
+                <!-- Botón Menú Hamburguesa -->
+                <button class="header__menu-toggle" aria-label="Abrir menú">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <span class="header__menu-toggle__text">MENÚ</span>
+                </button>
+
+                <!-- Icono de Búsqueda -->
+                <button class="header__btn header__btn--search-mobile" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span class="header__menu-toggle__text">BUSCAR</span>
+                </button>
+
+                <!-- Carrito -->
+                <button class="header__btn header__btn--cart" id="cartBtnMobile" aria-label="Ver carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span class="header__cart-count header__cart-count--hidden" id="cartCountMobile">0</span>
+                    <span class="header__menu-toggle__text">CARRITO</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenedor Desktop (Solo Desktop) -->
+        <div class="header__container">
+            <!-- Logo (Desktop) -->
+            <a href="index.html" class="header__logo header__logo--desktop" aria-label="Ir a inicio">
+                <img src="assets/icons/mplogo.png" alt="MP Ferretería Logo" class="header__logo-icon">
+                <span class="header__logo-text">Materiales Eléctricos</span>
+            </a>
+
+            <!-- Buscador Avanzado Integrado (Solo Desktop) -->
+            <div class="header__search-advanced">
+                <select class="header__search-category" aria-label="Seleccionar categoría">
+                    <option value="all">Todas las categorías</option>
+                    <option value="herramientas">Herramientas</option>
+                    <option value="construccion">Construcción</option>
+                    <option value="tornilleria">Tornillería</option>
+                    <option value="pintura">Pintura/Químicos</option>
+                    <option value="proteccion">Material de Protección</option>
+                    <option value="electricidad">Electricidad/Iluminación</option>
+                    <option value="cerrajeria">Cerrajería</option>
+                    <option value="agricola">Agrícola/Jardín</option>
+                    <option value="hogar">Hogar</option>
+                </select>
+                <input
+                    type="search"
+                    class="header__search-input"
+                    placeholder="Buscar productos..."
+                    aria-label="Buscar productos"
+                >
+                <button class="header__search-button" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Acciones (Desktop) -->
+            <div class="header__actions">
+                <!-- Botón Cuenta -->
+                <button class="header__btn header__btn--account" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span class="header__btn-text">Mi Cuenta</span>
+                </button>
+
+                <!-- Carrito -->
+                <button class="header__btn header__btn--cart" id="cartBtnDesktop" aria-label="Ver carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span class="header__cart-count header__cart-count--hidden" id="cartCountDesktop">0</span>
+                    <span class="header__btn-text">Carrito</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Panel del Carrito -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-panel__header">
+            <h2 class="cart-panel__title">Tu Carrito</h2>
+            <button class="cart-panel__close" id="closeCartBtn" aria-label="Cerrar carrito">×</button>
+        </div>
+        <div class="cart-panel__content">
+            <div class="cart-panel__items" id="cartItems">
+                <!-- Items del carrito -->
+            </div>
+            <div class="cart-panel__empty" id="cartEmpty">
+                <p>Tu carrito está vacío</p>
+                <button class="cart-panel__continue">Continuar comprando</button>
+            </div>
+        </div>
+        <div class="cart-panel__footer">
+            <div class="cart-panel__summary">
+                <div class="cart-panel__summary-row">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="cart-panel__summary-row">
+                    <span>IVA (16%)</span>
+                    <span id="cartIva">$0.00</span>
+                </div>
+                <div class="cart-panel__summary-row cart-panel__summary-row--total">
+                    <span>Total</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+            </div>
+            <button class="cart-panel__checkout" id="checkoutBtn">
+                Finalizar Compra
+            </button>
+        </div>
+    </div>
+    <div class="cart-panel__overlay" id="cartOverlay"></div>
+
+    <!-- Toast de Notificación -->
+    <div class="toast" id="toast">
+        <div class="toast__icon">✓</div>
+        <div class="toast__content">
+            <p class="toast__message">Producto agregado al carrito</p>
+            <p class="toast__product" id="toastProduct"></p>
+        </div>
+        <button class="toast__action" id="toastAction">Ver carrito</button>
+    </div>
+
+    <!-- Navegación Principal -->
+    <nav class="nav">
+        <div class="nav__container">
+            <ul class="nav__categories">
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=herramientas" class="nav__category-link">Herramientas</a>
+                </li>
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=electricidad" class="nav__category-link">Material Eléctrico</a>
+                </li>
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=tornilleria" class="nav__category-link">Tornillería</a>
+                </li>
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=cerrajeria" class="nav__category-link">Cerrajería</a>
+                </li>
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=pintura" class="nav__category-link">Pintura</a>
+                </li>
+                <li class="nav__category">
+                    <a href="catalogo.html?categoria=hogar" class="nav__category-link">Hogar</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="main">
+        <div class="product-detail">
+            <!-- Loading State -->
+            <div id="loadingState" class="product-detail__loading">
+                <p>Cargando producto...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="product-detail__error" style="display: none;">
+                <p>No se encontró el producto solicitado.</p>
+                <a href="index.html" style="color: var(--color-primary); margin-top: 1rem; display: inline-block;">Volver al inicio</a>
+            </div>
+
+            <!-- Product Content -->
+            <div id="productContent" style="display: none;">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="Navegación">
+                    <ul class="breadcrumbs__list">
+                        <li class="breadcrumbs__item">
+                            <a href="index.html" class="breadcrumbs__link">Inicio</a>
+                        </li>
+                        <li class="breadcrumbs__item">
+                            <a href="#" id="breadcrumbCategory" class="breadcrumbs__link">Categoría</a>
+                        </li>
+                        <li class="breadcrumbs__item">
+                            <a href="#" id="breadcrumbSubcategory" class="breadcrumbs__link">Subcategoría</a>
+                        </li>
+                        <li class="breadcrumbs__item">
+                            <span id="breadcrumbProduct" class="breadcrumbs__current">Nombre del Producto</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Product Grid -->
+                <div class="product-detail__grid">
+                    <!-- Columna Izquierda: Imagen -->
+                    <div class="product-detail__image-section">
+                        <div class="product-detail__main-image">
+                            <img id="productImage" src="" alt="" style="display: none;">
+                            <div id="imagePlaceholder" class="product-detail__image-placeholder" style="display: flex;">
+                                <span>Cargando imagen...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Información -->
+                    <div class="product-detail__info-section">
+                        <!-- Header -->
+                        <div class="product-detail__header">
+                            <h1 id="productTitle" class="product-detail__title">Nombre del Producto</h1>
+                            <div class="product-detail__meta">
+                                <span id="productBrand" class="product-detail__brand">Marca</span>
+                                <span id="productSku" class="product-detail__sku">SKU: 000000</span>
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="product-detail__price-section">
+                            <span id="productPrice" class="product-detail__price">$0.00</span>
+                            <span id="productPriceOriginal" class="product-detail__price-original" style="display: none;">$0.00</span>
+                            <span id="productDiscount" class="product-detail__discount" style="display: none;">SALE -0%</span>
+                        </div>
+
+                        <!-- Stock -->
+                        <div id="productStock" class="product-detail__stock product-detail__stock--available">
+                            <span class="product-detail__stock-dot"></span>
+                            <span id="stockText">En Stock</span>
+                        </div>
+
+                        <!-- Quantity Selector -->
+                        <div class="product-detail__quantity">
+                            <span class="product-detail__quantity-label">Cantidad:</span>
+                            <div class="product-detail__quantity-controls">
+                                <button id="decreaseQty" class="product-detail__quantity-btn" aria-label="Disminuir cantidad">-</button>
+                                <input id="quantityInput" class="product-detail__quantity-input" type="number" value="1" min="1" max="99">
+                                <button id="increaseQty" class="product-detail__quantity-btn" aria-label="Aumentar cantidad">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Add to Cart Button -->
+                        <button id="addToCartBtn" class="product-detail__add-to-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            AÑADIR AL CARRITO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__grid">
+                <div class="footer__section">
+                    <h3 class="footer__section-title">Sobre Nosotros</h3>
+                    <a href="#" class="footer__link">Nuestra Historia</a>
+                    <a href="#" class="footer__link">Misión y Visión</a>
+                    <a href="#" class="footer__link">Equipo</a>
+                    <a href="#" class="footer__link">Blog</a>
+                </div>
+
+                <div class="footer__section">
+                    <h3 class="footer__section-title">Atención al Cliente</h3>
+                    <a href="#" class="footer__link">Contacto</a>
+                    <a href="#" class="footer__link">Preguntas Frecuentes</a>
+                    <a href="#" class="footer__link">Envíos y Devoluciones</a>
+                    <a href="#" class="footer__link">Garantías</a>
+                </div>
+
+                <div class="footer__section">
+                    <h3 class="footer__section-title">Servicios</h3>
+                    <a href="#" class="footer__link">Asesoramiento Técnico</a>
+                    <a href="#" class="footer__link">Corte de Materiales</a>
+                    <a href="#" class="footer__link">Alquiler de Herramientas</a>
+                    <a href="#" class="footer__link">Pedidos Especiales</a>
+                </div>
+
+                <div class="footer__section">
+                    <h3 class="footer__section-title">Legal</h3>
+                    <a href="#" class="footer__link">Aviso Legal</a>
+                    <a href="#" class="footer__link">Política de Privacidad</a>
+                    <a href="#" class="footer__link">Cookies</a>
+                    <a href="#" class="footer__link">Términos y Condiciones</a>
+                </div>
+
+                <div class="footer__section footer__section--map">
+                    <h3 class="footer__section-title">Ubicación</h3>
+                    <div class="footer__map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.0!2d-56.0!3d-34.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959f7e0e0e0e0e0f%3A0x0!2zMzTCsNDInMDAuMCJTIDU2wrAwJzAwLjAiVw!5e0!3m2!1ses!2suy!4v1600000000000!5m2!1ses!2suy"
+                            width="100%"
+                            height="200"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de la Ferretería">
+                        </iframe>
+                    </div>
+                    <p class="footer__address">📍 Eduardo Pascual M2 S49, 80500 Ciudad del Plata, San José</p>
+                    <p class="footer__phone">📞 +598 0000 0000</p>
+                    <p class="footer__hours">⏰ Lun-Vie: 8:00-18:00 | Sáb: 9:00-13:00</p>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p>&copy; 2026 Ferretería Profesional. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script defer src="data/productos.js"></script>
+    <script defer src="data/ofertas.js"></script>
+    <script defer src="assets/js/ofertas.js"></script>
+    <script defer src="carrito.js"></script>
+    <script>
+        // ============================================
+        // PRODUCT DETAIL PAGE LOGIC
+        // ============================================
+
+        // Esperar a que todo esté cargado (productos y carrito)
+        window.addEventListener('load', function() {
+            console.log('🚀 Product Detail Page - Window Load');
+
+            // Esperar a que el carrito esté inicializado
+            const waitForCarrito = setInterval(() => {
+                if (typeof carrito !== 'undefined' && carrito) {
+                    console.log('✅ Carrito inicializado correctamente');
+                    console.log('📦 Items en carrito:', carrito.carrito.items.length);
+                    console.log('📊 Cantidad total:', carrito.obtenerCantidadTotal());
+
+                    clearInterval(waitForCarrito);
+                    initializeProductPage();
+                }
+            }, 100);
+
+            // Timeout por si el carrito no se inicializa
+            setTimeout(() => {
+                clearInterval(waitForCarrito);
+                if (typeof carrito === 'undefined') {
+                    console.error('❌ Carrito no se inicializó después del timeout');
+                }
+            }, 5000);
+
+            function initializeProductPage() {
+                // Actualizar contador del carrito con datos existentes
+                if (typeof carrito !== 'undefined' && carrito) {
+                    console.log('🔄 Actualizando contador del carrito...');
+                    carrito.actualizarContador();
+                    carrito.renderizarCarrito();
+                }
+
+                // Esperar a que los productos estén cargados
+                setTimeout(() => {
+                    if (typeof window.productos !== 'undefined') {
+                        console.log('✅ Productos cargados correctamente');
+                        console.log('📊 Total de productos:', window.productos.length);
+                        loadProductFromURL();
+                    } else {
+                        console.error('❌ Productos no cargados - window.productos es undefined');
+                        showError();
+                    }
+                }, 100);
+            }
+
+            // ============================================
+            // CARGAR PRODUCTO DESDE URL
+            // ============================================
+            function loadProductFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get('id');
+
+                console.log('🔍 Buscando producto con ID:', productId);
+
+                if (!productId) {
+                    console.error('❌ No se proporcionó ID de producto');
+                    showError();
+                    return;
+                }
+
+                // Buscar producto por ID o SKU
+                const product = window.productos.find(p =>
+                    p.id == productId || p.sku === productId
+                );
+
+                if (!product) {
+                    console.error('❌ Producto no encontrado:', productId);
+                    showError();
+                    return;
+                }
+
+                console.log('✅ Producto encontrado:', product);
+                displayProduct(product);
+            }
+
+            // ============================================
+            // MOSTRAR PRODUCTO
+            // ============================================
+            function displayProduct(product) {
+                // Ocultar loading, mostrar contenido
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'none';
+                document.getElementById('productContent').style.display = 'block';
+
+                // Breadcrumbs
+                document.getElementById('breadcrumbCategory').textContent = capitalizeFirst(product.categoria_principal);
+                document.getElementById('breadcrumbCategory').href = `catalogo.html?categoria=${product.categoria_principal}`;
+                document.getElementById('breadcrumbSubcategory').textContent = capitalizeFirst(product.subcategoria);
+                document.getElementById('breadcrumbSubcategory').href = `catalogo.html?categoria=${product.categoria_principal}&subcategoria=${product.subcategoria}`;
+                document.getElementById('breadcrumbProduct').textContent = product.nombre;
+
+                // Imagen
+                const productImage = document.getElementById('productImage');
+                const imagePlaceholder = document.getElementById('imagePlaceholder');
+
+                if (product.imagen && product.imagen !== '') {
+                    productImage.src = window.getCloudinaryUrl ? window.getCloudinaryUrl(product.imagen) : product.imagen;
+                    productImage.alt = product.nombre;
+
+                    // Manejar error de carga de imagen
+                    productImage.onerror = function() {
+                        console.log('❌ Error cargando imagen:', product.imagen);
+                        this.style.display = 'none';
+                        imagePlaceholder.style.display = 'flex';
+                        imagePlaceholder.querySelector('span').textContent = 'Imagen no disponible';
+                    };
+
+                    // Mostrar imagen cuando cargue
+                    productImage.onload = function() {
+                        console.log('✅ Imagen cargada correctamente');
+                        this.style.display = 'block';
+                        imagePlaceholder.style.display = 'none';
+                    };
+
+                    // Forzar recarga para asegurar que se dispare el evento
+                    productImage.style.display = 'block';
+                } else {
+                    productImage.style.display = 'none';
+                    imagePlaceholder.style.display = 'flex';
+                    imagePlaceholder.querySelector('span').textContent = 'Imagen no disponible';
+                }
+
+                // Información básica
+                document.getElementById('productTitle').textContent = product.nombre;
+                document.getElementById('productBrand').textContent = 'Marca'; // No hay campo brand en los datos
+                document.getElementById('productSku').textContent = `SKU: ${product.sku}`;
+
+                // Precio con soporte de ofertas
+                const priceElement = document.getElementById('productPrice');
+                const priceOriginalElement = document.getElementById('productPriceOriginal');
+                const discountElement = document.getElementById('productDiscount');
+
+                const oferta = window.getOferta ? window.getOferta(product.id) : null;
+
+                if (oferta) {
+                    const precioFinal = window.getPrecioConOferta(product.precio, oferta.descuento);
+                    // Precio en oferta (rojo)
+                    priceElement.textContent = formatPrice(precioFinal);
+                    priceElement.style.color = '#E74C3C';
+                    // Precio original tachado
+                    priceOriginalElement.textContent = formatPrice(product.precio);
+                    priceOriginalElement.style.display = 'inline';
+                    // Badge de descuento
+                    discountElement.textContent = `-${oferta.descuento}% OFF`;
+                    discountElement.style.display = 'inline';
+                } else {
+                    priceElement.textContent = formatPrice(product.precio);
+                    priceOriginalElement.style.display = 'none';
+                    discountElement.style.display = 'none';
+                }
+
+                // Stock
+                updateStockDisplay(product.stock);
+
+                // Configurar botón de añadir al carrito
+                setupAddToCart(product);
+            }
+
+            // ============================================
+            // ACTUALIZAR DISPLAY DE STOCK
+            // ============================================
+            function updateStockDisplay(stock) {
+                const stockElement = document.getElementById('productStock');
+                const stockText = document.getElementById('stockText');
+                const addToCartBtn = document.getElementById('addToCartBtn');
+
+                stockElement.className = 'product-detail__stock';
+
+                if (stock > 0) {
+                    stockElement.classList.add('product-detail__stock--available');
+                    stockText.textContent = 'En Stock';
+                    addToCartBtn.disabled = false;
+                } else {
+                    stockElement.classList.add('product-detail__stock--out');
+                    stockText.textContent = 'Agotado';
+                    addToCartBtn.disabled = true;
+                }
+            }
+
+            // ============================================
+            // CONFIGURAR BOTÓN AÑADIR AL CARRITO
+            // ============================================
+            function setupAddToCart(product) {
+                const addToCartBtn = document.getElementById('addToCartBtn');
+                const quantityInput = document.getElementById('quantityInput');
+                const decreaseBtn = document.getElementById('decreaseQty');
+                const increaseBtn = document.getElementById('increaseQty');
+
+                // Controles de cantidad
+                decreaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(quantityInput.value);
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                });
+
+                increaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(quantityInput.value);
+                    const maxValue = product.stock || 99;
+                    if (currentValue < maxValue) {
+                        quantityInput.value = currentValue + 1;
+                    }
+                });
+
+                quantityInput.addEventListener('change', () => {
+                    let value = parseInt(quantityInput.value);
+                    const maxValue = product.stock || 99;
+                    if (value < 1) value = 1;
+                    if (value > maxValue) value = maxValue;
+                    quantityInput.value = value;
+                });
+
+                // Botón añadir al carrito
+                addToCartBtn.addEventListener('click', () => {
+                    const quantity = parseInt(quantityInput.value);
+
+                    if (quantity > (product.stock || 0)) {
+                        alert('No hay suficiente stock disponible');
+                        return;
+                    }
+
+                    // Usar el sistema de carrito existente
+                    if (typeof carrito !== 'undefined' && carrito) {
+                        carrito.agregarProducto(product, quantity);
+                    } else {
+                        console.error('❌ Sistema de carrito no disponible');
+                        alert('Error al agregar al carrito. Por favor recarga la página.');
+                    }
+                });
+            }
+
+            // ============================================
+            // MOSTRAR ERROR
+            // ============================================
+            function showError() {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                document.getElementById('productContent').style.display = 'none';
+            }
+
+            // ============================================
+            // UTILIDADES
+            // ============================================
+            function formatPrice(price) {
+                return '$U ' + price.toLocaleString('es-UY');
+            }
+
+            function capitalizeFirst(str) {
+                if (!str) return '';
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+                const cartCountDesktop = document.getElementById('cartCountDesktop');
+                const cartCountMobile = document.getElementById('cartCountMobile');
+
+                if (cartCountDesktop) {
+                    cartCountDesktop.textContent = totalItems;
+                    cartCountDesktop.classList.remove('header__cart-count--hidden');
+                }
+
+                if (cartCountMobile) {
+                    cartCountMobile.textContent = totalItems;
+                    cartCountMobile.classList.remove('header__cart-count--hidden');
+                }
+            }
+
+            // Inicializar contador del carrito
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
