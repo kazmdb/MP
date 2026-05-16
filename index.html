@@ -20,6 +20,10 @@
     <link rel="preload" href="data/productos.js" as="script">
 
     <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/wishlist.css">
+    <link rel="stylesheet" href="assets/css/orders.css">
+    <link rel="stylesheet" href="assets/css/checkout.css">
     <link rel="icon" type="image/png" href="assets/icons/mplogo.png">
 </head>
 
@@ -58,6 +62,23 @@
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <span class="header__menu-toggle__text">BUSCAR</span>
+                </button>
+
+                <!-- Mi Cuenta -->
+                <button class="header__btn header__btn--account-mobile" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span class="header__menu-toggle__text">CUENTA</span>
+                </button>
+
+                <!-- Favoritos -->
+                <button class="header__btn header__btn--wishlist-mobile" id="wishlistBtnMobile" aria-label="Ver favoritos">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="header__cart-count header__cart-count--hidden" id="wishlistCountMobile">0</span>
+                    <span class="header__menu-toggle__text">FAVS</span>
                 </button>
 
                 <!-- Carrito -->
@@ -115,6 +136,15 @@
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                     <span class="header__btn-text">Mi Cuenta</span>
+                </button>
+
+                <!-- Favoritos -->
+                <button class="header__btn header__btn--wishlist" id="wishlistBtnDesktop" aria-label="Ver favoritos">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="header__cart-count header__cart-count--hidden" id="wishlistCountDesktop">0</span>
+                    <span class="header__btn-text">Favoritos</span>
                 </button>
 
                 <!-- Carrito -->
@@ -203,12 +233,23 @@
 
     <!-- Toast de Notificación -->
     <div class="toast" id="toast">
-        <div class="toast__icon">✓</div>
-        <div class="toast__content">
-            <p class="toast__message">Producto agregado al carrito</p>
-            <p class="toast__product" id="toastProduct"></p>
+        <!-- ... -->
+    </div>
+
+    <!-- Panel de Favoritos -->
+    <div class="cart-panel wishlist-panel" id="wishlistPanel">
+        <div class="cart-panel__header">
+            <h2 class="cart-panel__title">Mis Favoritos</h2>
+            <button class="cart-panel__close" id="closeWishlistBtn" aria-label="Cerrar favoritos">×</button>
         </div>
-        <button class="toast__action" id="toastAction">Ver carrito</button>
+        <div class="cart-panel__content">
+            <div class="cart-panel__items" id="wishlistItems">
+                <!-- Items de favoritos -->
+            </div>
+            <div class="cart-panel__empty" id="wishlistEmpty">
+                <p>Aún no tienes productos favoritos</p>
+            </div>
+        </div>
     </div>
 
     <!-- Navegación Principal -->
@@ -659,7 +700,6 @@
     </footer>
 
     <script defer src="data/productos.js"></script>
-    <script defer src="data/ofertas.js"></script>
     <script defer src="assets/js/ofertas.js"></script>
     <script defer src="carrito.js"></script>
     <script defer src="assets/js/categorias.js"></script>
@@ -669,24 +709,48 @@
         // JAVASCRIPT - INTERACTIVIDAD
         // ============================================
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
             console.log('🚀 DOMContentLoaded - Iniciando aplicación');
-            console.log('📦 Verificando carga de productos...');
 
-            // Verificar que los productos estén cargados
-            setTimeout(() => {
-                if (typeof window.productos !== 'undefined') {
-                    console.log('✅ Productos cargados correctamente');
-                    console.log('📊 Total de productos:', window.productos.length);
-                    console.log('📦 Primer producto:', window.productos[0]);
-                } else {
-                    console.error('❌ Productos no cargados - window.productos es undefined');
+            // ============================================
+            // INICIALIZACIÓN DE FIREBASE Y DATOS
+            // ============================================
+            
+            // Si db no está disponible (viene de auth.js), lo esperamos o inicializamos
+            if (typeof db === 'undefined') {
+                console.log('⏳ Esperando a Firebase...');
+                // Podemos esperar un poco o inicializarlo si auth.js no cargó
+            }
+
+            // Función para cargar productos desde Firebase (con límite para performance)
+            async function fetchFirebaseProducts() {
+                try {
+                    console.log('📥 Cargando productos desde Firestore...');
+                    const snapshot = await db.collection('productos')
+                        .orderBy('fecha_creacion', 'desc')
+                        .limit(10000) // Traemos todos los productos para la home
+                        .get();
+                    
+                    if (!window.productos) window.productos = [];
+                    snapshot.forEach(doc => {
+                        const p = doc.data();
+                        p.id = doc.id; // Usar ID de Firestore como ID
+                        window.productos.push(p);
+                    });
+                    console.log(`✅ ${window.productos.length} productos cargados desde Firebase`);
+                    return true;
+                } catch (error) {
+                    console.error('❌ Error al cargar productos de Firebase:', error);
+                    return false;
                 }
-            }, 100);
+            }
 
-            // ============================================
-            // CARGAR PRODUCTOS DINÁMICAMENTE
-            // ============================================
+            // Cargar datos antes de iniciar la UI
+            const success = await fetchFirebaseProducts();
+            if (!success) {
+                // Fallback si Firebase falla (opcional: cargar local)
+                console.warn('⚠️ Usando productos locales como fallback');
+            }
 
             // ============================================
             // CARGAR CARRUSELES DE PRODUCTOS POR CATEGORÍA
@@ -789,9 +853,10 @@
                 if (category === 'ofertas') {
                     filtered = window.productos.filter(p => window.getOferta(p.id) !== null);
                 } else {
-                    filtered = window.productos.filter(p =>
-                        p.categoria_principal.toLowerCase() === category.toLowerCase()
-                    );
+                    filtered = window.productos.filter(p => {
+                        const cat = p.categoria_principal || p.categoria || '';
+                        return cat.toLowerCase() === category.toLowerCase();
+                    });
                 }
 
                 // Ordenar productos de manera variada por subcategoría
@@ -970,9 +1035,10 @@
                                 <img src="${imagenSrc}" alt="${product.nombre}" class="product-card__image" loading="lazy">
                             </a>
                             ${badgeHtml}
+                            ${window.wishlist ? window.wishlist.getHeartHtml(product.id) : ''}
                         </div>
                         <div class="product-card__content">
-                            <p class="product-card__category">${product.categoria_principal}</p>
+                            <p class="product-card__category">${product.categoria_principal || product.categoria || 'Varios'}</p>
                             <h3 class="product-card__title">${product.nombre}</h3>
                             <p class="product-card__sku">SKU: <span>${product.sku}</span></p>
                             <div class="${priceContainerClass}">
@@ -1599,13 +1665,7 @@
                 console.warn('  - searchButton existe:', !!searchButton);
             }
 
-            // Botón de cuenta (simulado)
-            const accountButton = document.querySelector('.header__btn--account');
-            if (accountButton) {
-                accountButton.addEventListener('click', function () {
-                    showNotification('Función de mi cuenta próximamente disponible');
-                });
-            }
+
 
             // Smooth scroll para enlaces internos
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2612,6 +2672,14 @@
             });
         });
     </script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/wishlist.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/checkout.js"></script>
 </body>
 
 </html>

@@ -3,6 +3,8 @@
 // ============================================
 
 // Clase principal del carrito
+let carrito;
+
 class CarritoCompras {
     constructor() {
         this.carrito = this.cargarCarrito();
@@ -327,7 +329,16 @@ class CarritoCompras {
         // Botón checkout
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', () => this.checkoutWhatsApp());
+            checkoutBtn.addEventListener('click', () => {
+                if (typeof Checkout !== 'undefined') {
+                    // Cerrar panel del carrito para mostrar el modal
+                    this.cerrarPanel();
+                    Checkout.toggleModal(true);
+                } else {
+                    console.error('Sistema de Checkout no cargado');
+                    this.checkoutWhatsApp(); // Fallback
+                }
+            });
         }
 
         // Cerrar con tecla ESC
@@ -385,12 +396,10 @@ class CarritoCompras {
 // INICIALIZACIÓN
 // ============================================
 
-// Crear instancia global del carrito
-let carrito;
-
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     carrito = new CarritoCompras();
+    window.carrito = carrito;
 
     // Renderizar carrito inicial
     carrito.renderizarCarrito();

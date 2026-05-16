@@ -12,6 +12,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/producto.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/wishlist.css">
+    <link rel="stylesheet" href="assets/css/orders.css">
+    <link rel="stylesheet" href="assets/css/checkout.css">
+    <link rel="icon" type="image/png" href="assets/icons/mplogo.png">
     <link rel="preload" href="data/productos.js" as="script">
 
     <style>
@@ -153,6 +158,14 @@
                     <span class="header__menu-toggle__text">MENÚ</span>
                 </button>
 
+                <!-- Mi Cuenta -->
+                <button class="header__btn header__btn--account-mobile" aria-label="Mi cuenta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span class="header__menu-toggle__text">CUENTA</span>
+                </button>
+
                 <!-- Icono de Búsqueda -->
                 <button class="header__btn header__btn--search-mobile" aria-label="Buscar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,6 +181,21 @@
                     </svg>
                     <span class="header__cart-count header__cart-count--hidden" id="cartCountMobile">0</span>
                     <span class="header__menu-toggle__text">CARRITO</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Barra de Búsqueda Móvil (Desplegable) -->
+        <div class="header__search-mobile">
+            <div class="header__search-mobile__container">
+                <input type="search" class="header__search-mobile__input" placeholder="Buscar productos..."
+                    aria-label="Buscar productos">
+                <button class="header__search-mobile__button" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
                 </button>
             </div>
         </div>
@@ -217,6 +245,15 @@
                     <span class="header__btn-text">Mi Cuenta</span>
                 </button>
 
+                <!-- Favoritos -->
+                <button class="header__btn header__btn--wishlist" id="wishlistBtnDesktop" aria-label="Ver favoritos">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="header__cart-count header__cart-count--hidden" id="wishlistCountDesktop">0</span>
+                    <span class="header__btn-text">Favoritos</span>
+                </button>
+
                 <!-- Carrito -->
                 <button class="header__btn header__btn--cart" id="cartBtnDesktop" aria-label="Ver carrito">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -225,6 +262,25 @@
                     <span class="header__cart-count header__cart-count--hidden" id="cartCountDesktop">0</span>
                     <span class="header__btn-text">Carrito</span>
                 </button>
+            </div>
+        </div>
+        </div>
+
+        <!-- Menú Lateral Móvil -->
+        <div class="header__mobile-menu">
+            <div class="header__mobile-menu__overlay"></div>
+            <div class="header__mobile-menu__content">
+                <div class="header__mobile-menu__header">
+                    <span class="header__mobile-menu__title">Menú</span>
+                    <button class="header__mobile-menu__close" aria-label="Cerrar menú">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="mobileMenuContainer"></div>
             </div>
         </div>
     </header>
@@ -265,6 +321,22 @@
         </div>
     </div>
     <div class="cart-panel__overlay" id="cartOverlay"></div>
+
+    <!-- Panel de Favoritos -->
+    <div class="cart-panel wishlist-panel" id="wishlistPanel">
+        <div class="cart-panel__header">
+            <h2 class="cart-panel__title">Mis Favoritos</h2>
+            <button class="cart-panel__close" id="closeWishlistBtn" aria-label="Cerrar favoritos">×</button>
+        </div>
+        <div class="cart-panel__content">
+            <div class="cart-panel__items" id="wishlistItems">
+                <!-- Items de favoritos -->
+            </div>
+            <div class="cart-panel__empty" id="wishlistEmpty">
+                <p>Aún no tienes productos favoritos</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast de Notificación -->
     <div class="toast" id="toast">
@@ -340,7 +412,7 @@
                 <div class="product-detail__grid">
                     <!-- Columna Izquierda: Imagen -->
                     <div class="product-detail__image-section">
-                        <div class="product-detail__main-image">
+                        <div class="product-detail__main-image" id="productImageContainer">
                             <img id="productImage" src="" alt="" style="display: none;">
                             <div id="imagePlaceholder" class="product-detail__image-placeholder" style="display: flex;">
                                 <span>Cargando imagen...</span>
@@ -458,8 +530,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script defer src="data/productos.js"></script>
-    <script defer src="data/ofertas.js"></script>
+    <!-- <script defer src="data/productos.js"></script> -->
     <script defer src="assets/js/ofertas.js"></script>
     <script defer src="carrito.js"></script>
     <script>
@@ -499,17 +570,40 @@
                     carrito.renderizarCarrito();
                 }
 
-                // Esperar a que los productos estén cargados
-                setTimeout(() => {
-                    if (typeof window.productos !== 'undefined') {
-                        console.log('✅ Productos cargados correctamente');
-                        console.log('📊 Total de productos:', window.productos.length);
-                        loadProductFromURL();
-                    } else {
-                        console.error('❌ Productos no cargados - window.productos es undefined');
+                // Cargar productos desde Firebase (Solo el producto específico)
+                const urlParams = new URLSearchParams(window.location.search);
+                let productId = urlParams.get('id');
+                if (productId) productId = productId.replace(/\//g, '-');
+
+                if (productId) {
+                    console.log('📥 Solicitando producto a Firestore:', productId);
+                    db.collection('productos').doc(productId).get().then(doc => {
+                        if (doc.exists) {
+                            const p = doc.data();
+                            p.id = doc.id;
+                            // Injectamos en un array para compatibilidad
+                            window.productos = [p];
+                            loadProductFromURL();
+                        } else {
+                            // Si no existe por ID, quizás es un SKU antiguo, intentamos buscar por SKU
+                            db.collection('productos').where('sku', '==', productId).limit(1).get().then(snap => {
+                                if (!snap.empty) {
+                                    const p = snap.docs[0].data();
+                                    p.id = snap.docs[0].id;
+                                    window.productos = [p];
+                                    loadProductFromURL();
+                                } else {
+                                    showError();
+                                }
+                            });
+                        }
+                    }).catch(err => {
+                        console.error("Error cargando producto:", err);
                         showError();
-                    }
-                }, 100);
+                    });
+                } else {
+                    showError();
+                }
             }
 
             // ============================================
@@ -552,10 +646,11 @@
                 document.getElementById('productContent').style.display = 'block';
 
                 // Breadcrumbs
-                document.getElementById('breadcrumbCategory').textContent = capitalizeFirst(product.categoria_principal);
-                document.getElementById('breadcrumbCategory').href = `catalogo.html?categoria=${product.categoria_principal}`;
-                document.getElementById('breadcrumbSubcategory').textContent = capitalizeFirst(product.subcategoria);
-                document.getElementById('breadcrumbSubcategory').href = `catalogo.html?categoria=${product.categoria_principal}&subcategoria=${product.subcategoria}`;
+                const cat = product.categoria_principal || product.categoria || 'Varios';
+                document.getElementById('breadcrumbCategory').textContent = capitalizeFirst(cat);
+                document.getElementById('breadcrumbCategory').href = `catalogo.html?categoria=${cat}`;
+                document.getElementById('breadcrumbSubcategory').textContent = capitalizeFirst(product.subcategoria || '');
+                document.getElementById('breadcrumbSubcategory').href = `catalogo.html?categoria=${cat}&subcategoria=${product.subcategoria || ''}`;
                 document.getElementById('breadcrumbProduct').textContent = product.nombre;
 
                 // Imagen
@@ -623,6 +718,18 @@
 
                 // Configurar botón de añadir al carrito
                 setupAddToCart(product);
+
+                // Añadir corazón de favoritos
+                const imgContainer = document.getElementById('productImageContainer');
+                if (imgContainer && window.wishlist) {
+                    // Limpiar corazón previo si existe
+                    const existingHeart = imgContainer.querySelector('.wishlist-btn');
+                    if (existingHeart) existingHeart.remove();
+                    
+                    const heartHtml = window.wishlist.getHeartHtml(product.id);
+                    imgContainer.insertAdjacentHTML('beforeend', heartHtml);
+                    window.wishlist.updateUI();
+                }
             }
 
             // ============================================
@@ -739,7 +846,259 @@
 
             // Inicializar contador del carrito
             updateCartCount();
+
+            // ============================================
+            // MOBILE SEARCH FUNCTIONALITY
+            // ============================================
+            const searchMobileToggle = document.querySelector('.header__btn--search-mobile');
+            const searchMobile = document.querySelector('.header__search-mobile');
+            const searchMobileInput = document.querySelector('.header__search-mobile__input');
+
+            if (searchMobileToggle && searchMobile) {
+                searchMobileToggle.addEventListener('click', () => {
+                    searchMobile.classList.toggle('header__search-mobile--active');
+                    if (searchMobile.classList.contains('header__search-mobile--active')) {
+                        searchMobileInput.focus();
+                    }
+                });
+
+                // Redirigir al catálogo al buscar
+                const executeSearch = () => {
+                    const query = searchMobileInput.value.trim();
+                    if (query.length >= 2) {
+                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                    }
+                };
+
+                searchMobileInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') executeSearch();
+                });
+
+                document.querySelector('.header__search-mobile__button').addEventListener('click', executeSearch);
+
+                // Búsqueda en tiempo real para móviles
+                searchMobileInput.addEventListener('input', () => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        const query = searchMobileInput.value.trim();
+                        if (query.length >= 2) {
+                            const results = buscarProductos(query);
+                            mostrarResultadosBusqueda(results, query, true); // true = es móvil
+                        } else {
+                            limpiarResultadosBusqueda();
+                        }
+                    }, 300);
+                });
+            }
+
+            // ============================================
+            // SEARCH LOGIC (SHARED)
+            // ============================================
+            let searchTimeout;
+
+            function limpiarResultadosBusqueda() {
+                const existingResults = document.querySelector('.search-results');
+                if (existingResults) existingResults.remove();
+            }
+
+            function buscarProductos(query) {
+                const productosDisponibles = window.productos || [];
+                const queryLower = query.toLowerCase().trim();
+                return productosDisponibles.filter(p => 
+                    (p.nombre && p.nombre.toLowerCase().includes(queryLower)) ||
+                    (p.sku && p.sku.toLowerCase().includes(queryLower)) ||
+                    (p.categoria_principal && p.categoria_principal.toLowerCase().includes(queryLower)) ||
+                    (p.subcategoria && p.subcategoria.toLowerCase().includes(queryLower))
+                );
+            }
+
+            function posicionarResultadosBusqueda(resultsContainer, isMobile = false) {
+                let targetEl;
+                if (isMobile) {
+                    targetEl = document.querySelector('.header__search-mobile__container');
+                } else {
+                    targetEl = document.querySelector('.header__search-advanced');
+                }
+
+                if (!targetEl) return;
+                
+                const rect = targetEl.getBoundingClientRect();
+                resultsContainer.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+                resultsContainer.style.left = (rect.left + window.scrollX) + 'px';
+                resultsContainer.style.width = rect.width + 'px';
+                resultsContainer.style.zIndex = '10000';
+            }
+
+            function mostrarResultadosBusqueda(resultados, query, isMobile = false) {
+                limpiarResultadosBusqueda();
+                if (resultados.length === 0) return;
+
+                const resultsContainer = document.createElement('div');
+                resultsContainer.className = 'search-results';
+                
+                const resultsHeader = document.createElement('div');
+                resultsHeader.className = 'search-results__header';
+                resultsHeader.innerHTML = `
+                    <span class="search-results__count">${resultados.length} resultados</span>
+                    <button class="search-results__close">×</button>
+                `;
+
+                const resultsList = document.createElement('div');
+                resultsList.className = 'search-results__list';
+
+                resultados.slice(0, 8).forEach(producto => {
+                    const item = document.createElement('div');
+                    item.className = 'search-results__item';
+                    const img = window.getCloudinaryUrl ? window.getCloudinaryUrl(producto.imagen) : producto.imagen;
+                    item.innerHTML = `
+                        <div class="search-results__item-image">
+                            <img src="${img}" alt="${producto.nombre}">
+                        </div>
+                        <div class="search-results__item-info">
+                            <h4 class="search-results__item-name">${producto.nombre}</h4>
+                            <p class="search-results__item-price">$${producto.precio.toFixed(2)}</p>
+                        </div>
+                    `;
+                    item.addEventListener('click', () => window.location.href = `producto.html?id=${producto.id}`);
+                    resultsList.appendChild(item);
+                });
+
+                if (resultados.length > 8) {
+                    const viewAll = document.createElement('button');
+                    viewAll.className = 'search-results__view-all';
+                    viewAll.textContent = 'Ver todos los resultados';
+                    viewAll.addEventListener('click', () => {
+                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                    });
+                    resultsList.appendChild(viewAll);
+                }
+
+                resultsContainer.appendChild(resultsHeader);
+                resultsContainer.appendChild(resultsList);
+                posicionarResultadosBusqueda(resultsContainer, isMobile);
+                document.body.appendChild(resultsContainer);
+
+                resultsContainer.querySelector('.search-results__close').addEventListener('click', limpiarResultadosBusqueda);
+                
+                // Cerrar al hacer clic fuera
+                document.addEventListener('click', function closeSearch(e) {
+                    const mobileInput = document.querySelector('.header__search-mobile__input');
+                    const desktopInput = document.querySelector('.header__search-input');
+                    
+                    if (!resultsContainer.contains(e.target) && 
+                        (!desktopInput || !desktopInput.contains(e.target)) &&
+                        (!mobileInput || !mobileInput.contains(e.target))) {
+                        limpiarResultadosBusqueda();
+                        document.removeEventListener('click', closeSearch);
+                    }
+                });
+            }
+
+            const searchInput = document.querySelector('.header__search-input');
+            const searchButton = document.querySelector('.header__search-button');
+            const searchCategory = document.querySelector('.header__search-category');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        const query = searchInput.value.trim();
+                        if (query.length >= 2) {
+                            let results = buscarProductos(query);
+                            const cat = searchCategory ? searchCategory.value : 'all';
+                            if (cat !== 'all') {
+                                results = results.filter(p => p.categoria_principal.toLowerCase() === cat);
+                            }
+                            mostrarResultadosBusqueda(results, query, false); // false = es desktop
+                        } else {
+                            limpiarResultadosBusqueda();
+                        }
+                    }, 300);
+                });
+
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        const query = searchInput.value.trim();
+                        if (query.length >= 2) {
+                            window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                        }
+                    }
+                });
+            }
+
+            if (searchButton) {
+                searchButton.addEventListener('click', () => {
+                    const query = searchInput.value.trim();
+                    if (query.length >= 2) {
+                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                    }
+                });
+            }
+
+            // ============================================
+            // MOBILE MENU FUNCTIONALITY
+            // ============================================
+            
+            // Generar contenido del menú móvil
+            const mobileContainer = document.getElementById('mobileMenuContainer');
+            if (mobileContainer && typeof generarMenuMovilHTML === 'function') {
+                mobileContainer.innerHTML = generarMenuMovilHTML();
+            }
+
+            const menuToggle = document.querySelector('.header__menu-toggle');
+            const mobileMenu = document.querySelector('.header__mobile-menu');
+            const mobileMenuClose = document.querySelector('.header__mobile-menu__close');
+            const mobileMenuOverlay = document.querySelector('.header__mobile-menu__overlay');
+
+            if (menuToggle && mobileMenu) {
+                // Abrir menú móvil
+                menuToggle.addEventListener('click', function () {
+                    mobileMenu.classList.add('header__mobile-menu--active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                // Cerrar menú móvil
+                function closeMobileMenu() {
+                    mobileMenu.classList.remove('header__mobile-menu--active');
+                    document.body.style.overflow = '';
+                }
+
+                if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+                if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+                // Accordion logic for mobile menu
+                const accordions = document.querySelectorAll('.header__mobile-menu__accordion');
+                accordions.forEach(accordion => {
+                    accordion.addEventListener('click', function () {
+                        const category = this.getAttribute('data-category');
+                        const submenu = document.getElementById(`submenu-${category}`);
+                        const chevron = this.querySelector('.header__mobile-menu__chevron');
+
+                        if (submenu) {
+                            const isActive = submenu.classList.contains('header__mobile-menu__submenu--active');
+                            
+                            // Cerrar otros
+                            document.querySelectorAll('.header__mobile-menu__submenu').forEach(m => m.classList.remove('header__mobile-menu__submenu--active'));
+                            document.querySelectorAll('.header__mobile-menu__chevron').forEach(c => c.classList.remove('header__mobile-menu__chevron--rotated'));
+
+                            if (!isActive) {
+                                submenu.classList.add('header__mobile-menu__submenu--active');
+                                if (chevron) chevron.classList.add('header__mobile-menu__chevron--rotated');
+                            }
+                        }
+                    });
+                });
+            }
         });
     </script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script src="assets/js/categorias.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/wishlist.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/checkout.js"></script>
 </body>
 </html>
