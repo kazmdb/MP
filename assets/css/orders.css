@@ -175,7 +175,83 @@
     color: white;
 }
 
-/* Empty State */
+/* ============================================
+   ORDER TRACKING TIMELINE
+   ============================================ */
+
+.order-tracking {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 12px 0 16px;
+    padding: 0 4px;
+}
+
+.order-tracking__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.order-tracking__circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.3s;
+    z-index: 2;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.order-tracking__circle--active {
+    background: #27ae60;
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+}
+
+.order-tracking__circle--inactive {
+    background: #d1d5db;
+    color: #fff;
+}
+
+.order-tracking__line {
+    flex: 1;
+    height: 3px;
+    background: #d1d5db;
+    align-self: center;
+    margin-bottom: 24px;
+    min-width: 12px;
+    transition: background 0.3s;
+}
+
+.order-tracking__line--active {
+    background: #27ae60;
+}
+
+.order-tracking__label {
+    font-size: 0.62rem;
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 600;
+    color: #999;
+    max-width: 80px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-tracking__label--active {
+    color: #27ae60;
+}
 .orders-empty {
     display: flex;
     flex-direction: column;

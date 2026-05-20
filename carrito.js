@@ -25,6 +25,19 @@ class CarritoCompras {
         // Buscar si el producto ya existe en el carrito
         const itemExistente = this.carrito.items.find(item => item.id === producto.id);
 
+        // Validar stock si el producto tiene límite definido
+        if (producto.stock !== null && producto.stock !== undefined) {
+            if (producto.stock <= 0) {
+                alert('Este producto está agotado');
+                return;
+            }
+            const yaEnCarrito = itemExistente ? itemExistente.cantidad : 0;
+            if (yaEnCarrito + cantidad > producto.stock) {
+                alert(`Solo hay ${producto.stock} unidades disponibles`);
+                return;
+            }
+        }
+
         if (itemExistente) {
             // Actualizar cantidad si ya existe
             itemExistente.cantidad += cantidad;
@@ -63,6 +76,119 @@ class CarritoCompras {
         this.renderizarCarrito();
     }
 
+    // ============================================
+    // ENTRADA RÁPIDA POR SKU
+    // ============================================
+
+    agregarPorSKU(sku, cantidad) {
+        const skuNorm = (sku || '').trim().toUpperCase();
+        if (!skuNorm) return { ok: false, msg: 'Escribe un SKU' };
+        const producto = (window.productos || []).find(p =>
+            (p.sku || '').toUpperCase() === skuNorm
+        );
+        if (!producto) return { ok: false, msg: `SKU "${skuNorm}" no encontrado` };
+        if (producto.stock !== null && producto.stock !== undefined && producto.stock <= 0) {
+            return { ok: false, msg: `"${producto.nombre}" está agotado` };
+        }
+        this.agregarProducto(producto, cantidad);
+        return { ok: true, msg: `${producto.nombre} ×${cantidad}` };
+    }
+
+    // ============================================
+    // PEDIDOS FRECUENTES
+    // ============================================
+
+    guardarPedido() {
+        if (this.carrito.items.length === 0) {
+            this.mostrarToast('El carrito está vacío', '');
+            return;
+        }
+        const nombre = prompt('Nombre para este pedido (ej: "Electricista semana"):',
+            `Pedido ${new Date().toLocaleDateString('es')}`);
+        if (nombre === null) return; // cancelled
+        const pedidos = JSON.parse(localStorage.getItem('pedidos_guardados') || '[]');
+        pedidos.unshift({
+            nombre: nombre.trim() || `Pedido ${new Date().toLocaleDateString('es')}`,
+            fecha: new Date().toLocaleDateString('es'),
+            items: this.carrito.items.map(i => ({ id: i.id, sku: i.sku, nombre: i.nombre, cantidad: i.cantidad }))
+        });
+        if (pedidos.length > 10) pedidos.length = 10;
+        localStorage.setItem('pedidos_guardados', JSON.stringify(pedidos));
+        this.renderizarPedidosGuardados();
+        this.mostrarToast('Pedido guardado', nombre);
+    }
+
+    cargarPedido(index) {
+        const pedidos = JSON.parse(localStorage.getItem('pedidos_guardados') || '[]');
+        const pedido = pedidos[index];
+        if (!pedido || !window.productos) return;
+        if (!confirm(`¿Cargar "${pedido.nombre}"? Reemplazará el carrito actual.`)) return;
+        // Limpiar carrito
+        this.carrito.items = [];
+        this.calcularTotales();
+        this.guardarCarrito();
+        this.actualizarContador();
+        // Agregar items del pedido guardado
+        let cargados = 0;
+        pedido.items.forEach(item => {
+            const producto = window.productos.find(p => String(p.id) === String(item.id));
+            if (producto) {
+                this.agregarProducto(producto, item.cantidad);
+                cargados++;
+            }
+        });
+        this.mostrarToast(`"${pedido.nombre}" cargado (${cargados} productos)`, '');
+    }
+
+    eliminarPedido(index) {
+        const pedidos = JSON.parse(localStorage.getItem('pedidos_guardados') || '[]');
+        pedidos.splice(index, 1);
+        localStorage.setItem('pedidos_guardados', JSON.stringify(pedidos));
+        this.renderizarPedidosGuardados();
+    }
+
+    renderizarPedidosGuardados() {
+        const container = document.getElementById('savedOrdersList');
+        if (!container) return;
+        const pedidos = JSON.parse(localStorage.getItem('pedidos_guardados') || '[]');
+        if (pedidos.length === 0) {
+            container.innerHTML = '<p class="cart-saved__empty">Sin pedidos guardados aún.</p>';
+            return;
+        }
+        container.innerHTML = pedidos.map((p, i) => `
+            <div class="cart-saved__item">
+                <div class="cart-saved__info">
+                    <span class="cart-saved__name">${p.nombre}</span>
+                    <span class="cart-saved__meta">${p.items.length} ref${p.items.length !== 1 ? 's' : ''} · ${p.fecha}</span>
+                </div>
+                <div class="cart-saved__actions">
+                    <button class="cart-saved__load" data-index="${i}">Cargar</button>
+                    <button class="cart-saved__del" data-index="${i}" aria-label="Eliminar">×</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ============================================
+    // MINI-BARRA DE SUBTOTAL
+    // ============================================
+
+    renderizarMiniBar() {
+        const bar = document.getElementById('cartMiniBar');
+        if (!bar) return;
+        const count = this.obtenerCantidadTotal();
+        const panelOpen = document.getElementById('cartPanel')?.classList.contains('cart-panel--active');
+        if (count === 0 || panelOpen) {
+            bar.classList.remove('cart-mini-bar--active');
+            return;
+        }
+        bar.classList.add('cart-mini-bar--active');
+        const itemsEl = document.getElementById('miniBarItems');
+        const totalEl = document.getElementById('miniBarTotal');
+        if (itemsEl) itemsEl.textContent = `${count} art${count !== 1 ? 's' : '.'}`;
+        if (totalEl) totalEl.textContent = this.formatearPrecio(this.carrito.subtotal);
+    }
+
     actualizarCantidad(id, nuevaCantidad) {
         const item = this.carrito.items.find(item => item.id === id);
 
@@ -71,6 +197,12 @@ class CarritoCompras {
         // Validar que la cantidad sea válida
         if (nuevaCantidad < 1) {
             this.eliminarProducto(id);
+            return;
+        }
+
+        // Validar stock si el producto tiene límite definido
+        if (item.stock !== null && item.stock !== undefined && nuevaCantidad > item.stock) {
+            alert(`Solo hay ${item.stock} unidades disponibles`);
             return;
         }
 
@@ -165,14 +297,14 @@ class CarritoCompras {
                         <p class="cart-item__sku">SKU: ${item.sku}</p>
                         <p class="cart-item__price">${this.formatearPrecio(item.precio)}</p>
                         <div class="cart-item__quantity">
-                            <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad(${item.id}, ${item.cantidad - 1})" ${item.cantidad <= 1 ? 'disabled' : ''}>-</button>
+                            <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad('${item.id}', ${item.cantidad - 1})" ${item.cantidad <= 1 ? 'disabled' : ''}>-</button>
                             <span class="cart-item__quantity-value">${item.cantidad}</span>
-                            <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad(${item.id}, ${item.cantidad + 1})">+</button>
+                            <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad('${item.id}', ${item.cantidad + 1})">+</button>
                         </div>
                     </div>
                     <div class="cart-item__total">
                         <p>${this.formatearPrecio(item.precio * item.cantidad)}</p>
-                        <button class="cart-item__remove" onclick="carrito.eliminarProducto(${item.id})" aria-label="Eliminar producto">×</button>
+                        <button class="cart-item__remove" onclick="carrito.eliminarProducto('${item.id}')" aria-label="Eliminar producto">×</button>
                     </div>
                 </div>
             `).join('');
@@ -212,6 +344,9 @@ class CarritoCompras {
                 cartCountDesktop.classList.add('header__cart-count--hidden');
             }
         }
+
+        // Actualizar mini-barra de subtotal
+        this.renderizarMiniBar();
     }
 
     mostrarToast(mensaje, producto) {
@@ -252,6 +387,18 @@ class CarritoCompras {
 
         // Prevenir scroll del body
         document.body.style.overflow = 'hidden';
+
+        // Ocultar mini-bar cuando el panel está abierto
+        this.renderizarMiniBar();
+
+        // Auto-foco en el campo SKU
+        setTimeout(() => {
+            const skuInput = document.getElementById('skuInput');
+            if (skuInput) skuInput.focus();
+        }, 300);
+
+        // Renderizar pedidos guardados
+        this.renderizarPedidosGuardados();
     }
 
     cerrarPanel() {
@@ -263,6 +410,9 @@ class CarritoCompras {
 
         // Restaurar scroll del body
         document.body.style.overflow = '';
+
+        // Mostrar mini-bar al cerrar
+        this.renderizarMiniBar();
     }
 
     togglePanel() {
@@ -347,6 +497,66 @@ class CarritoCompras {
                 this.cerrarPanel();
             }
         });
+
+        // ---- ENTRADA POR SKU ----
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#skuAddBtn')) {
+                const skuInput = document.getElementById('skuInput');
+                const skuQty = document.getElementById('skuQty');
+                const feedback = document.getElementById('skuFeedback');
+                if (!skuInput) return;
+                const result = this.agregarPorSKU(skuInput.value, parseInt(skuQty?.value) || 1);
+                if (feedback) {
+                    feedback.textContent = result.msg;
+                    feedback.className = 'cart-sku-bar__feedback cart-sku-bar__feedback--' + (result.ok ? 'ok' : 'err');
+                    setTimeout(() => { feedback.textContent = ''; feedback.className = 'cart-sku-bar__feedback'; }, 3000);
+                }
+                if (result.ok) {
+                    skuInput.value = '';
+                    if (skuQty) skuQty.value = 1;
+                    skuInput.focus();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.id === 'skuInput') {
+                document.getElementById('skuAddBtn')?.click();
+            }
+        });
+
+        // ---- PEDIDOS GUARDADOS ----
+        document.addEventListener('click', (e) => {
+            // Toggle panel de pedidos
+            if (e.target.closest('#savedOrdersToggle')) {
+                const body = document.getElementById('savedOrdersBody');
+                if (body) {
+                    const open = body.style.display !== 'none';
+                    body.style.display = open ? 'none' : 'block';
+                    e.target.closest('#savedOrdersToggle')?.classList.toggle('cart-saved__toggle--open', !open);
+                    if (!open) this.renderizarPedidosGuardados();
+                }
+            }
+            // Guardar pedido actual
+            if (e.target.closest('#guardarPedidoBtn')) {
+                this.guardarPedido();
+            }
+            // Cargar pedido guardado
+            if (e.target.matches('.cart-saved__load')) {
+                this.cargarPedido(parseInt(e.target.dataset.index));
+            }
+            // Eliminar pedido guardado
+            if (e.target.matches('.cart-saved__del')) {
+                this.eliminarPedido(parseInt(e.target.dataset.index));
+            }
+        });
+
+        // ---- MINI-BARRA ----
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#cartMiniBarBtn')) {
+                this.abrirPanel();
+            }
+        });
     }
 
     checkoutWhatsApp() {
@@ -408,9 +618,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Exportar funciones globales para usar en HTML
 window.agregarAlCarrito = (productoId, cantidad = 1) => {
-    // Buscar el producto en la base de datos
-    if (typeof productos !== 'undefined' && productos.length > 0) {
-        const producto = productos.find(p => p.id === productoId);
+    // Buscar el producto en los datos de Firestore (window.productos)
+    if (typeof window.productos !== 'undefined' && window.productos.length > 0) {
+        const producto = window.productos.find(p => String(p.id) === String(productoId));
         if (producto) {
             carrito.agregarProducto(producto, cantidad);
         } else {

@@ -1,0 +1,2 @@
+// Generado automáticamente — 2026-05-20T07:01:20.413Z
+window.productos_servicios = [{"id":3415,"sku":"INT1-240","nombre":"pantalon azul trabajo talle M/L/XL/XXL WURTH","precio":1635,"categoria_principal":"servicios","subcategoria":"trabajos","imagen":"assets/img/productos/INT1-240.jpg","stock":3},{"id":4938,"sku":"INT1-963","nombre":"TRAMITE EN UTE","precio":5500,"categoria_principal":"servicios","subcategoria":"tramites","imagen":"assets/img/productos/INT1-963.jpg","stock":3}];

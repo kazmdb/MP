@@ -25,6 +25,260 @@
     <link rel="stylesheet" href="assets/css/orders.css">
     <link rel="stylesheet" href="assets/css/checkout.css">
     <link rel="icon" type="image/png" href="assets/icons/mplogo.png">
+    <style>
+        /* ── HERO FUNCIONAL ─────────────────────────────────────────── */
+        .home-hero {
+            background: linear-gradient(160deg, #1a1a1a 0%, #2c2c2c 100%);
+            padding: 56px 20px 48px;
+            text-align: center;
+        }
+        .home-hero__inner { max-width: 720px; margin: 0 auto; }
+        .home-hero__title {
+            font-size: clamp(1.7rem, 4vw, 2.6rem);
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 10px;
+            line-height: 1.2;
+        }
+        .home-hero__subtitle {
+            color: rgba(255,255,255,.65);
+            font-size: .95rem;
+            margin: 0 0 28px;
+        }
+        .home-hero__search-wrapper {
+            display: flex;
+            background: #fff;
+            border-radius: 10px;
+            overflow: visible;
+            box-shadow: 0 10px 40px rgba(0,0,0,.35);
+            max-width: 660px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .home-hero__search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 16px 18px;
+            font-size: 1rem;
+            background: transparent;
+            color: #1a1a1a;
+            min-width: 0;
+            border-radius: 10px 0 0 10px;
+        }
+        .home-hero__search-input::placeholder { color: transparent; }
+        .home-hero__search-wrapper { position: relative; }
+        .home-hero__typing-label {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #aaa;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: calc(100% - 130px);
+            user-select: none;
+            line-height: 1;
+        }
+        @media (max-width: 540px) {
+            .home-hero__search-btn { padding: 0 16px; }
+            .home-hero__search-btn-text { display: none; }
+            .home-hero__typing-label { max-width: calc(100% - 60px); }
+        }
+
+        /* ── Tarjetas del carrusel: imagen más compacta, contenido sin espacio extra ─── */
+        .carousel-section__container .product-card__image-container {
+            height: 200px;
+        }
+        .carousel-section__container .product-card__title {
+            flex: none;
+        }
+        .carousel-section__container .product-card__content {
+            height: auto;
+        }
+        .carousel-section__container .product-card__price-container {
+            margin-top: 4px;
+        }
+        .carousel-section__container .product-card__price-container--offer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        /* ── Carrusel: scroll nativo en móvil ─────────────────────── */
+        @media (max-width: 767px) {
+            .carousel-section__track {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+            }
+            .carousel-section__track::-webkit-scrollbar { display: none; }
+            .carousel-section__container { transform: none !important; }
+            .carousel-section__container .product-card { scroll-snap-align: start; }
+        }
+        .home-hero__typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: .9em;
+            background: #bbb;
+            margin-left: 1px;
+            vertical-align: middle;
+            animation: heroBlink .7s step-end infinite;
+        }
+        @keyframes heroBlink {
+            0%,100% { opacity: 1; }
+            50%      { opacity: 0; }
+        }
+        .home-hero__search-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 24px;
+            background: var(--color-primary, #e53935);
+            color: #fff;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            font-size: .95rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .15s;
+            flex-shrink: 0;
+        }
+        .home-hero__search-btn:hover { background: var(--color-primary-dark, #c62828); }
+        .home-hero__shortcuts {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .home-hero__shortcut {
+            color: rgba(255,255,255,.75);
+            font-size: .85rem;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            transition: all .15s;
+        }
+        .home-hero__shortcut:hover {
+            color: #fff;
+            background: rgba(255,255,255,.1);
+        }
+
+        /* ── SECCIONES COMPARTIDAS ─────────────────────────────────── */
+        .home-section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .home-section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 20px;
+        }
+
+        /* ── GRID DE CATEGORÍAS ────────────────────────────────────── */
+        .home-categories {
+            background: #f4f4f4;
+            padding: 40px 0;
+        }
+        .home-categories__grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 1024px) {
+            .home-categories__grid { grid-template-columns: repeat(5, 1fr); }
+        }
+        @media (max-width: 680px) {
+            .home-categories__grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        }
+        @media (max-width: 420px) {
+            .home-categories__grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 768px) {
+            .home-categories { display: none; }
+        }
+        .home-cat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 8px;
+            background: #fff;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #1a1a1a;
+            border: 1px solid #e8e8e8;
+            transition: transform .15s, box-shadow .15s, border-color .15s;
+        }
+        .home-cat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,.1);
+            border-color: var(--color-primary, #e53935);
+        }
+        .home-cat-card__icon {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary, #e53935);
+        }
+        .home-cat-card__icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .home-cat-card__name {
+            font-size: .7rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            color: #333;
+        }
+        @media (max-width: 680px) {
+            .home-cat-card { padding: 12px 6px; gap: 6px; }
+            .home-cat-card__icon { width: 1.6rem; height: 1.6rem; }
+        }
+
+        /* ── BÚSQUEDAS FRECUENTES ──────────────────────────────────── */
+        .home-frecuentes {
+            background: #fff;
+            padding: 40px 0;
+            border-top: 1px solid #ebebeb;
+        }
+        .home-frecuentes__grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .home-frecuente-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            text-decoration: none;
+            color: #333;
+            font-size: .88rem;
+            font-weight: 500;
+            transition: all .15s;
+            cursor: pointer;
+        }
+        .home-frecuente-pill:hover {
+            background: var(--color-primary, #e53935);
+            border-color: var(--color-primary, #e53935);
+            color: #fff;
+        }
+        .home-frecuente-pill__icon { font-size: 1rem; }
+    </style>
 </head>
 
 <body>
@@ -200,6 +454,22 @@
             <h2 class="cart-panel__title">Tu Carrito</h2>
             <button class="cart-panel__close" id="closeCartBtn" aria-label="Cerrar carrito">×</button>
         </div>
+
+        <!-- Entrada rápida por SKU -->
+        <div class="cart-sku-bar">
+            <div class="cart-sku-bar__row">
+                <input class="cart-sku-bar__input" id="skuInput" type="text"
+                    placeholder="Código SKU..." autocomplete="off" spellcheck="false">
+                <input class="cart-sku-bar__qty" id="skuQty" type="number" value="1" min="1" max="999">
+                <button class="cart-sku-bar__btn" id="skuAddBtn" title="Añadir al carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="cart-sku-bar__feedback" id="skuFeedback"></p>
+        </div>
+
         <div class="cart-panel__content">
             <div class="cart-panel__items" id="cartItems">
                 <!-- Items del carrito -->
@@ -210,6 +480,27 @@
             </div>
         </div>
         <div class="cart-panel__footer">
+            <!-- Pedidos frecuentes -->
+            <div class="cart-saved">
+                <div class="cart-saved__header">
+                    <button class="cart-saved__toggle" id="savedOrdersToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="14" height="14">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Mis pedidos frecuentes
+                        <svg class="cart-saved__chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="12" height="12">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <button class="cart-saved__save-btn" id="guardarPedidoBtn" title="Guardar pedido actual como frecuente">
+                        Guardar
+                    </button>
+                </div>
+                <div class="cart-saved__body" id="savedOrdersBody">
+                    <div id="savedOrdersList"></div>
+                </div>
+            </div>
+
             <div class="cart-panel__summary">
                 <div class="cart-panel__summary-row">
                     <span>Subtotal</span>
@@ -231,9 +522,25 @@
     </div>
     <div class="cart-panel__overlay" id="cartOverlay"></div>
 
+    <!-- Mini-barra de subtotal (visible sin abrir el carrito) -->
+    <div class="cart-mini-bar" id="cartMiniBar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <span id="miniBarItems">0 arts.</span>
+        <span class="cart-mini-bar__sep">·</span>
+        <span class="cart-mini-bar__total" id="miniBarTotal">$0</span>
+        <button class="cart-mini-bar__btn" id="cartMiniBarBtn">Ver carrito ›</button>
+    </div>
+
     <!-- Toast de Notificación -->
     <div class="toast" id="toast">
-        <!-- ... -->
+        <div class="toast__icon">✓</div>
+        <div class="toast__content">
+            <p class="toast__message">Producto agregado al carrito</p>
+            <p class="toast__product" id="toastProduct"></p>
+        </div>
+        <button class="toast__action" id="toastAction">Ver carrito</button>
     </div>
 
     <!-- Panel de Favoritos -->
@@ -307,110 +614,144 @@
 
     <!-- Contenido Principal -->
     <main class="main">
-        <!-- Hero Carousel -->
-        <section class="hero-carousel" aria-label="Promociones destacadas">
-            <div class="hero-carousel__slides">
-                <!-- Slide 1 - Promoción Principal -->
-                <div class="hero-carousel__slide hero-carousel__slide--active" data-slide="0">
-                    <div class="hero-carousel__slide-bg"
-                        style="background-image: url('assets/images/hero/herramientaselectricas.webp');"></div>
-                    <div class="hero-carousel__slide-overlay"></div>
-                    <div class="hero-carousel__slide-content">
-                        <span class="hero-carousel__slide-badge">🔥 OFERTA FLASH</span>
-                        <h2 class="hero-carousel__slide-title">Hasta 20% OFF en Herramientas Eléctricas PRETUL</h2>
-                        <p class="hero-carousel__slide-description">Taladros, sierras y herramientas de potencia de las
-                            mejores marcas. ¡Aprovecha esta oferta por tiempo limitado!</p>
-                        <div>
-                            <a href="catalogo.html?ofertas=1"
-                                class="hero-carousel__slide-cta">Ver Ofertas</a>
-                            <a href="catalogo.html?categoria=herramientas"
-                                class="hero-carousel__slide-cta hero-carousel__slide-cta--secondary">Ver Categorías</a>
-                        </div>
-                    </div>
+        <!-- Hero Funcional: Buscador -->
+        <section class="home-hero">
+            <div class="home-hero__inner">
+                <h1 class="home-hero__title">¿Qué necesitas hoy?</h1>
+                <p class="home-hero__subtitle">+5.000 productos · Herramientas, tornillería, electricidad y más</p>
+                <div class="home-hero__search-wrapper" id="heroSearchWrapper">
+                    <input type="text" class="home-hero__search-input" id="heroSearchInput"
+                           autocomplete="off" spellcheck="false" aria-label="Buscar productos">
+                    <span class="home-hero__typing-label" id="heroTypingLabel"
+                          aria-hidden="true">Busca <span id="heroTypingText"></span><span class="home-hero__typing-cursor"></span></span>
+                    <button class="home-hero__search-btn" id="heroSearchBtn" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <span class="home-hero__search-btn-text">Buscar</span>
+                    </button>
                 </div>
-
-                <!-- Slide 2 - Herramientas de Temporada -->
-                <div class="hero-carousel__slide" data-slide="1">
-                    <div class="hero-carousel__slide-bg"
-                        style="background-image: url('assets/images/hero/kitcontruccion.webp');"></div>
-                    <div class="hero-carousel__slide-overlay"></div>
-                    <div class="hero-carousel__slide-content">
-                        <span class="hero-carousel__slide-badge">🛠️ TEMPORADA</span>
-                        <h2 class="hero-carousel__slide-title">Herramientas para Constructor</h2>
-                        <p class="hero-carousel__slide-description">Todo lo que necesitas para tu proyecto de
-                            construcción. Martillos, niveles, cintas métricas y más.</p>
-                        <div>
-                            <a href="catalogo.html?categoria=construccion" class="hero-carousel__slide-cta">Ver
-                                herramientas</a>
-                            <a href="catalogo.html?categoria=herramientas"
-                                class="hero-carousel__slide-cta hero-carousel__slide-cta--secondary">Más
-                                Herramientas</a>
-                        </div>
-                    </div>
+                <div class="home-hero__shortcuts">
+                    <a href="catalogo.html?ofertas=1" class="home-hero__shortcut"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1em;height:1em;vertical-align:-0.125em;display:inline-block"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z"/></svg> Ofertas</a>
+                    <a href="catalogo.html" class="home-hero__shortcut">Ver catálogo completo →</a>
                 </div>
-
-                <!-- Slide 3 - Seguridad Industrial -->
-                <div class="hero-carousel__slide" data-slide="2">
-                    <div class="hero-carousel__slide-bg"
-                        style="background-image: url('assets/images/hero/proteccionpersonal.webp');"></div>
-                    <div class="hero-carousel__slide-overlay"></div>
-                    <div class="hero-carousel__slide-content">
-                        <span class="hero-carousel__slide-badge">⛑️ SEGURIDAD</span>
-                        <h2 class="hero-carousel__slide-title">Equipos de Protección Personal</h2>
-                        <p class="hero-carousel__slide-description">Cascos, botas de seguridad, guantes y gafas de
-                            protección. Tu seguridad es nuestra prioridad.</p>
-                        <div>
-                            <a href="catalogo.html?categoria=proteccion&subcategoria=epp"
-                                class="hero-carousel__slide-cta">Ver EPP</a>
-                            <a href="catalogo.html"
-                                class="hero-carousel__slide-cta hero-carousel__slide-cta--secondary">Catálogo
-                                Completo</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4 - Iluminación LED -->
-                <div class="hero-carousel__slide" data-slide="3">
-                    <div class="hero-carousel__slide-bg"
-                        style="background-image: url('assets/images/hero/luzled.webp');"></div>
-                    <div class="hero-carousel__slide-overlay"></div>
-                    <div class="hero-carousel__slide-content">
-                        <span class="hero-carousel__slide-badge">💡 NUEVO</span>
-                        <h2 class="hero-carousel__slide-title">Iluminación LED Premium</h2>
-                        <p class="hero-carousel__slide-description">Ahorra hasta 80% en tu factura de luz con nuestra
-                            línea de iluminación LED de alta eficiencia.</p>
-                        <div>
-                            <a href="catalogo.html?categoria=electricidad&subcategoria=iluminacion_led"
-                                class="hero-carousel__slide-cta">Ver Catálogo LED</a>
-                            <a href="#categorias"
-                                class="hero-carousel__slide-cta hero-carousel__slide-cta--secondary">Calculadora de
-                                Ahorro</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navegación -->
-            <button class="hero-carousel__nav hero-carousel__nav--prev" aria-label="Slide anterior">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button class="hero-carousel__nav hero-carousel__nav--next" aria-label="Siguiente slide">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-
-            <!-- Indicadores -->
-            <div class="hero-carousel__indicators">
-                <button class="hero-carousel__indicator hero-carousel__indicator--active" data-slide="0"
-                    aria-label="Ir al slide 1"></button>
-                <button class="hero-carousel__indicator" data-slide="1" aria-label="Ir al slide 2"></button>
-                <button class="hero-carousel__indicator" data-slide="2" aria-label="Ir al slide 3"></button>
-                <button class="hero-carousel__indicator" data-slide="3" aria-label="Ir al slide 4"></button>
             </div>
         </section>
+
+        <!-- Grid de Categorías -->
+        <section class="home-categories" id="categorias">
+            <div class="home-section-inner">
+                <h2 class="home-section-title">Navega por categoría</h2>
+                <div class="home-categories__grid">
+                    <a href="catalogo.html?categoria=herramientas" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- wrench -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Herramientas</span>
+                    </a>
+                    <a href="catalogo.html?categoria=electricidad" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- bolt -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Material Eléctrico</span>
+                    </a>
+                    <a href="catalogo.html?categoria=tornilleria" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- cog-6-tooth -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Tornillería</span>
+                    </a>
+                    <a href="catalogo.html?categoria=cerrajeria" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- lock-closed -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Cerrajería</span>
+                    </a>
+                    <a href="catalogo.html?categoria=pintura" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- paint-brush -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Pintura</span>
+                    </a>
+                    <a href="catalogo.html?categoria=construccion" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- building-office-2 -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Construcción</span>
+                    </a>
+                    <a href="catalogo.html?categoria=proteccion" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- shield-check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Protección</span>
+                    </a>
+                    <a href="catalogo.html?categoria=jardin" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- sun -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Jardín</span>
+                    </a>
+                    <a href="catalogo.html?categoria=agricola" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- globe-alt -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Agrícola</span>
+                    </a>
+                    <a href="catalogo.html?categoria=automotriz" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- truck -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Automotriz</span>
+                    </a>
+                    <a href="catalogo.html?categoria=almacenamiento" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- archive-box -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Almacenamiento</span>
+                    </a>
+                    <a href="catalogo.html?categoria=cocina" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- fire -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Cocina</span>
+                    </a>
+                    <a href="catalogo.html?categoria=soldadura" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- sparkles -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Soldadura</span>
+                    </a>
+                    <a href="catalogo.html?categoria=hogar" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- home -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Hogar</span>
+                    </a>
+                    <a href="catalogo.html?ofertas=1" class="home-cat-card">
+                        <span class="home-cat-card__icon">
+                            <!-- tag -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z"/></svg>
+                        </span>
+                        <span class="home-cat-card__name">Ofertas</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
 
         <!-- Productos Destacados con Carruseles -->
         <section class="featured-products" id="productos-destacados">
@@ -420,8 +761,7 @@
                 <div class="carousel-section" data-category="ofertas">
                     <div class="carousel-section__header">
                         <div class="carousel-section__title-wrapper">
-                            <h3 class="carousel-section__title" style="color: var(--color-accent);">🔥 Ofertas
-                                Especiales</h3>
+                            <h3 class="carousel-section__title" style="color: var(--color-accent);"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1em;height:1em;vertical-align:-0.125em;display:inline-block"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z"/></svg> Ofertas Especiales</h3>
                             <a href="catalogo.html?oferta=true" class="carousel-section__view-all">Ver todo →</a>
                         </div>
                         <div class="carousel-section__controls">
@@ -722,25 +1062,62 @@
                 // Podemos esperar un poco o inicializarlo si auth.js no cargó
             }
 
-            // Función para cargar productos desde Firebase (con límite para performance)
+            // ── SISTEMA DE CACHE CON VERSIÓN ──────────────────────────────────────
+            // 1 sola lectura de Firestore por sesión (el doc de versión).
+            // Los productos se guardan en localStorage y solo se re-descargan
+            // cuando el admin modifica el catálogo (bumps la versión).
+            // ─────────────────────────────────────────────────────────────────────
+            const CACHE_KEY_DATA    = 'mp_productos_data';
+            const CACHE_KEY_VERSION = 'mp_productos_version';
+
             async function fetchFirebaseProducts() {
                 try {
-                    console.log('📥 Cargando productos desde Firestore...');
-                    const snapshot = await db.collection('productos')
-                        .orderBy('fecha_creacion', 'desc')
-                        .limit(10000) // Traemos todos los productos para la home
+                    // 1 lectura: documento de versión
+                    const verDoc = await window.db.collection('config').doc('catalogo').get();
+                    const remoteVersion = verDoc.exists ? (verDoc.data().version || '0') : '0';
+                    const localVersion  = localStorage.getItem(CACHE_KEY_VERSION) || '';
+                    const cachedData    = localStorage.getItem(CACHE_KEY_DATA);
+
+                    if (remoteVersion === localVersion && cachedData) {
+                        // Cache válido → sin lecturas adicionales
+                        window.productos = JSON.parse(cachedData);
+                        console.log(`✅ ${window.productos.length} productos desde cache local (v${remoteVersion})`);
+                        return true;
+                    }
+
+                    // Cache desactualizado → descargar todo el catálogo
+                    console.log('📥 Catálogo actualizado, descargando desde Firestore...');
+                    const snapshot = await window.db.collection('productos')
+                        .orderBy('nombre')
                         .get();
-                    
-                    if (!window.productos) window.productos = [];
+
+                    window.productos = [];
                     snapshot.forEach(doc => {
                         const p = doc.data();
-                        p.id = doc.id; // Usar ID de Firestore como ID
+                        p.id = doc.id;
                         window.productos.push(p);
                     });
-                    console.log(`✅ ${window.productos.length} productos cargados desde Firebase`);
+
+                    // Guardar en cache
+                    try {
+                        localStorage.setItem(CACHE_KEY_DATA, JSON.stringify(window.productos));
+                        localStorage.setItem(CACHE_KEY_VERSION, remoteVersion);
+                    } catch (e) {
+                        // localStorage lleno → continúa sin cache
+                        console.warn('⚠️ localStorage lleno, no se pudo cachear:', e.message);
+                    }
+
+                    console.log(`✅ ${window.productos.length} productos cargados y cacheados (v${remoteVersion})`);
                     return true;
                 } catch (error) {
-                    console.error('❌ Error al cargar productos de Firebase:', error);
+                    // Sin conexión → intentar cache aunque esté desactualizado
+                    const cachedData = localStorage.getItem(CACHE_KEY_DATA);
+                    if (cachedData) {
+                        window.productos = JSON.parse(cachedData);
+                        console.warn(`⚠️ Sin conexión, usando cache local (${window.productos.length} productos)`);
+                        return true;
+                    }
+                    console.error('❌ Error al cargar productos y sin cache disponible:', error);
                     return false;
                 }
             }
@@ -748,8 +1125,7 @@
             // Cargar datos antes de iniciar la UI
             const success = await fetchFirebaseProducts();
             if (!success) {
-                // Fallback si Firebase falla (opcional: cargar local)
-                console.warn('⚠️ Usando productos locales como fallback');
+                console.warn('⚠️ No se pudieron cargar productos');
             }
 
             // ============================================
@@ -1093,19 +1469,21 @@
                 // Mover carrusel
                 function moveCarousel(direction) {
                     const cardWidth = container.firstElementChild ?
-                        container.firstElementChild.offsetWidth + 20 : 0; // + gap
-
+                        container.firstElementChild.offsetWidth + 20 : 0;
                     if (cardWidth === 0) return;
 
-                    // Desplazar 3 productos a la vez
+                    if (window.innerWidth <= 767 && track) {
+                        // Móvil: scroll nativo
+                        programmaticScroll = true;
+                        track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+                        setTimeout(() => { programmaticScroll = false; }, 1200);
+                        return;
+                    }
+
+                    // Desktop: transform
                     currentIndex += direction * 3;
-
-                    // Limitar índice
                     currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
-
-                    // Aplicar transformación
                     container.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-
                     updateButtons();
                 }
 
@@ -1116,19 +1494,37 @@
                 // Auto-scroll cada 5 segundos
                 let autoScrollInterval;
                 let isAutoScrollPaused = false;
+                let pauseUntil = 0;
+
+                function pauseAutoScrollFor(ms) {
+                    pauseUntil = Date.now() + ms;
+                }
 
                 function startAutoScroll() {
                     if (autoScrollInterval) clearInterval(autoScrollInterval);
                     autoScrollInterval = setInterval(() => {
-                        if (!isAutoScrollPaused && currentIndex < maxIndex) {
-                            moveCarousel(1);
-                        } else if (currentIndex >= maxIndex) {
-                            // Reiniciar al principio cuando llega al final
-                            currentIndex = 0;
-                            container.style.transform = 'translateX(0)';
-                            updateButtons();
+                        if (isAutoScrollPaused || Date.now() < pauseUntil) return;
+                        if (window.innerWidth <= 767 && track) {
+                            programmaticScroll = true;
+                            const maxScroll = track.scrollWidth - track.clientWidth;
+                            if (track.scrollLeft >= maxScroll - 10) {
+                                track.scrollTo({ left: 0, behavior: 'smooth' });
+                            } else {
+                                const cardW = container.firstElementChild
+                                    ? container.firstElementChild.offsetWidth + 20 : 0;
+                                track.scrollBy({ left: cardW, behavior: 'smooth' });
+                            }
+                            setTimeout(() => { programmaticScroll = false; }, 1200);
+                        } else {
+                            if (currentIndex < maxIndex) {
+                                moveCarousel(1);
+                            } else {
+                                currentIndex = 0;
+                                container.style.transform = 'translateX(0)';
+                                updateButtons();
+                            }
                         }
-                    }, 5000); // 5 segundos
+                    }, 5000);
                 }
 
                 function stopAutoScroll() {
@@ -1138,14 +1534,18 @@
                     }
                 }
 
-                // Pausar auto-scroll al hacer hover
-                carouselSection.addEventListener('mouseenter', () => {
-                    isAutoScrollPaused = true;
-                });
+                // Pausar auto-scroll al hacer hover (desktop)
+                carouselSection.addEventListener('mouseenter', () => { isAutoScrollPaused = true; });
+                carouselSection.addEventListener('mouseleave', () => { isAutoScrollPaused = false; });
 
-                carouselSection.addEventListener('mouseleave', () => {
-                    isAutoScrollPaused = false;
-                });
+                // Pausa 30 s cuando el usuario scrollea manualmente en móvil
+                const track = carouselSection.querySelector('.carousel-section__track');
+                let programmaticScroll = false;
+                if (track) {
+                    track.addEventListener('scroll', () => {
+                        if (!programmaticScroll) pauseAutoScrollFor(30000);
+                    }, { passive: true });
+                }
 
                 // Iniciar auto-scroll
                 startAutoScroll();
@@ -1228,441 +1628,98 @@
                 }, 3000);
             }
 
-            // Función para limpiar resultados de búsqueda
+            // Delegado al motor de búsqueda inteligente
             function limpiarResultadosBusqueda() {
-                console.log('🧹 Limpiando resultados de búsqueda...');
-                const existingResults = document.querySelector('.search-results');
-                console.log('  - Resultados existentes:', existingResults ? 'Sí' : 'No');
-                if (existingResults) {
-                    existingResults.remove();
-                    console.log('✅ Resultados eliminados');
-                }
+                if (window.BuscadorInteligente) window.BuscadorInteligente.limpiar();
             }
 
-            // Función para buscar productos
-            function buscarProductos(query) {
-                console.log('🔍 buscarProductos() llamada con query:', query);
-
-                // Usar window.productos para asegurar acceso a la variable global
-                const productosDisponibles = window.productos || [];
-
-                console.log('📦 Productos disponibles:', productosDisponibles.length);
-                console.log('  - window.productos existe:', !!window.productos);
-                console.log('  - Es array:', Array.isArray(productosDisponibles));
-
-                if (!Array.isArray(productosDisponibles)) {
-                    console.error('❌ Array de productos no disponible');
-                    return [];
+            function buscarProductos(query, categoria) {
+                if (window.BuscadorInteligente) {
+                    return window.BuscadorInteligente.buscar(query, categoria || 'all');
                 }
-
-                const queryLower = query.toLowerCase().trim();
-                console.log('  - Query normalizado:', queryLower);
-
-                const resultados = productosDisponibles.filter(producto => {
-                    // Buscar en nombre
-                    if (producto.nombre && producto.nombre.toLowerCase().includes(queryLower)) {
-                        return true;
-                    }
-
-                    // Buscar en SKU
-                    if (producto.sku && producto.sku.toLowerCase().includes(queryLower)) {
-                        return true;
-                    }
-
-                    // Buscar en categoría principal
-                    if (producto.categoria_principal && producto.categoria_principal.toLowerCase().includes(queryLower)) {
-                        return true;
-                    }
-
-                    // Buscar en subcategoría
-                    if (producto.subcategoria && producto.subcategoria.toLowerCase().includes(queryLower)) {
-                        return true;
-                    }
-
-                    // Buscar en marca si existe
-                    if (producto.marca && producto.marca.toLowerCase().includes(queryLower)) {
-                        return true;
-                    }
-
-                    return false;
-                });
-
-                console.log('✅ Resultados encontrados:', resultados.length);
-                return resultados;
+                const q = (query || '').toLowerCase().trim();
+                return (window.productos || []).filter(p =>
+                    (p.nombre && p.nombre.toLowerCase().includes(q)) ||
+                    (p.sku && p.sku.toLowerCase().includes(q))
+                );
             }
 
-            // Función para posicionar resultados de búsqueda
-            function posicionarResultadosBusqueda(resultsContainer) {
-                console.log('📍 posicionarResultadosBusqueda() llamada');
-                try {
-                    // Usar el contenedor completo de búsqueda en lugar del input individual
-                    const searchContainer = document.querySelector('.header__search-advanced');
-                    if (!searchContainer) {
-                        console.warn('⚠️ No se encontró el contenedor de búsqueda');
-                        return;
-                    }
-
-                    console.log('✅ Contenedor de búsqueda encontrado');
-                    const rect = searchContainer.getBoundingClientRect();
-                    console.log('  - Rect del contenedor:', rect);
-                    console.log('    - top:', rect.top);
-                    console.log('    - bottom:', rect.bottom);
-                    console.log('    - left:', rect.left);
-                    console.log('    - width:', rect.width);
-
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-
-                    console.log('  - Scroll positions:', { scrollTop, scrollLeft });
-
-                    // Calcular posición relativa al viewport
-                    const topPosition = rect.bottom + window.scrollY + 5;
-                    const leftPosition = rect.left + window.scrollX;
-
-                    console.log('  - Posiciones calculadas:', { topPosition, leftPosition });
-
-                    // Aplicar posición - alinear con el contenedor de búsqueda
-                    resultsContainer.style.top = topPosition + 'px';
-                    resultsContainer.style.left = leftPosition + 'px';
-                    resultsContainer.style.transform = 'none'; // Eliminar el centrado
-
-                    // Ajustar ancho para que coincida con el contenedor de búsqueda completo
-                    resultsContainer.style.width = rect.width + 'px';
-                    resultsContainer.style.maxWidth = 'none'; // Eliminar el límite máximo
-
-                    console.log('✅ Posicionamiento aplicado');
-                    console.log('  - top:', resultsContainer.style.top);
-                    console.log('  - left:', resultsContainer.style.left);
-                    console.log('  - width:', resultsContainer.style.width);
-                    console.log('  - transform:', resultsContainer.style.transform);
-
-                } catch (error) {
-                    console.error('❌ Error al posicionar resultados:', error);
-                    console.error('Stack trace:', error.stack);
-                }
-            }
-
-            // Función para mostrar resultados de búsqueda
+            // Delegado al motor de búsqueda inteligente (rendering)
             function mostrarResultadosBusqueda(resultados, query) {
-                console.log('📋 mostrarResultadosBusqueda() llamada');
-                console.log('  - Resultados:', resultados.length);
-                console.log('  - Query:', query);
 
-                try {
-                    // Validar parámetros
-                    if (!Array.isArray(resultados)) {
-                        console.error('❌ Resultados no es un array válido');
-                        return;
-                    }
-
-                    if (!query || typeof query !== 'string') {
-                        console.error('❌ Query no es válido');
-                        return;
-                    }
-
-                    console.log('✅ Parámetros válidos, procediendo...');
-
-                    // Eliminar resultados anteriores
-                    limpiarResultadosBusqueda();
-
-                    if (resultados.length === 0) {
-                        console.log('⚠️ No hay resultados, mostrando mensaje de sin resultados');
-                        // Mostrar mensaje de sin resultados
-                        const noResults = document.createElement('div');
-                        noResults.className = 'search-results';
-                        noResults.innerHTML = `
-                            <div class="search-results__no-results">
-                                <p>No se encontraron productos para "${query}"</p>
-                                <p class="search-results__suggestion">Intenta con otros términos o busca en todas las categorías</p>
-                            </div>
-                        `;
-
-                        // Posicionar el contenedor de forma fija centrada
-                        posicionarResultadosBusqueda(noResults);
-
-                        document.body.appendChild(noResults);
-                        console.log('✅ Mensaje de sin resultados agregado al DOM');
-                        return;
-                    }
-
-                    console.log('✅ Hay resultados, creando contenedor...');
-
-                    // Limitar a 8 resultados para no saturar
-                    const resultadosLimitados = resultados.slice(0, 8);
-                    console.log('📦 Resultados limitados a:', resultadosLimitados.length);
-
-                    // Crear contenedor de resultados
-                    const resultsContainer = document.createElement('div');
-                    resultsContainer.className = 'search-results';
-                    console.log('📦 Contenedor creado con clase:', resultsContainer.className);
-
-                    // Crear header de resultados
-                    const resultsHeader = document.createElement('div');
-                    resultsHeader.className = 'search-results__header';
-                    resultsHeader.innerHTML = `
-                    <span class="search-results__count">${resultados.length} resultados encontrados</span>
-                    <button class="search-results__close" aria-label="Cerrar resultados">×</button>
-                `;
-                    console.log('📋 Header creado');
-
-                    // Crear lista de resultados
-                    const resultsList = document.createElement('div');
-                    resultsList.className = 'search-results__list';
-                    console.log('📋 Lista creada');
-
-                    resultadosLimitados.forEach((producto, index) => {
-                        console.log(`📦 Creando item ${index + 1}/${resultadosLimitados.length}:`, producto.nombre);
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'search-results__item';
-                        resultItem.dataset.sku = producto.sku;
-
-                        const imagenSrc = window.getCloudinaryUrl ? window.getCloudinaryUrl(producto.imagen) : (producto.imagen || 'assets/images/placeholder-product.png');
-
-                        resultItem.innerHTML = `
-                        <div class="search-results__item-image">
-                            <a href="producto.html?id=${producto.id}" class="search-results__item-image-link" aria-label="Ver ${producto.nombre}">
-                                <img src="${imagenSrc}" alt="${producto.nombre}" loading="lazy">
-                            </a>
-                        </div>
-                        <div class="search-results__item-info">
-                            <h4 class="search-results__item-name">${producto.nombre}</h4>
-                            <p class="search-results__item-sku">SKU: ${producto.sku}</p>
-                            <p class="search-results__item-price">$${producto.precio.toFixed(2)}</p>
-                        </div>
-                        <button class="search-results__item-add" aria-label="Agregar al carrito">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </button>
-                    `;
-
-                        // Evento para ir al producto
-                        resultItem.addEventListener('click', function (e) {
-                            if (!e.target.closest('.search-results__item-add') && !e.target.closest('.search-results__item-image-link')) {
-                                // Navegar a la página del producto
-                                window.location.href = `producto.html?id=${producto.id}`;
-                            }
-                        });
-
-                        // Evento para agregar al carrito
-                        const addToCartBtn = resultItem.querySelector('.search-results__item-add');
-                        addToCartBtn.addEventListener('click', function (e) {
-                            e.stopPropagation();
-                            // Usar la función global del carrito
-                            if (typeof window.agregarAlCarrito === 'function') {
-                                window.agregarAlCarrito(producto.id, 1);
-                            } else {
-                                console.error('Función agregarAlCarrito no disponible');
-                                showNotification(`${producto.nombre} agregado al carrito`);
-                            }
-                        });
-
-                        resultsList.appendChild(resultItem);
-                    });
-
-                    console.log('✅ Todos los items agregados a la lista');
-
-                    // Botón ver todos si hay más resultados
-                    if (resultados.length > 8) {
-                        console.log('📋 Creando botón "Ver todos"');
-                        const viewAllBtn = document.createElement('button');
-                        viewAllBtn.className = 'search-results__view-all';
-                        viewAllBtn.textContent = `Ver todos los ${resultados.length} resultados`;
-                        viewAllBtn.addEventListener('click', function () {
-                            window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
-                        });
-                        resultsList.appendChild(viewAllBtn);
-                    }
-
-                    resultsContainer.appendChild(resultsHeader);
-                    resultsContainer.appendChild(resultsList);
-
-                    console.log('✅ Header y lista agregados al contenedor');
-
-                    // Posicionar el contenedor de forma fija centrada
-                    console.log('📍 Posicionando contenedor...');
-                    posicionarResultadosBusqueda(resultsContainer);
-
-                    console.log('📦 Agregando contenedor al body...');
-                    document.body.appendChild(resultsContainer);
-
-                    // Verificar visibilidad del contenedor
-                    setTimeout(() => {
-                        const computedStyle = window.getComputedStyle(resultsContainer);
-                        console.log('👁️ Estilos computados del contenedor:');
-                        console.log('  - display:', computedStyle.display);
-                        console.log('  - visibility:', computedStyle.visibility);
-                        console.log('  - opacity:', computedStyle.opacity);
-                        console.log('  - position:', computedStyle.position);
-                        console.log('  - top:', computedStyle.top);
-                        console.log('  - left:', computedStyle.left);
-                        console.log('  - width:', computedStyle.width);
-                        console.log('  - height:', computedStyle.height);
-                        console.log('  - z-index:', computedStyle.zIndex);
-                        console.log('  - transform:', computedStyle.transform);
-                        console.log('  - overflow:', computedStyle.overflow);
-                        console.log('  - max-height:', computedStyle.maxHeight);
-
-                        // Verificar si el elemento está en el viewport
-                        const rect = resultsContainer.getBoundingClientRect();
-                        console.log('📐 Rectángulo del contenedor:');
-                        console.log('  - top:', rect.top);
-                        console.log('  - left:', rect.left);
-                        console.log('  - width:', rect.width);
-                        console.log('  - height:', rect.height);
-                        console.log('  - isVisible:', rect.width > 0 && rect.height > 0);
-
-                        // Verificar si está detrás de otros elementos
-                        console.log('🔍 Verificando si está detrás de otros elementos...');
-                        const header = document.querySelector('.header');
-                        if (header) {
-                            const headerRect = header.getBoundingClientRect();
-                            const headerZIndex = window.getComputedStyle(header).zIndex;
-                            console.log('  - Header z-index:', headerZIndex);
-                            console.log('  - Header rect:', headerRect);
-                            console.log('  - Contenedor está detrás del header:', rect.top < headerRect.bottom);
-                        }
-                    }, 100);
-
-                    console.log('✅ Contenedor agregado al DOM');
-
-                    // Evento para cerrar resultados
-                    const closeBtn = resultsContainer.querySelector('.search-results__close');
-                    if (closeBtn) {
-                        console.log('✅ Botón de cierre encontrado, agregando evento');
-                        closeBtn.addEventListener('click', limpiarResultadosBusqueda);
-                    } else {
-                        console.warn('⚠️ No se encontró el botón de cierre');
-                    }
-
-                    // Cerrar al hacer clic fuera
-                    console.log('🖱️ Configurando cierre al hacer clic fuera');
-                    document.addEventListener('click', function closeResultsOutside(e) {
-                        if (!resultsContainer.contains(e.target) && !searchInput.contains(e.target)) {
-                            console.log('🖱️ Clic fuera detectado, cerrando resultados');
-                            limpiarResultadosBusqueda();
-                            document.removeEventListener('click', closeResultsOutside);
-                        }
-                    });
-
-                    console.log('✅ mostrarResultadosBusqueda() completada exitosamente');
-                } catch (error) {
-                    console.error('❌ Error al mostrar resultados de búsqueda:', error);
-                    console.error('Stack trace:', error.stack);
-                    limpiarResultadosBusqueda();
+                if (window.BuscadorInteligente) {
+                    window.BuscadorInteligente.mostrarResultados(resultados, query, searchInput);
                 }
             }
 
-            // Búsqueda funcional
-            console.log('🔍 Inicializando buscador de PC...');
-
+            // ── Inicialización del buscador desktop ──────────────────────────────
             const searchInput = document.querySelector('.header__search-input');
             const searchButton = document.querySelector('.header__search-button');
             const searchCategory = document.querySelector('.header__search-category');
             let searchTimeout;
 
-            console.log('📊 Elementos del buscador:');
-            console.log('  - searchInput:', searchInput ? '✅ Encontrado' : '❌ No encontrado');
-            console.log('  - searchButton:', searchButton ? '✅ Encontrado' : '❌ No encontrado');
-            console.log('  - searchCategory:', searchCategory ? '✅ Encontrado' : '❌ No encontrado');
-
             if (searchInput && searchButton) {
                 const handleSearch = function (redirectToCatalog = false) {
-                    try {
-                        console.log('🔎 Ejecutando búsqueda...');
-                        const query = searchInput.value.trim();
-                        const category = searchCategory ? searchCategory.value : 'all';
-
-                        console.log('  - Query:', query);
-                        console.log('  - Categoría:', category);
-                        console.log('  - Longitud query:', query.length);
-                        console.log('  - Redirigir al catálogo:', redirectToCatalog);
-
-                        if (query.length >= 2) {
-                            console.log('✅ Query válido, iniciando búsqueda de productos...');
-                            // Filtrar productos por categoría si se seleccionó una
-                            let resultados = buscarProductos(query);
-
-                            console.log('📦 Resultados encontrados:', resultados.length);
-
-                            if (category !== 'all') {
-                                console.log('🏷️ Filtrando por categoría:', category);
-                                resultados = resultados.filter(producto => {
-                                    const categoriaLower = producto.categoria_principal.toLowerCase();
-                                    return categoriaLower === category;
-                                });
-                                console.log('📦 Resultados después de filtro:', resultados.length);
-                            }
-
-                            if (redirectToCatalog) {
-                                // Redirigir al catálogo con los parámetros de búsqueda
-                                let catalogUrl = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
-
-                                if (category !== 'all') {
-                                    catalogUrl += `&categoria=${category}`;
-                                }
-
-                                console.log('🔗 Redirigiendo a:', catalogUrl);
-                                window.location.href = catalogUrl;
-                            } else {
-                                // Mostrar resultados en dropdown
-                                console.log('📋 Mostrando resultados en dropdown...');
-                                mostrarResultadosBusqueda(resultados, query);
-                            }
+                    const query = searchInput.value.trim();
+                    const category = searchCategory ? searchCategory.value : 'all';
+                    if (query.length >= 2) {
+                        const resultados = buscarProductos(query, category);
+                        if (redirectToCatalog) {
+                            if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
+                            let url = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                            if (category !== 'all') url += `&categoria=${category}`;
+                            window.location.href = url;
                         } else {
-                            console.log('⚠️ Query muy corto');
-                            if (redirectToCatalog) {
-                                showNotification('Por favor ingresa al menos 2 caracteres para buscar');
-                            } else {
-                                limpiarResultadosBusqueda();
-                            }
+                            mostrarResultadosBusqueda(resultados, query);
                         }
-                    } catch (error) {
-                        console.error('❌ Error en la búsqueda:', error);
-                        console.error('Stack trace:', error.stack);
-                        if (!redirectToCatalog) {
+                    } else {
+                        if (redirectToCatalog) {
+                            showNotification('Por favor ingresa al menos 2 caracteres para buscar');
+                        } else {
                             limpiarResultadosBusqueda();
                         }
                     }
                 };
 
-                // Búsqueda en tiempo real con debounce (muestra dropdown)
-                searchInput.addEventListener('input', function () {
-                    console.log('⌨️ Evento input detectado. Valor:', searchInput.value);
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        if (searchInput.value.trim().length >= 2) {
-                            console.log('⏰ Debounce completado, ejecutando búsqueda en dropdown');
-                            handleSearch(false); // false = no redirigir, mostrar dropdown
-                        } else {
-                            console.log('⚠️ Query muy corto después de debounce');
-                            limpiarResultadosBusqueda();
-                        }
-                    }, 300);
-                });
-
-                // Búsqueda al presionar Enter (redirige al catálogo)
-                searchInput.addEventListener('keypress', function (e) {
-                    console.log('⌨️ Evento keypress detectado. Key:', e.key);
-                    if (e.key === 'Enter') {
-                        console.log('⏎ Enter presionado, redirigiendo al catálogo');
-                        clearTimeout(searchTimeout);
-                        handleSearch(true); // true = redirigir al catálogo
+                // Historial al enfocar con el campo vacío
+                searchInput.addEventListener('focus', function () {
+                    if (searchInput.value.trim().length === 0 && window.BuscadorInteligente) {
+                        window.BuscadorInteligente.mostrarHistorial(searchInput, function (q) {
+                            searchInput.value = q;
+                            handleSearch(false);
+                        });
                     }
                 });
 
-                // Búsqueda al hacer clic en el botón (redirige al catálogo)
-                searchButton.addEventListener('click', function () {
-                    console.log('🖱️ Botón de búsqueda clickeado, redirigiendo al catálogo');
+                // Búsqueda en tiempo real con debounce
+                searchInput.addEventListener('input', function () {
                     clearTimeout(searchTimeout);
-                    handleSearch(true); // true = redirigir al catálogo
+                    searchTimeout = setTimeout(() => {
+                        const v = searchInput.value.trim();
+                        if (v.length >= 2) {
+                            handleSearch(false);
+                        } else if (v.length === 0 && window.BuscadorInteligente) {
+                            window.BuscadorInteligente.mostrarHistorial(searchInput, function (q) {
+                                searchInput.value = q;
+                                handleSearch(false);
+                            });
+                        } else {
+                            limpiarResultadosBusqueda();
+                        }
+                    }, 250);
                 });
 
-                console.log('✅ Buscador de PC inicializado correctamente');
-            } else {
-                console.warn('⚠️ No se encontraron elementos del buscador de PC');
-                console.warn('  - searchInput existe:', !!searchInput);
-                console.warn('  - searchButton existe:', !!searchButton);
+                // Enter → ir al catálogo
+                searchInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { clearTimeout(searchTimeout); handleSearch(true); }
+                    if (e.key === 'Escape') { limpiarResultadosBusqueda(); }
+                });
+
+                // Botón lupa → ir al catálogo
+                searchButton.addEventListener('click', function () {
+                    clearTimeout(searchTimeout);
+                    handleSearch(true);
+                });
             }
 
 
@@ -1799,9 +1856,6 @@
 
                     // Inicializar botones de añadir al carrito
                     this.initAddToCart();
-
-                    // Inicializar botones de wishlist
-                    this.initWishlist();
 
                     // Inicializar botones de vista rápida
                     this.initQuickView();
@@ -1950,26 +2004,6 @@
                         button.innerHTML = originalText;
                         button.style.background = '';
                     }, 1500);
-                },
-
-                initWishlist() {
-                    const wishlistButtons = document.querySelectorAll('.product-card__wishlist');
-
-                    wishlistButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            const isWishlisted = button.classList.toggle('product-card__wishlist--active');
-
-                            if (isWishlisted) {
-                                button.style.background = 'var(--color-primary)';
-                                button.style.color = 'var(--color-white)';
-                                showNotification('Producto agregado a favoritos');
-                            } else {
-                                button.style.background = '';
-                                button.style.color = '';
-                                showNotification('Producto eliminado de favoritos');
-                            }
-                        });
-                    });
                 },
 
                 initQuickView() {
@@ -2523,17 +2557,23 @@
                 });
             });
 
-            // ============================================
-            // MOBILE SEARCH FUNCTIONALITY
-            // ============================================
-
+            // ── Inicialización del buscador mobile ───────────────────────────────
             const searchMobileToggle = document.querySelector('.header__btn--search-mobile');
             const searchMobile = document.querySelector('.header__search-mobile');
             const searchMobileInput = document.querySelector('.header__search-mobile__input');
             const searchMobileButton = document.querySelector('.header__search-mobile__button');
             let mobileSearchTimeout;
 
-            // Toggle búsqueda móvil
+            function limpiarResultadosBusquedaMovil() {
+                if (window.BuscadorInteligente) window.BuscadorInteligente.limpiarMobile(searchMobile);
+            }
+
+            function mostrarResultadosBusquedaMovil(resultados, query) {
+                if (window.BuscadorInteligente) {
+                    window.BuscadorInteligente.mostrarResultadosMobile(resultados, query, searchMobile);
+                }
+            }
+
             searchMobileToggle.addEventListener('click', function () {
                 searchMobile.classList.toggle('header__search-mobile--active');
                 if (searchMobile.classList.contains('header__search-mobile--active')) {
@@ -2541,137 +2581,151 @@
                 }
             });
 
-            // Búsqueda móvil en tiempo real
             if (searchMobileInput && searchMobileButton) {
-                const handleMobileSearch = function (redirectToCatalog = false) {
+                const handleMobileSearch = function (redirectToCatalog) {
                     const query = searchMobileInput.value.trim();
-
-                    console.log('🔍 Búsqueda móvil - Query:', query, 'Redirigir:', redirectToCatalog);
-
                     if (query.length >= 2) {
                         if (redirectToCatalog) {
-                            // Redirigir al catálogo con los parámetros de búsqueda
-                            const catalogUrl = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
-                            console.log('🔗 Redirigiendo a:', catalogUrl);
-                            window.location.href = catalogUrl;
+                            if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
+                            window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
                         } else {
-                            // Mostrar resultados en dropdown móvil
-                            const resultados = buscarProductos(query);
-                            mostrarResultadosBusquedaMovil(resultados, query);
+                            mostrarResultadosBusquedaMovil(buscarProductos(query), query);
                         }
                     } else {
-                        if (redirectToCatalog) {
-                            showNotification('Por favor ingresa al menos 2 caracteres para buscar');
-                        } else {
-                            limpiarResultadosBusquedaMovil();
-                        }
+                        if (redirectToCatalog) showNotification('Por favor ingresa al menos 2 caracteres para buscar');
+                        else limpiarResultadosBusquedaMovil();
                     }
                 };
 
                 searchMobileInput.addEventListener('input', function () {
                     clearTimeout(mobileSearchTimeout);
                     mobileSearchTimeout = setTimeout(() => {
-                        if (searchMobileInput.value.trim().length >= 2) {
-                            handleMobileSearch(false); // false = mostrar dropdown
-                        } else {
-                            limpiarResultadosBusquedaMovil();
-                        }
-                    }, 300);
+                        if (searchMobileInput.value.trim().length >= 2) handleMobileSearch(false);
+                        else limpiarResultadosBusquedaMovil();
+                    }, 250);
                 });
 
-                searchMobileInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                        clearTimeout(mobileSearchTimeout);
-                        handleMobileSearch(true); // true = redirigir al catálogo
-                    }
+                searchMobileInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { clearTimeout(mobileSearchTimeout); handleMobileSearch(true); }
                 });
 
                 searchMobileButton.addEventListener('click', function () {
                     clearTimeout(mobileSearchTimeout);
-                    handleMobileSearch(true); // true = redirigir al catálogo
+                    handleMobileSearch(true);
                 });
             }
 
-            // Función para limpiar resultados de búsqueda móvil
-            function limpiarResultadosBusquedaMovil() {
-                const existingResults = searchMobile.querySelector('.search-results-mobile');
-                const noResults = searchMobile.querySelector('.search-results-mobile__no-results');
-                if (existingResults) {
-                    existingResults.remove();
-                }
-                if (noResults) {
-                    noResults.remove();
-                }
-            }
-
-            // Función para mostrar resultados de búsqueda móvil
-            function mostrarResultadosBusquedaMovil(resultados, query) {
-                // Eliminar resultados anteriores
-                limpiarResultadosBusquedaMovil();
-
-                if (resultados.length === 0) {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'search-results-mobile__no-results';
-                    noResults.innerHTML = `
-                        <p>No se encontraron productos para "${query}"</p>
-                    `;
-                    searchMobile.appendChild(noResults);
-                    return;
-                }
-
-                const resultadosLimitados = resultados.slice(0, 6);
-
-                const resultsContainer = document.createElement('div');
-                resultsContainer.className = 'search-results-mobile';
-
-                resultadosLimitados.forEach(producto => {
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'search-results-mobile__item';
-                    resultItem.dataset.sku = producto.sku;
-
-                    const imagenSrc = window.getCloudinaryUrl ? window.getCloudinaryUrl(producto.imagen) : (producto.imagen || 'assets/images/placeholder-product.png');
-
-                    resultItem.innerHTML = `
-                        <div class="search-results-mobile__item-image">
-                            <a href="producto.html?id=${producto.id}" class="search-results-mobile__item-image-link" aria-label="Ver ${producto.nombre}">
-                                <img src="${imagenSrc}" alt="${producto.nombre}" loading="lazy">
-                            </a>
-                        </div>
-                        <div class="search-results-mobile__item-info">
-                            <h4 class="search-results-mobile__item-name">${producto.nombre}</h4>
-                            <p class="search-results-mobile__item-price">$${producto.precio.toFixed(2)}</p>
-                        </div>
-                    `;
-
-                    resultItem.addEventListener('click', function () {
-                        window.location.href = `catalogo.html?sku=${producto.sku}`;
-                    });
-
-                    resultsContainer.appendChild(resultItem);
-                });
-
-                if (resultados.length > 6) {
-                    const viewAllBtn = document.createElement('button');
-                    viewAllBtn.className = 'search-results-mobile__view-all';
-                    viewAllBtn.textContent = `Ver todos los ${resultados.length} resultados`;
-                    viewAllBtn.addEventListener('click', function () {
-                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
-                    });
-                    resultsContainer.appendChild(viewAllBtn);
-                }
-
-                searchMobile.appendChild(resultsContainer);
-            }
-
-            // Cerrar búsqueda móvil al hacer clic fuera
             document.addEventListener('click', function (event) {
                 if (!searchMobile.contains(event.target) && !searchMobileToggle.contains(event.target)) {
                     searchMobile.classList.remove('header__search-mobile--active');
                     limpiarResultadosBusquedaMovil();
                 }
             });
+
+            // ── Buscador del Hero ─────────────────────────────────────────────
+            const heroInput = document.getElementById('heroSearchInput');
+            const heroBtn   = document.getElementById('heroSearchBtn');
+
+            function heroRedirect() {
+                const q = heroInput ? heroInput.value.trim() : '';
+                if (q.length >= 2) {
+                    if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(q);
+                    window.location.href = 'catalogo.html?busqueda=' + encodeURIComponent(q);
+                }
+            }
+
+            if (heroInput) {
+                let heroTimeout;
+
+                heroInput.addEventListener('focus', function () {
+                    if (heroInput.value.trim().length === 0 && window.BuscadorInteligente) {
+                        window.BuscadorInteligente.mostrarHistorial(heroInput, function (q) {
+                            heroInput.value = q;
+                            heroRedirect();
+                        });
+                    }
+                });
+
+                heroInput.addEventListener('input', function () {
+                    clearTimeout(heroTimeout);
+                    heroTimeout = setTimeout(function () {
+                        const v = heroInput.value.trim();
+                        if (v.length >= 2 && window.BuscadorInteligente) {
+                            const resultados = window.BuscadorInteligente.buscar(v, 'all');
+                            window.BuscadorInteligente.mostrarResultados(resultados, v, heroInput);
+                        } else if (v.length === 0 && window.BuscadorInteligente) {
+                            window.BuscadorInteligente.mostrarHistorial(heroInput, function (q) {
+                                heroInput.value = q;
+                                heroRedirect();
+                            });
+                        } else {
+                            if (window.BuscadorInteligente) window.BuscadorInteligente.limpiar();
+                        }
+                    }, 250);
+                });
+
+                heroInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { clearTimeout(heroTimeout); heroRedirect(); }
+                    if (e.key === 'Escape' && window.BuscadorInteligente) window.BuscadorInteligente.limpiar();
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!heroInput.contains(e.target) && window.BuscadorInteligente) {
+                        window.BuscadorInteligente.limpiar();
+                    }
+                });
+            }
+
+            if (heroBtn) heroBtn.addEventListener('click', heroRedirect);
+
+            // ── Typewriter en el hero ─────────────────────────────────────────
+            const typingLabel = document.getElementById('heroTypingLabel');
+            const typingText  = document.getElementById('heroTypingText');
+            const TERMS = [
+                'taladro 20V', 'tornillo M6', 'cable 2.5mm²', 'broca HSS 8mm',
+                'cinta americana', 'llave inglesa', 'nivel de burbuja',
+                'disco de corte', 'pintura blanca', 'candado 50mm',
+                'flexómetro 5m', 'martillo 500g', 'guantes de nitrilo',
+                'tubo PVC 3/4"', 'interruptor simple'
+            ];
+            let tIdx = 0, cIdx = 0, deleting = false, typeTO;
+
+            function tick() {
+                const term = TERMS[tIdx];
+                if (!deleting) {
+                    cIdx++;
+                    typingText.textContent = term.slice(0, cIdx);
+                    typeTO = setTimeout(tick, cIdx === term.length ? 1600 : 80);
+                    if (cIdx === term.length) deleting = true;
+                } else {
+                    cIdx--;
+                    typingText.textContent = term.slice(0, cIdx);
+                    if (cIdx === 0) {
+                        deleting = false;
+                        tIdx = (tIdx + 1) % TERMS.length;
+                        typeTO = setTimeout(tick, 420);
+                    } else {
+                        typeTO = setTimeout(tick, 38);
+                    }
+                }
+            }
+
+            if (typingLabel && typingText && heroInput) {
+                typeTO = setTimeout(tick, 900);
+                heroInput.addEventListener('focus', function () {
+                    typingLabel.style.display = 'none';
+                    clearTimeout(typeTO);
+                });
+                heroInput.addEventListener('blur', function () {
+                    if (!heroInput.value.trim()) {
+                        typingLabel.style.display = '';
+                        typeTO = setTimeout(tick, 500);
+                    }
+                });
+            }
         });
     </script>
+    <script src="assets/js/buscador.js"></script>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>

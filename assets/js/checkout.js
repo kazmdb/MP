@@ -165,11 +165,11 @@ const Checkout = {
 
         if (closeBtn) closeBtn.onclick = () => this.toggleModal(false);
         if (prevBtn) prevBtn.onclick = () => this.moveStep(-1);
-        if (nextBtn) nextBtn.onclick = () => {
+        if (nextBtn) nextBtn.onclick = async () => {
             if (this.currentStep === this.totalSteps) {
                 this.finishOrder();
             } else {
-                if (this.validateStep()) this.moveStep(1);
+                if (await this.validateStep()) this.moveStep(1);
             }
         };
 
@@ -274,7 +274,7 @@ const Checkout = {
         }
     },
 
-    validateStep() {
+    async validateStep() {
         if (this.currentStep === 1) {
             if (!(window.auth && window.auth.currentUser)) {
                 const name = document.getElementById('chkName').value.trim();
@@ -285,6 +285,36 @@ const Checkout = {
                 }
                 this.data.customer.name = name;
                 this.data.customer.phone = phone;
+
+                // Registrar o loguear automáticamente con estos datos
+                if (window.auth) {
+                    const nextBtn = document.getElementById('nextBtn');
+                    if (nextBtn) { nextBtn.disabled = true; nextBtn.textContent = 'Procesando...'; }
+
+                    try {
+                        const result = await window.auth.register(name, phone);
+                        if (result.success) {
+                            this.showCheckoutMessage('¡Cuenta creada! La próxima vez podrás ingresar solo con tu teléfono.', 'success');
+                        } else if (result.message === 'Este teléfono ya está registrado') {
+                            const loginResult = await window.auth.login(phone);
+                            if (loginResult.success) {
+                                this.showCheckoutMessage(`¡Bienvenido de nuevo, ${window.auth.currentUser.name}!`, 'success');
+                            }
+                        }
+                        // login() llama closeModal() que resetea overflow; lo restauramos
+                        document.body.style.overflow = 'hidden';
+
+                        if (window.auth.currentUser) {
+                            this.data.customer.name = window.auth.currentUser.name;
+                            this.data.customer.phone = window.auth.currentUser.phone;
+                            // Actualizar UI del paso 1 para mostrar nombre registrado
+                            const chkUserName = document.getElementById('chkUserName');
+                            if (chkUserName) chkUserName.textContent = window.auth.currentUser.name;
+                        }
+                    } finally {
+                        if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Siguiente'; }
+                    }
+                }
             }
         } else if (this.currentStep === 2) {
             if (this.data.delivery.method === 'shipping') {
@@ -302,6 +332,21 @@ const Checkout = {
             }
         }
         return true;
+    },
+
+    showCheckoutMessage(text, type) {
+        const existing = document.querySelector('.checkout-inline-msg');
+        if (existing) existing.remove();
+        const msg = document.createElement('div');
+        msg.className = 'checkout-inline-msg';
+        msg.style.cssText = `padding:10px 14px;border-radius:8px;font-size:0.875rem;margin-top:12px;` +
+            (type === 'success'
+                ? 'background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;'
+                : 'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;');
+        msg.textContent = text;
+        const guestFields = document.getElementById('guestFields');
+        if (guestFields) guestFields.appendChild(msg);
+        setTimeout(() => msg.remove(), 5000);
     },
 
     moveStep(dir) {
@@ -391,7 +436,7 @@ const Checkout = {
             this.toggleModal(false);
         } catch (error) {
             console.error('Error al finalizar pedido:', error);
-            alert('Hubo un problema al procesar tu pedido. Intenta de nuevo.');
+            alert('Hubo un problema al procesar tu pedido:\n\n' + (error.message || error));
         } finally {
             if (nextBtn) {
                 nextBtn.disabled = false;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -577,7 +577,7 @@
 
                 if (productId) {
                     console.log('📥 Solicitando producto a Firestore:', productId);
-                    db.collection('productos').doc(productId).get().then(doc => {
+                    window.db.collection('productos').doc(productId).get().then(doc => {
                         if (doc.exists) {
                             const p = doc.data();
                             p.id = doc.id;
@@ -586,7 +586,7 @@
                             loadProductFromURL();
                         } else {
                             // Si no existe por ID, quizás es un SKU antiguo, intentamos buscar por SKU
-                            db.collection('productos').where('sku', '==', productId).limit(1).get().then(snap => {
+                            window.db.collection('productos').where('sku', '==', productId).limit(1).get().then(snap => {
                                 if (!snap.empty) {
                                     const p = snap.docs[0].data();
                                     p.id = snap.docs[0].id;
@@ -742,9 +742,9 @@
 
                 stockElement.className = 'product-detail__stock';
 
-                if (stock > 0) {
+                if (stock === null || stock === undefined || stock > 0) {
                     stockElement.classList.add('product-detail__stock--available');
-                    stockText.textContent = 'En Stock';
+                    stockText.textContent = stock === null || stock === undefined ? 'En Stock' : 'En Stock';
                     addToCartBtn.disabled = false;
                 } else {
                     stockElement.classList.add('product-detail__stock--out');
@@ -772,7 +772,7 @@
 
                 increaseBtn.addEventListener('click', () => {
                     const currentValue = parseInt(quantityInput.value);
-                    const maxValue = product.stock || 99;
+                    const maxValue = (product.stock !== null && product.stock !== undefined) ? product.stock : 999;
                     if (currentValue < maxValue) {
                         quantityInput.value = currentValue + 1;
                     }
@@ -780,7 +780,7 @@
 
                 quantityInput.addEventListener('change', () => {
                     let value = parseInt(quantityInput.value);
-                    const maxValue = product.stock || 99;
+                    const maxValue = (product.stock !== null && product.stock !== undefined) ? product.stock : 999;
                     if (value < 1) value = 1;
                     if (value > maxValue) value = maxValue;
                     quantityInput.value = value;
@@ -790,7 +790,7 @@
                 addToCartBtn.addEventListener('click', () => {
                     const quantity = parseInt(quantityInput.value);
 
-                    if (quantity > (product.stock || 0)) {
+                    if (product.stock !== null && product.stock !== undefined && quantity > product.stock) {
                         alert('No hay suficiente stock disponible');
                         return;
                     }
@@ -847,190 +847,143 @@
             // Inicializar contador del carrito
             updateCartCount();
 
-            // ============================================
-            // MOBILE SEARCH FUNCTIONALITY
-            // ============================================
+            // ── Buscador inteligente (mobile toggle) ────────────────────────────
             const searchMobileToggle = document.querySelector('.header__btn--search-mobile');
             const searchMobile = document.querySelector('.header__search-mobile');
             const searchMobileInput = document.querySelector('.header__search-mobile__input');
 
             if (searchMobileToggle && searchMobile) {
-                searchMobileToggle.addEventListener('click', () => {
+                searchMobileToggle.addEventListener('click', function() {
                     searchMobile.classList.toggle('header__search-mobile--active');
-                    if (searchMobile.classList.contains('header__search-mobile--active')) {
+                    if (searchMobile.classList.contains('header__search-mobile--active') && searchMobileInput) {
                         searchMobileInput.focus();
                     }
                 });
 
-                // Redirigir al catálogo al buscar
-                const executeSearch = () => {
-                    const query = searchMobileInput.value.trim();
+                const executeMobileSearch = function() {
+                    const query = searchMobileInput ? searchMobileInput.value.trim() : '';
                     if (query.length >= 2) {
-                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                        if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
+                        window.location.href = 'catalogo.html?busqueda=' + encodeURIComponent(query);
                     }
                 };
 
-                searchMobileInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') executeSearch();
-                });
-
-                document.querySelector('.header__search-mobile__button').addEventListener('click', executeSearch);
-
-                // Búsqueda en tiempo real para móviles
-                searchMobileInput.addEventListener('input', () => {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        const query = searchMobileInput.value.trim();
-                        if (query.length >= 2) {
-                            const results = buscarProductos(query);
-                            mostrarResultadosBusqueda(results, query, true); // true = es móvil
-                        } else {
-                            limpiarResultadosBusqueda();
-                        }
-                    }, 300);
-                });
-            }
-
-            // ============================================
-            // SEARCH LOGIC (SHARED)
-            // ============================================
-            let searchTimeout;
-
-            function limpiarResultadosBusqueda() {
-                const existingResults = document.querySelector('.search-results');
-                if (existingResults) existingResults.remove();
-            }
-
-            function buscarProductos(query) {
-                const productosDisponibles = window.productos || [];
-                const queryLower = query.toLowerCase().trim();
-                return productosDisponibles.filter(p => 
-                    (p.nombre && p.nombre.toLowerCase().includes(queryLower)) ||
-                    (p.sku && p.sku.toLowerCase().includes(queryLower)) ||
-                    (p.categoria_principal && p.categoria_principal.toLowerCase().includes(queryLower)) ||
-                    (p.subcategoria && p.subcategoria.toLowerCase().includes(queryLower))
-                );
-            }
-
-            function posicionarResultadosBusqueda(resultsContainer, isMobile = false) {
-                let targetEl;
-                if (isMobile) {
-                    targetEl = document.querySelector('.header__search-mobile__container');
-                } else {
-                    targetEl = document.querySelector('.header__search-advanced');
-                }
-
-                if (!targetEl) return;
-                
-                const rect = targetEl.getBoundingClientRect();
-                resultsContainer.style.top = (rect.bottom + window.scrollY + 5) + 'px';
-                resultsContainer.style.left = (rect.left + window.scrollX) + 'px';
-                resultsContainer.style.width = rect.width + 'px';
-                resultsContainer.style.zIndex = '10000';
-            }
-
-            function mostrarResultadosBusqueda(resultados, query, isMobile = false) {
-                limpiarResultadosBusqueda();
-                if (resultados.length === 0) return;
-
-                const resultsContainer = document.createElement('div');
-                resultsContainer.className = 'search-results';
-                
-                const resultsHeader = document.createElement('div');
-                resultsHeader.className = 'search-results__header';
-                resultsHeader.innerHTML = `
-                    <span class="search-results__count">${resultados.length} resultados</span>
-                    <button class="search-results__close">×</button>
-                `;
-
-                const resultsList = document.createElement('div');
-                resultsList.className = 'search-results__list';
-
-                resultados.slice(0, 8).forEach(producto => {
-                    const item = document.createElement('div');
-                    item.className = 'search-results__item';
-                    const img = window.getCloudinaryUrl ? window.getCloudinaryUrl(producto.imagen) : producto.imagen;
-                    item.innerHTML = `
-                        <div class="search-results__item-image">
-                            <img src="${img}" alt="${producto.nombre}">
-                        </div>
-                        <div class="search-results__item-info">
-                            <h4 class="search-results__item-name">${producto.nombre}</h4>
-                            <p class="search-results__item-price">$${producto.precio.toFixed(2)}</p>
-                        </div>
-                    `;
-                    item.addEventListener('click', () => window.location.href = `producto.html?id=${producto.id}`);
-                    resultsList.appendChild(item);
-                });
-
-                if (resultados.length > 8) {
-                    const viewAll = document.createElement('button');
-                    viewAll.className = 'search-results__view-all';
-                    viewAll.textContent = 'Ver todos los resultados';
-                    viewAll.addEventListener('click', () => {
-                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                if (searchMobileInput) {
+                    searchMobileInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') executeMobileSearch();
                     });
-                    resultsList.appendChild(viewAll);
+
+                    let mobileSearchTimeout;
+                    searchMobileInput.addEventListener('input', function() {
+                        clearTimeout(mobileSearchTimeout);
+                        mobileSearchTimeout = setTimeout(function() {
+                            const query = searchMobileInput.value.trim();
+                            if (query.length >= 2 && window.BuscadorInteligente) {
+                                const results = buscarProductos(query);
+                                window.BuscadorInteligente.mostrarResultadosMobile(results, query, searchMobile);
+                            } else if (window.BuscadorInteligente) {
+                                window.BuscadorInteligente.limpiarMobile(searchMobile);
+                            }
+                        }, 250);
+                    });
                 }
 
-                resultsContainer.appendChild(resultsHeader);
-                resultsContainer.appendChild(resultsList);
-                posicionarResultadosBusqueda(resultsContainer, isMobile);
-                document.body.appendChild(resultsContainer);
+                const mobileSearchBtn = document.querySelector('.header__search-mobile__button');
+                if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', executeMobileSearch);
 
-                resultsContainer.querySelector('.search-results__close').addEventListener('click', limpiarResultadosBusqueda);
-                
-                // Cerrar al hacer clic fuera
-                document.addEventListener('click', function closeSearch(e) {
-                    const mobileInput = document.querySelector('.header__search-mobile__input');
-                    const desktopInput = document.querySelector('.header__search-input');
-                    
-                    if (!resultsContainer.contains(e.target) && 
-                        (!desktopInput || !desktopInput.contains(e.target)) &&
-                        (!mobileInput || !mobileInput.contains(e.target))) {
-                        limpiarResultadosBusqueda();
-                        document.removeEventListener('click', closeSearch);
+                document.addEventListener('click', function(e) {
+                    if (!searchMobile.contains(e.target) && !searchMobileToggle.contains(e.target)) {
+                        searchMobile.classList.remove('header__search-mobile--active');
+                        if (window.BuscadorInteligente) window.BuscadorInteligente.limpiarMobile(searchMobile);
                     }
                 });
             }
 
+            // ── Buscador inteligente (desktop) ───────────────────────────────────
+            let searchTimeout;
             const searchInput = document.querySelector('.header__search-input');
             const searchButton = document.querySelector('.header__search-button');
             const searchCategory = document.querySelector('.header__search-category');
 
+            function limpiarResultadosBusqueda() {
+                if (window.BuscadorInteligente) window.BuscadorInteligente.limpiar();
+            }
+
+            function buscarProductos(query, categoria) {
+                if (!window.BuscadorInteligente) {
+                    const q = (query || '').toLowerCase().trim();
+                    return (window.productos || []).filter(function(p) {
+                        return (p.nombre && p.nombre.toLowerCase().includes(q)) ||
+                               (p.sku && p.sku.toLowerCase().includes(q));
+                    });
+                }
+                // producto.html carga solo 1 producto en window.productos.
+                // Para el buscador usamos el catálogo completo del caché de localStorage.
+                const productoActual = window.productos;
+                try {
+                    const cached = localStorage.getItem('mp_productos_data');
+                    if (cached) {
+                        const catalogo = JSON.parse(cached);
+                        if (catalogo && catalogo.length > 1) window.productos = catalogo;
+                    }
+                } catch (e) {}
+                const resultados = window.BuscadorInteligente.buscar(query, categoria || 'all');
+                window.productos = productoActual;
+                return resultados;
+            }
+
             if (searchInput) {
-                searchInput.addEventListener('input', () => {
+                searchInput.addEventListener('focus', function() {
+                    if (searchInput.value.trim().length === 0 && window.BuscadorInteligente) {
+                        window.BuscadorInteligente.mostrarHistorial(searchInput, function(q) {
+                            searchInput.value = q;
+                            const results = buscarProductos(q);
+                            if (window.BuscadorInteligente) window.BuscadorInteligente.mostrarResultados(results, q, searchInput);
+                        });
+                    }
+                });
+
+                searchInput.addEventListener('input', function() {
                     clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        const query = searchInput.value.trim();
-                        if (query.length >= 2) {
-                            let results = buscarProductos(query);
+                    searchTimeout = setTimeout(function() {
+                        const v = searchInput.value.trim();
+                        if (v.length >= 2 && window.BuscadorInteligente) {
                             const cat = searchCategory ? searchCategory.value : 'all';
-                            if (cat !== 'all') {
-                                results = results.filter(p => p.categoria_principal.toLowerCase() === cat);
-                            }
-                            mostrarResultadosBusqueda(results, query, false); // false = es desktop
+                            const results = buscarProductos(v, cat);
+                            window.BuscadorInteligente.mostrarResultados(results, v, searchInput);
+                        } else if (v.length === 0 && window.BuscadorInteligente) {
+                            window.BuscadorInteligente.mostrarHistorial(searchInput, function(q) {
+                                searchInput.value = q;
+                                const results = buscarProductos(q);
+                                window.BuscadorInteligente.mostrarResultados(results, q, searchInput);
+                            });
                         } else {
                             limpiarResultadosBusqueda();
                         }
-                    }, 300);
+                    }, 250);
                 });
 
-                searchInput.addEventListener('keypress', (e) => {
+                searchInput.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
                         const query = searchInput.value.trim();
                         if (query.length >= 2) {
-                            window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                            if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
+                            const cat = searchCategory ? searchCategory.value : 'all';
+                            let url = 'catalogo.html?busqueda=' + encodeURIComponent(query);
+                            if (cat !== 'all') url += '&categoria=' + cat;
+                            window.location.href = url;
                         }
                     }
+                    if (e.key === 'Escape') limpiarResultadosBusqueda();
                 });
             }
 
             if (searchButton) {
-                searchButton.addEventListener('click', () => {
-                    const query = searchInput.value.trim();
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput ? searchInput.value.trim() : '';
                     if (query.length >= 2) {
-                        window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
+                        if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
+                        window.location.href = 'catalogo.html?busqueda=' + encodeURIComponent(query);
                     }
                 });
             }
@@ -1091,6 +1044,7 @@
             }
         });
     </script>
+    <script src="assets/js/buscador.js"></script>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>

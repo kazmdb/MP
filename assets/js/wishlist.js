@@ -62,7 +62,7 @@ class Wishlist {
             return;
         }
 
-        productId = parseInt(productId);
+        productId = String(productId);
         const index = this.items.indexOf(productId);
 
         if (index === -1) {
@@ -89,7 +89,7 @@ class Wishlist {
         // 1. Actualizar corazones en la página
         const allHearts = document.querySelectorAll('.wishlist-btn');
         allHearts.forEach(btn => {
-            const id = parseInt(btn.dataset.productId);
+            const id = btn.dataset.productId;
             if (this.items.includes(id)) {
                 btn.classList.add('wishlist-btn--active');
             } else {
@@ -124,7 +124,7 @@ class Wishlist {
 
         // Buscar productos en la data global
         this.items.forEach(id => {
-            const product = window.productos.find(p => p.id === id);
+            const product = window.productos.find(p => String(p.id) === id);
             if (product) {
                 const itemHtml = `
                     <div class="cart-item">
@@ -136,9 +136,9 @@ class Wishlist {
                                 <h4 class="cart-item__name">${product.nombre}</h4>
                             </a>
                             <p class="cart-item__price">$${product.precio.toFixed(2)}</p>
-                            <button class="wishlist-remove-btn" onclick="window.wishlist.toggleFavorite(${product.id})">Eliminar</button>
+                            <button class="wishlist-remove-btn" onclick="window.wishlist.toggleFavorite('${product.id}')">Eliminar</button>
                         </div>
-                        <button class="cart-panel__item-add" onclick="window.agregarAlCarrito(${product.id}, 1)" title="Añadir al carrito">
+                        <button class="cart-panel__item-add" onclick="window.agregarAlCarrito('${product.id}', 1)" title="Añadir al carrito">
                             🛒
                         </button>
                     </div>
@@ -167,7 +167,7 @@ class Wishlist {
 
     // Helper para inyectar el HTML del botón de favorito
     getHeartHtml(productId) {
-        const isActive = this.items.includes(parseInt(productId)) ? 'wishlist-btn--active' : '';
+        const isActive = this.items.includes(productId) ? 'wishlist-btn--active' : '';
         return `
             <button class="wishlist-btn ${isActive}" data-product-id="${productId}" aria-label="Agregar a favoritos">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

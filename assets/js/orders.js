@@ -30,7 +30,7 @@ const Orders = {
         document.addEventListener('authReady', (e) => {
             const user = e.detail.user;
             if (user) {
-                this.loadUserOrders(user.uid);
+                this.loadUserOrders(user.id || user.uid);
             } else {
                 this.clearOrders();
             }
@@ -100,27 +100,46 @@ const Orders = {
                 ? (window.auth.currentUser.id || window.auth.currentUser.uid) 
                 : `guest_${orderData.cliente.phone}`;
 
-            const pedido = {
-                userId: userId,
-                esInvitado: !(window.auth && window.auth.currentUser),
-                cliente: orderData.cliente,
-                fecha: firebase.firestore.Timestamp.now(),
-                estado: 'completado',
-                total: orderData.total,
-                items: orderData.items,
-                metodoPago: orderData.metodoPago || 'Simulado',
-                creadoEn: new Date().toISOString()
-            };
+        const pedido = {
+            userId: userId,
+            esInvitado: !(window.auth && window.auth.currentUser),
+            cliente: orderData.cliente,
+            fecha: firebase.firestore.Timestamp.now(),
+            estado: 'pendiente',
+            total: orderData.total,
+            items: orderData.items,
+            metodoPago: orderData.metodoPago || 'Simulado',
+            metodoEntrega: orderData.metodoEntrega || 'pickup',
+            direccion: orderData.direccion || null,
+            creadoEn: firebase.firestore.FieldValue.serverTimestamp()
+        };
 
             const docRef = await window.db.collection('pedidos').add(pedido);
             console.log('✅ Pedido guardado con ID:', docRef.id);
+
+            // Decrementar stock de cada producto (solo si tiene stock limitado)
+            try {
+                for (const item of orderData.items) {
+                    const prodRef = window.db.collection('productos').doc(item.id);
+                    const prodSnap = await prodRef.get();
+                    if (prodSnap.exists) {
+                        const currentStock = prodSnap.data().stock;
+                        if (currentStock !== null && currentStock !== undefined) {
+                            const nuevoStock = Math.max(0, currentStock - item.cantidad);
+                            await prodRef.update({ stock: nuevoStock });
+                        }
+                    }
+                }
+            } catch (stockError) {
+                console.warn('⚠️ No se pudo actualizar stock:', stockError.message);
+            }
             
             // Recargar pedidos
             this.loadUserOrders(userId);
             return docRef.id;
         } catch (error) {
             console.error('❌ Error al guardar pedido:', error);
-            return null;
+            throw new Error('Error al guardar pedido: ' + (error.message || error));
         }
     },
 
@@ -166,16 +185,38 @@ const Orders = {
                 month: 'short',
                 year: 'numeric'
             });
-            
+
             const itemsHtml = order.items.map(item => `
-                <img src="${item.imagen}" alt="${item.nombre}" class="order-card__item-img" title="${item.nombre}">
+                <img src="${window.getCloudinaryUrl ? window.getCloudinaryUrl(item.imagen) : (item.imagen || 'assets/images/placeholder-product.png')}" alt="${item.nombre}" class="order-card__item-img" title="${item.nombre}">
             `).join('');
+
+            const estado = order.estado || 'pendiente';
+            const entrega = order.metodoEntrega || 'pickup';
+            const paso1 = true;
+            const paso2 = estado === 'en_proceso' || estado === 'en proceso' || estado === 'listo_para_retirar' || estado === 'enviado';
+            const paso3 = estado === 'listo_para_retirar' || estado === 'enviado';
+            const label3 = entrega === 'shipping' ? 'Enviado' : 'Listo para retirar';
 
             html += `
                 <div class="order-card">
                     <div class="order-card__header">
                         <span class="order-card__date">${fecha}</span>
-                        <span class="order-card__status order-card__status--${order.estado}">${order.estado}</span>
+                    </div>
+                    <div class="order-tracking">
+                        <div class="order-tracking__step">
+                            <div class="order-tracking__circle ${paso1 ? 'order-tracking__circle--active' : 'order-tracking__circle--inactive'}">${paso1 ? '✓' : '1'}</div>
+                            <div class="order-tracking__label ${paso1 ? 'order-tracking__label--active' : ''}">Recibido</div>
+                        </div>
+                        <div class="order-tracking__line ${paso2 ? 'order-tracking__line--active' : ''}"></div>
+                        <div class="order-tracking__step">
+                            <div class="order-tracking__circle ${paso2 ? 'order-tracking__circle--active' : 'order-tracking__circle--inactive'}">${paso2 ? '✓' : '2'}</div>
+                            <div class="order-tracking__label ${paso2 ? 'order-tracking__label--active' : ''}">Preparando</div>
+                        </div>
+                        <div class="order-tracking__line ${paso3 ? 'order-tracking__line--active' : ''}"></div>
+                        <div class="order-tracking__step">
+                            <div class="order-tracking__circle ${paso3 ? 'order-tracking__circle--active' : 'order-tracking__circle--inactive'}">${paso3 ? '✓' : '3'}</div>
+                            <div class="order-tracking__label ${paso3 ? 'order-tracking__label--active' : ''}">${label3}</div>
+                        </div>
                     </div>
                     <div class="order-card__items">
                         ${itemsHtml}
@@ -199,6 +240,7 @@ const Orders = {
         }
     }
 };
+window.Orders = Orders;
 
 // Auto-inicializar al cargar el script
 document.addEventListener('DOMContentLoaded', () => Orders.init());
