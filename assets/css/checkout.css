@@ -303,3 +303,23 @@
     margin-top: 4px;
     display: inline-block;
 }
+
+/* MercadoPago — subtítulo en tarjeta de pago */
+.option-card__subtitle {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+}
+
+/* MercadoPago — cuadro informativo al seleccionar pago online */
+.mp-info-box {
+    background: #f0f7ff;
+    border: 1px solid #c3dafe;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #1e40af;
+    margin-top: 12px;
+    line-height: 1.4;
+}

@@ -13,7 +13,14 @@
 window.getOferta = function(productoId) {
     if (!window.productos) return null;
     const product = window.productos.find(p => p.id == productoId);
-    return (product && product.descuento) ? { id: product.id, descuento: product.descuento } : null;
+    if (!product) return null;
+    
+    // Obtener descuento del producto, o fallback al mapa global de descuentos
+    const descuento = product.descuento || 
+                      (product.sku && window._descuentoMap && window._descuentoMap[product.sku]) || 
+                      (window._descuentoMap && window._descuentoMap[product.id]);
+                      
+    return descuento ? { id: product.id, descuento: descuento } : null;
 };
 
 /**

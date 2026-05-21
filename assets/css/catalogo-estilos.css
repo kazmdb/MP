@@ -3,6 +3,15 @@
    Sidebar, filtros, grid y tarjetas de producto
 ============================================ */
 
+/* Ocultar mega bar en catálogo */
+.nav {
+    display: none !important;
+}
+
+/* Ajuste de body para catálogo (sin nav bar) */
+body {
+    padding-top: 40px !important;
+}
 
 /* ============================================
    LAYOUT DEL CATÁLOGO
@@ -11,15 +20,15 @@
     display: flex;
     gap: 30px;
     max-width: 1400px;
-    margin: 10px auto 0 auto;
-    padding: var(--spacing-md) var(--spacing-lg);
+    margin: 0 auto;
+    padding: 8px var(--spacing-lg) var(--spacing-md);
     min-height: calc(100vh - 200px);
 }
 
 /* Sidebar de Filtros */
 .catalog-sidebar {
     position: sticky;
-    top: 130px;
+    top: 140px;
     width: 360px;
     flex-shrink: 0;
     background: var(--color-white);
@@ -591,6 +600,12 @@
 
 .catalog-filter__brand-input::placeholder {
     color: var(--color-text-light);
+}
+
+/* Una sola columna en el flyout de marcas (desktop) */
+#brandFlyout .catalog-filter__brand-list,
+#materialFlyout .catalog-filter__brand-list {
+    grid-template-columns: 1fr !important;
 }
 
 .catalog-filter__brand-list {

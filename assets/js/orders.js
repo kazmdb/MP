@@ -105,7 +105,7 @@ const Orders = {
             esInvitado: !(window.auth && window.auth.currentUser),
             cliente: orderData.cliente,
             fecha: firebase.firestore.Timestamp.now(),
-            estado: 'pendiente',
+            estado: orderData.estado || 'pendiente',
             total: orderData.total,
             items: orderData.items,
             metodoPago: orderData.metodoPago || 'Simulado',

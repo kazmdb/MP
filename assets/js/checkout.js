@@ -14,8 +14,11 @@ const Checkout = {
     },
     
     // Configuración UltraMsg (Placeholder)
-    ULTRAMSG_INSTANCE: '', 
+    ULTRAMSG_INSTANCE: '',
     ULTRAMSG_TOKEN: '',
+
+    // MercadoPago
+    MP_PUBLIC_KEY: 'APP_USR-18b1797d-4e6f-45ba-b4ff-678eaaeeb3b5',
 
     init() {
         console.log('🛒 Inicializando sistema de Checkout...');
@@ -124,11 +127,13 @@ const Checkout = {
                                     <span class="option-card__title">Efectivo / Al Recibir</span>
                                 </div>
                                 <div class="option-card" data-pay="online">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                    </svg>
+                                    <img src="assets/icons/mplogo.png" alt="MercadoPago" style="height:28px;object-fit:contain;max-width:100%;">
                                     <span class="option-card__title">Pago Online</span>
+                                    <span class="option-card__subtitle">Visa · Mastercard · OCA · Débito</span>
                                 </div>
+                            </div>
+                            <div id="mpInfo" class="mp-info-box" style="display:none;">
+                                🔒 Serás redirigido a MercadoPago para completar el pago de forma segura.
                             </div>
 
                             <div class="checkout-summary">
@@ -192,6 +197,8 @@ const Checkout = {
                 document.querySelectorAll('#step3 .option-card').forEach(c => c.classList.remove('option-card--active'));
                 card.classList.add('option-card--active');
                 this.data.payment.method = card.dataset.pay;
+                const mpInfo = document.getElementById('mpInfo');
+                if (mpInfo) mpInfo.style.display = card.dataset.pay === 'online' ? 'block' : 'none';
             };
         });
 
@@ -410,38 +417,77 @@ const Checkout = {
 
     async finishOrder() {
         const nextBtn = document.getElementById('nextBtn');
-        if (nextBtn) {
-            nextBtn.disabled = true;
-            nextBtn.textContent = 'Procesando...';
-        }
+        if (nextBtn) { nextBtn.disabled = true; nextBtn.textContent = 'Procesando...'; }
 
         try {
             const cartData = this.getCartData();
-            
-            if (window.Orders) {
-                await Orders.saveOrder({
-                    total: this.data.costs.total,
-                    items: cartData.items,
-                    metodoPago: this.data.payment.method,
-                    metodoEntrega: this.data.delivery.method,
-                    direccion: this.data.delivery,
-                    cliente: this.data.customer
+
+            if (this.data.payment.method === 'online') {
+                // --- PAGO ONLINE CON MERCADOPAGO ---
+
+                // 1. Guardar pedido como "pendiente_pago" para no perderlo antes de redirigir
+                let pedidoId = null;
+                if (window.Orders) {
+                    pedidoId = await Orders.saveOrder({
+                        total: this.data.costs.total,
+                        items: cartData.items,
+                        metodoPago: 'online',
+                        metodoEntrega: this.data.delivery.method,
+                        direccion: this.data.delivery,
+                        cliente: this.data.customer,
+                        estado: 'pendiente_pago'
+                    });
+                }
+
+                // 2. Llamar la función serverless de Vercel para crear la preferencia de pago
+                if (nextBtn) nextBtn.textContent = 'Conectando con MercadoPago...';
+
+                const response = await fetch('/api/crear-preferencia', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: cartData.items,
+                        cliente: this.data.customer,
+                        total: this.data.costs.total,
+                        pedidoId: pedidoId || 'sin_ref',
+                        siteUrl: window.location.origin + window.location.pathname
+                    })
                 });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err.error || 'No se pudo crear la preferencia de pago.');
+                }
+
+                const result = await response.json();
+
+                // 3. Redirigir a MercadoPago
+                if (nextBtn) nextBtn.textContent = 'Redirigiendo...';
+                window.location.href = result.initPoint;
+
+            } else {
+                // --- PAGO EN EFECTIVO / AL RECIBIR ---
+                if (window.Orders) {
+                    await Orders.saveOrder({
+                        total: this.data.costs.total,
+                        items: cartData.items,
+                        metodoPago: this.data.payment.method,
+                        metodoEntrega: this.data.delivery.method,
+                        direccion: this.data.delivery,
+                        cliente: this.data.customer
+                    });
+                }
+
+                await this.sendConfirmationMessage();
+                alert('¡Gracias! Tu pedido ha sido recibido. Te enviamos una confirmación por WhatsApp.');
+                if (window.carrito) window.carrito.vaciarCarrito();
+                this.toggleModal(false);
             }
 
-            await this.sendConfirmationMessage();
-            alert('¡Gracias! Tu pedido ha sido recibido. Te enviamos una confirmación por WhatsApp.');
-            
-            if (window.carrito) window.carrito.vaciarCarrito();
-            this.toggleModal(false);
         } catch (error) {
             console.error('Error al finalizar pedido:', error);
             alert('Hubo un problema al procesar tu pedido:\n\n' + (error.message || error));
-        } finally {
-            if (nextBtn) {
-                nextBtn.disabled = false;
-                nextBtn.textContent = 'Finalizar Pedido';
-            }
+            if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Finalizar Pedido'; }
         }
     },
 

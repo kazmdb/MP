@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -1309,6 +1309,10 @@
         let soloStock = false;
         let mostrarOfertas = false;
         let marcasSeleccionadas = [];
+        // Mapa global de descuentos: { productoId → % descuento }
+        // Se carga una vez desde Firestore y se aplica a cualquier set de productos
+        window._descuentoMap = {};
+        window._descuentoMapFetched = false; // true solo cuando loadDescuentoMap completó con éxito
         let materialesSeleccionados = [];
         let medidaFiltro = '';
 
@@ -1439,9 +1443,6 @@
             return productos;
         }
 
-        const BRANDS_VISIBLE_DEFAULT = 8;
-        let brandListExpanded = false;
-
         function renderizarListaMarcas(productosFiltrados) {
             const list = document.getElementById('brandList');
             const input = document.getElementById('brandSearchInput');
@@ -1470,15 +1471,8 @@
                 return;
             }
 
-            // Cuántas mostrar: siempre todas las seleccionadas + hasta N no seleccionadas
-            const seleccionadas = ordenadas.filter(m => marcasSeleccionadas.includes(m));
-            const noSeleccionadas = ordenadas.filter(m => !marcasSeleccionadas.includes(m));
-            const mostrar = (brandListExpanded || query)
-                ? ordenadas
-                : [...seleccionadas, ...noSeleccionadas.slice(0, Math.max(0, BRANDS_VISIBLE_DEFAULT - seleccionadas.length))];
-            const ocultas = ordenadas.length - mostrar.length;
-
-            list.innerHTML = mostrar.map(marca => {
+            // Mostrar todas siempre — el scroll del flyout permite verlas todas
+            list.innerHTML = ordenadas.map(marca => {
                 const checked = marcasSeleccionadas.includes(marca) ? 'checked' : '';
                 return `<label class="catalog-filter__brand-item">
                     <input type="checkbox" class="catalog-filter__brand-checkbox" value="${marca}" ${checked}>
@@ -1486,26 +1480,6 @@
                     <span class="catalog-filter__brand-count">(${counts[marca] || 0})</span>
                 </label>`;
             }).join('');
-
-            if (ocultas > 0) {
-                const moreBtn = document.createElement('button');
-                moreBtn.className = 'catalog-filter__brand-more';
-                moreBtn.textContent = `+ ${ocultas} marca${ocultas > 1 ? 's' : ''} más`;
-                moreBtn.addEventListener('click', () => {
-                    brandListExpanded = true;
-                    renderizarListaMarcas(productosFiltradosActuales);
-                });
-                list.appendChild(moreBtn);
-            } else if (brandListExpanded && !query && ordenadas.length > BRANDS_VISIBLE_DEFAULT) {
-                const lessBtn = document.createElement('button');
-                lessBtn.className = 'catalog-filter__brand-more';
-                lessBtn.textContent = 'Ver menos';
-                lessBtn.addEventListener('click', () => {
-                    brandListExpanded = false;
-                    renderizarListaMarcas(productosFiltradosActuales);
-                });
-                list.appendChild(lessBtn);
-            }
         }
 
         // Variables para lazy loading
@@ -2146,8 +2120,24 @@
             });
 
             // Toggle de Ofertas
-            document.getElementById('ofertasToggle').addEventListener('click', function() {
+            document.getElementById('ofertasToggle').addEventListener('click', async function() {
                 mostrarOfertas = !mostrarOfertas;
+                if (mostrarOfertas) {
+                    // Resetear categoría y subcategoría para visualización global de ofertas
+                    categoriaActual = 'todos';
+                    subcategoriasSeleccionadas = [];
+                    mostrarCargandoCategoria(true);
+                    
+                    // Cargar productos en oferta desde Firestore y mapa de descuentos
+                    await fetchOfertasProducts().catch(() => {});
+                    await loadDescuentoMap().catch(() => {});
+                    applyDescuentoMap();
+                } else {
+                    // Desactivar ofertas → volver al selector de categorías
+                    categoriaActual = 'todos';
+                    subcategoriasSeleccionadas = [];
+                    window.productos = [];
+                }
                 renderizarCatalogo();
             });
 
@@ -2460,22 +2450,26 @@
         // ACTUALIZAR URL CON ESTADO DE FILTROS
         // ============================================
         function actualizarURL() {
-            const params = new URLSearchParams();
-            if (categoriaActual !== 'todos') params.set('categoria', categoriaActual);
-            if (subcategoriasSeleccionadas.length > 0) {
-                params.set('subcategoria', subcategoriasSeleccionadas.join(','));
+            try {
+                const params = new URLSearchParams();
+                if (categoriaActual !== 'todos') params.set('categoria', categoriaActual);
+                if (subcategoriasSeleccionadas.length > 0) {
+                    params.set('subcategoria', subcategoriasSeleccionadas.join(','));
+                }
+                if (precioMin > 0) params.set('precio_min', precioMin);
+                if (precioMax < 100000) params.set('precio_max', precioMax);
+                if (ordenActual !== 'default') params.set('orden', ordenActual);
+                if (busquedaActual) params.set('busqueda', busquedaActual);
+                if (soloStock) params.set('stock', '1');
+                if (marcasSeleccionadas.length > 0) params.set('marca', marcasSeleccionadas.join(','));
+                if (materialesSeleccionados.length > 0) params.set('material', materialesSeleccionados.join(','));
+                if (medidaFiltro) params.set('medida', medidaFiltro);
+                if (mostrarOfertas) params.set('ofertas', '1');
+                const newURL = window.location.pathname + '?' + params.toString();
+                window.history.replaceState({}, '', params.toString() ? newURL : window.location.pathname);
+            } catch(e) {
+                console.warn('⚠️ No se pudo actualizar la URL (restricciones de seguridad de origen en protocolo file:// o iframe):', e.message);
             }
-            if (precioMin > 0) params.set('precio_min', precioMin);
-            if (precioMax < 100000) params.set('precio_max', precioMax);
-            if (ordenActual !== 'default') params.set('orden', ordenActual);
-            if (busquedaActual) params.set('busqueda', busquedaActual);
-            if (soloStock) params.set('stock', '1');
-            if (marcasSeleccionadas.length > 0) params.set('marca', marcasSeleccionadas.join(','));
-            if (materialesSeleccionados.length > 0) params.set('material', materialesSeleccionados.join(','));
-            if (medidaFiltro) params.set('medida', medidaFiltro);
-            if (mostrarOfertas) params.set('ofertas', '1');
-            const newURL = window.location.pathname + '?' + params.toString();
-            window.history.replaceState({}, '', params.toString() ? newURL : window.location.pathname);
         }
 
         // ============================================
@@ -2801,17 +2795,24 @@
                 productosFiltrados = productosFiltrados.filter(p => p.stock === null || p.stock === undefined || p.stock > 0);
             }
 
-            // Filtrar por ofertas
+            // Guardar copia pre-ofertas para marcas/materiales (refleja categoría/búsqueda, no el filtro de descuento)
+            const productosPreOferta = productosFiltrados;
+
+            // Filtrar por ofertas — SKU como clave fiable entre estáticos y Firestore
             if (mostrarOfertas) {
-                productosFiltrados = productosFiltrados.filter(p => window.getOferta(p.id) !== null);
+                productosFiltrados = productosFiltrados.filter(p =>
+                    p.descuento > 0 ||
+                    (p.sku && window._descuentoMap[p.sku] > 0) ||
+                    window._descuentoMap[p.id] > 0
+                );
             }
 
             // Total antes de filtros avanzados (para el contador "de Y")
             const totalDisponibles = productosFiltrados.length;
 
-            // Renderizar lista de marcas y materiales con contadores dinámicos
-            renderizarListaMarcas(productosFiltrados);
-            renderizarListaMateriales(productosFiltrados);
+            // Renderizar lista de marcas y materiales con la base pre-ofertas
+            renderizarListaMarcas(productosPreOferta);
+            renderizarListaMateriales(productosPreOferta);
 
             // Filtrar por marca
             if (marcasSeleccionadas.length > 0) {
@@ -2841,7 +2842,13 @@
             }
 
             // Actualizar título y contador de ofertas
-            const totalOfertas = (window.productos || []).filter(p => window.getOferta(p.id) !== null).length;
+            const totalOfertas = window._totalOfertasExistentes !== undefined
+                ? window._totalOfertasExistentes
+                : (window.productos || []).filter(p =>
+                    p.descuento > 0 ||
+                    (p.sku && window._descuentoMap[p.sku] > 0) ||
+                    window._descuentoMap[p.id] > 0
+                ).length;
             const ofertasCount = document.getElementById('ofertasCount');
             const ofertasToggle = document.getElementById('ofertasToggle');
             if (ofertasCount) ofertasCount.textContent = `(${totalOfertas})`;
@@ -2955,6 +2962,13 @@
             window.productos = [];
             if (!cat || cat === 'todos') return;
 
+            // Al navegar a una categoría real, desactivar el filtro de ofertas
+            if (mostrarOfertas) {
+                mostrarOfertas = false;
+                const btn = document.getElementById('ofertasToggle');
+                if (btn) btn.classList.remove('sidebar-action-btn--active');
+            }
+
             const CACHE_KEY = `mp_cat_${cat}_data`;
             const CACHE_VER = `mp_cat_${cat}_ver`;
 
@@ -2963,26 +2977,26 @@
             if (cachedData) {
                 try {
                     window.productos = JSON.parse(cachedData);
+                    applyDescuentoMap();
                     console.log(`✅ [${cat}] ${window.productos.length} prods · localStorage`);
-                    // Verificar versión en background sin bloquear
                     _sincronizarConFirestore(cat, CACHE_KEY, CACHE_VER);
                     return;
                 } catch(e) {
-                    localStorage.removeItem(CACHE_KEY); // cache corrupto
+                    localStorage.removeItem(CACHE_KEY);
                 }
             }
 
-            // ── 2. Archivo estático (sin red) ────────────────────────────────
+            // ── 2. Archivo estático ──────────────────────────────────────────
             const staticProds = await loadCategoryScript(cat);
             if (staticProds.length > 0) {
                 window.productos = staticProds;
+                applyDescuentoMap();
                 console.log(`✅ [${cat}] ${staticProds.length} prods · archivo estático`);
-                // Sincronizar con Firestore en background
                 _sincronizarConFirestore(cat, CACHE_KEY, CACHE_VER);
                 return;
             }
 
-            // ── 3. Firestore directo (sin estático disponible) ───────────────
+            // ── 3. Firestore directo ─────────────────────────────────────────
             try {
                 const snapshot = await withTimeout(
                     window.db.collection('productos')
@@ -2992,7 +3006,8 @@
                 );
                 const lista = [];
                 snapshot.forEach(doc => { const p = doc.data(); p.id = doc.id; lista.push(p); });
-                window.productos = lista;
+                window.productos = lista; // Firestore ya trae descuento
+                applyDescuentoMap();
                 try { localStorage.setItem(CACHE_KEY, JSON.stringify(lista)); } catch(e) {}
                 console.log(`✅ [${cat}] ${lista.length} prods · Firestore directo`);
             } catch(e) {
@@ -3017,7 +3032,13 @@
                     10000
                 );
                 const lista = [];
-                snapshot.forEach(doc => { const p = doc.data(); p.id = doc.id; lista.push(p); });
+                snapshot.forEach(doc => {
+                    const p = doc.data(); p.id = doc.id; lista.push(p);
+                    if (p.descuento) {
+                        if (p.sku) window._descuentoMap[p.sku] = p.descuento;
+                        window._descuentoMap[doc.id] = p.descuento;
+                    }
+                });
                 mergeSubcatFromStatic(lista, cat);
 
                 // Guardar en cache
@@ -3031,6 +3052,7 @@
                 // Re-renderizar solo si el usuario sigue en la misma categoría
                 if (window._categoriaCargada === cat) {
                     window.productos = lista;
+                    applyDescuentoMap();
                     renderizarCatalogo();
                     console.log(`✅ [${cat}] actualizado desde Firestore (v${remoteVersion})`);
                 }
@@ -3039,12 +3061,90 @@
             }
         }
 
+        // ── Mapa de descuentos: carga UNA VEZ desde Firestore, se aplica a cualquier set ──
+
+        async function loadDescuentoMap() {
+            if (window._descuentoMapFetched) return; // ya cargado completamente
+            window._descuentoMapFetched = true; // marcar antes del await para evitar llamadas paralelas
+            try {
+                if (!window.db) { window._descuentoMapFetched = false; return; }
+                const snap = await withTimeout(
+                    window.db.collection('productos').where('descuento', '>', 0).get(), 8000
+                );
+                const uniqueIds = new Set();
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    // Indexar por SKU (campo común entre estáticos y Firestore)
+                    if (data.sku) window._descuentoMap[data.sku] = data.descuento;
+                    window._descuentoMap[doc.id] = data.descuento; // fallback por doc.id
+                    uniqueIds.add(doc.id);
+                });
+                window._totalOfertasExistentes = uniqueIds.size;
+                console.log(`✅ Mapa de descuentos: ${Object.keys(window._descuentoMap).length} entradas (${window._totalOfertasExistentes} productos únicos en oferta)`);
+                applyDescuentoMap();
+                renderizarCatalogo();
+            } catch(e) {
+                window._descuentoMapFetched = false; // permitir reintento si falla
+                console.log('ℹ️ No se pudo cargar mapa de descuentos');
+            }
+        }
+
+        // Aplica el mapa de descuentos a window.productos (sin reemplazar productos)
+        function applyDescuentoMap() {
+            (window.productos || []).forEach(p => {
+                // Buscar por SKU primero (clave fiable en productos estáticos), luego por id
+                const d = (p.sku && window._descuentoMap[p.sku] !== undefined)
+                    ? window._descuentoMap[p.sku]
+                    : window._descuentoMap[p.id];
+                if (d !== undefined) p.descuento = d;
+            });
+        }
+
+        // Carga solo los productos en oferta desde Firestore (campo descuento > 0)
+        async function fetchOfertasProducts() {
+            try {
+                if (window.db) {
+                    const snapshot = await withTimeout(
+                        window.db.collection('productos').where('descuento', '>', 0).get(), 8000
+                    );
+                    const lista = [];
+                    const uniqueIds = new Set();
+                    snapshot.forEach(doc => {
+                        const p = doc.data(); p.id = doc.id; lista.push(p);
+                        if (p.sku) window._descuentoMap[p.sku] = p.descuento; // por SKU (clave fiable)
+                        window._descuentoMap[doc.id] = p.descuento; // fallback por doc.id
+                        uniqueIds.add(doc.id);
+                    });
+                    window._totalOfertasExistentes = uniqueIds.size;
+                    if (lista.length > 0) {
+                        window.productos = lista;
+                        console.log(`✅ ${lista.length} productos en oferta desde Firestore`);
+                        return;
+                    }
+                }
+            } catch(e) {
+                console.log('ℹ️ Firestore no disponible para ofertas');
+            }
+            await fetchAllProductsForSearch();
+            // Si cargó todo, contar cuántos tienen ofertas
+            const localOffers = (window.productos || []).filter(p =>
+                p.descuento > 0 ||
+                (p.sku && window._descuentoMap[p.sku] > 0) ||
+                window._descuentoMap[p.id] > 0
+            );
+            window._totalOfertasExistentes = localOffers.length;
+        }
+
         // Carga todo el catálogo para búsqueda global (estático primero)
         async function fetchAllProductsForSearch() {
             const CACHE_KEY = 'mp_todos_data';
             const cachedData = localStorage.getItem(CACHE_KEY);
             if (cachedData) {
-                try { window.productos = JSON.parse(cachedData); return; } catch(e) {}
+                try {
+                    window.productos = JSON.parse(cachedData);
+                    applyDescuentoMap();
+                    return;
+                } catch(e) {}
             }
             // Cargar todos los archivos estáticos por categoría
             const cats = Object.keys(typeof catalogCounts !== 'undefined' ? catalogCounts : {});
@@ -3055,6 +3155,7 @@
                     allProds.push(...prods);
                 }));
                 window.productos = allProds;
+                applyDescuentoMap();
                 try { localStorage.setItem(CACHE_KEY, JSON.stringify(allProds)); } catch(e) {}
                 return;
             }
@@ -3066,6 +3167,7 @@
                 const lista = [];
                 snapshot.forEach(doc => { const p = doc.data(); p.id = doc.id; lista.push(p); });
                 window.productos = lista;
+                applyDescuentoMap();
             } catch(e) { console.error('❌ Error cargando catálogo completo:', e.message); }
         }
 
@@ -3176,12 +3278,28 @@
 
             // ── Fetch inicial: solo la categoría necesaria ─────────────────────────
             window._categoriaCargada = categoriaActual;
-            if (busquedaParam) {
-                // Búsqueda global → cargar todo (excepción justificada)
+
+            // Cargar mapa de descuentos en background desde el inicio
+            // (sin bloquear — estará listo para cuando el usuario active ofertas)
+            loadDescuentoMap().catch(() => {});
+
+            if (mostrarOfertas && categoriaActual === 'todos') {
+                // Ofertas sin categoría → Firestore por descuento > 0 (también llena _descuentoMap)
+                await fetchOfertasProducts().catch(() => {});
+            } else if (busquedaParam) {
+                // Búsqueda global → cargar todo
                 await fetchAllProductsForSearch().catch(() => {});
             } else {
-                // Carga lazy: solo la categoría activa (o nada si está en "todos")
+                // Carga lazy por categoría; applyDescuentoMap se llama si llegó con ?ofertas=1
+                const _ofertasAntesDeFetch = mostrarOfertas; // fetchCategoryProducts puede desactivar mostrarOfertas
                 await fetchCategoryProducts(categoriaActual);
+                if (_ofertasAntesDeFetch) {
+                    mostrarOfertas = true; // restaurar: el usuario llegó con ?ofertas=1
+                    const btn = document.getElementById('ofertasToggle');
+                    if (btn) btn.classList.add('sidebar-action-btn--active');
+                    await loadDescuentoMap().catch(() => {});
+                    applyDescuentoMap();
+                }
             }
 
             inicializarEventListeners();
@@ -3216,6 +3334,58 @@
     <script src="assets/js/wishlist.js"></script>
     <script src="assets/js/orders.js"></script>
     <script src="assets/js/checkout.js"></script>
+
+    <!-- Handler de retorno de MercadoPago -->
+    <script>
+    (function handleMpReturn() {
+        const params = new URLSearchParams(window.location.search);
+        const mpStatus = params.get('mp_status');
+        const mpRef = params.get('mp_ref');
+        if (!mpStatus) return;
+
+        // Limpiar params de la URL sin recargar
+        window.history.replaceState({}, '', window.location.pathname);
+
+        if (mpStatus === 'approved') {
+            // Actualizar estado del pedido en Firestore
+            function actualizarPedido() {
+                if (window.db && mpRef && mpRef !== 'sin_ref') {
+                    window.db.collection('pedidos').doc(mpRef)
+                        .update({
+                            estado: 'pagado',
+                            pagadoEn: firebase.firestore.FieldValue.serverTimestamp()
+                        })
+                        .catch(e => console.warn('No se pudo actualizar estado del pedido:', e));
+                }
+            }
+            // Esperar a que Firebase esté listo
+            if (window.db) {
+                actualizarPedido();
+            } else {
+                document.addEventListener('firebaseReady', actualizarPedido, { once: true });
+                setTimeout(actualizarPedido, 2000); // fallback
+            }
+
+            // Vaciar carrito en localStorage
+            try {
+                const saved = localStorage.getItem('carrito');
+                if (saved) {
+                    const c = JSON.parse(saved);
+                    c.items = []; c.total = 0; c.subtotal = 0; c.iva = 0;
+                    localStorage.setItem('carrito', JSON.stringify(c));
+                }
+            } catch(e) {}
+
+            setTimeout(() => alert('✅ ¡Pago aprobado! Tu pedido fue confirmado.\nTe avisaremos cuando esté listo para retirar o enviar.'), 400);
+
+        } else if (mpStatus === 'failure') {
+            setTimeout(() => alert('❌ El pago no pudo completarse.\nPodés intentarlo de nuevo o elegir otro método de pago.'), 400);
+
+        } else if (mpStatus === 'pending') {
+            setTimeout(() => alert('⏳ Tu pago está siendo procesado.\nTe notificaremos cuando se confirme.'), 400);
+        }
+    })();
+    </script>
 
     <!-- Flyout de Marcas -->
     <div class="filter-flyout" id="brandFlyout" role="dialog" aria-label="Marcas" aria-hidden="true">
