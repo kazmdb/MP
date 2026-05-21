@@ -1,7 +1,5 @@
 {
-  "functions": {
-    "api/crear-preferencia.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/$1" }
+  ]
 }
