@@ -1537,9 +1537,10 @@
 
             // Actualizar contador del carrito
             updateCartCount() {
-                const cartCountElements = document.querySelectorAll('.header__cart-count');
-                cartCountElements.forEach(element => {
-                    element.textContent = this.cart.count;
+                // Solo los badges del carrito — nunca los de favoritos
+                ['cartCountDesktop', 'cartCountMobile'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = this.cart.count;
                 });
             },
 

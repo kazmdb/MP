@@ -1971,16 +1971,11 @@
                 },
 
                 updateCartCount() {
-                    const cartCountElement = document.querySelector('.header__cart-count');
-                    if (cartCountElement) {
-                        cartCountElement.textContent = this.cart.count;
-
-                        // Animación del contador
-                        cartCountElement.style.transform = 'scale(1.2)';
-                        setTimeout(() => {
-                            cartCountElement.style.transform = 'scale(1)';
-                        }, 150);
-                    }
+                    // Solo los badges del carrito — nunca los de favoritos
+                    ['cartCountDesktop', 'cartCountMobile'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = this.cart.count;
+                    });
                 },
 
                 animateButton(button) {

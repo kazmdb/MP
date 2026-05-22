@@ -310,6 +310,9 @@ class Auth {
                 const phone = document.getElementById('regPhone').value;
                 const result = await this.register(name, phone);
                 this.showMessage(result.message, result.success ? 'success' : 'error');
+                if (result.success) {
+                    setTimeout(() => this.closeModal(), 1800);
+                }
             }
         });
     }

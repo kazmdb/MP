@@ -64,7 +64,7 @@ class CarritoCompras {
         // Actualizar UI
         this.actualizarContador();
         this.renderizarCarrito();
-        this.mostrarToast('Producto agregado al carrito', producto.nombre);
+        this.animarPildora();
     }
 
 
@@ -298,7 +298,16 @@ class CarritoCompras {
                         <p class="cart-item__price">${this.formatearPrecio(item.precio)}</p>
                         <div class="cart-item__quantity">
                             <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad('${item.id}', ${item.cantidad - 1})" ${item.cantidad <= 1 ? 'disabled' : ''}>-</button>
-                            <span class="cart-item__quantity-value">${item.cantidad}</span>
+                            <input
+                                type="number"
+                                class="cart-item__quantity-input"
+                                value="${item.cantidad}"
+                                min="1"
+                                ${item.stock ? `max="${item.stock}"` : ''}
+                                onclick="this.select()"
+                                onkeydown="if(event.key==='Enter')this.blur()"
+                                onblur="(function(el){const v=parseInt(el.value)||1;if(v!==${item.cantidad})carrito.actualizarCantidad('${item.id}',v);else el.value=${item.cantidad};})(this)"
+                            >
                             <button class="cart-item__quantity-btn" onclick="carrito.actualizarCantidad('${item.id}', ${item.cantidad + 1})">+</button>
                         </div>
                     </div>
@@ -316,66 +325,67 @@ class CarritoCompras {
         if (cartTotal) cartTotal.textContent = this.formatearPrecio(this.carrito.total);
     }
 
+    _setBadge(el, cantidad) {
+        if (!el) return;
+        const label = cantidad > 99 ? '99+' : String(cantidad);
+        const visible = cantidad > 0;
+        const cambio = el.textContent !== label;
+
+        el.textContent = label;
+
+        if (visible) {
+            el.classList.remove('header__cart-count--hidden');
+            if (cambio) {
+                el.classList.remove('badge-pop');
+                void el.offsetWidth; // reflow para reiniciar animación
+                el.classList.add('badge-pop');
+                setTimeout(() => el.classList.remove('badge-pop'), 200);
+            }
+        } else {
+            el.classList.add('header__cart-count--hidden');
+        }
+    }
+
     actualizarContador() {
+        const cantidad = this.obtenerCantidadTotal();
+
         // Actualizar contador móvil
         const cartCountMobile = document.getElementById('cartCountMobile');
         if (cartCountMobile) {
-            const cantidad = this.obtenerCantidadTotal();
-            cartCountMobile.textContent = cantidad;
-
-            // Mostrar/ocultar contador
-            if (cantidad > 0) {
-                cartCountMobile.classList.remove('header__cart-count--hidden');
-            } else {
-                cartCountMobile.classList.add('header__cart-count--hidden');
-            }
+            this._setBadge(cartCountMobile, cantidad);
+            // (oculto en desktop vía CSS, no hace falta lógica extra)
         }
 
         // Actualizar contador desktop
         const cartCountDesktop = document.getElementById('cartCountDesktop');
         if (cartCountDesktop) {
-            const cantidad = this.obtenerCantidadTotal();
-            cartCountDesktop.textContent = cantidad;
-
-            // Mostrar/ocultar contador
-            if (cantidad > 0) {
-                cartCountDesktop.classList.remove('header__cart-count--hidden');
-            } else {
-                cartCountDesktop.classList.add('header__cart-count--hidden');
-            }
+            this._setBadge(cartCountDesktop, cantidad);
         }
 
         // Actualizar mini-barra de subtotal
         this.renderizarMiniBar();
     }
 
+    animarPildora() {
+        const bar = document.getElementById('cartMiniBar');
+        if (!bar || !bar.classList.contains('cart-mini-bar--active')) return;
+
+        // Reiniciar animación si ya está corriendo
+        bar.classList.remove('cart-mini-bar--bump');
+        void bar.offsetWidth; // forzar reflow para reiniciar
+
+        bar.classList.add('cart-mini-bar--bump');
+        bar.addEventListener('animationend', () => {
+            bar.classList.remove('cart-mini-bar--bump');
+        }, { once: true });
+    }
+
     mostrarToast(mensaje, producto) {
+        // Mantenido solo para el mensaje de WhatsApp (ver enviarPedidoWhatsApp)
         const toast = document.getElementById('toast');
-        const toastProduct = document.getElementById('toastProduct');
-        const toastAction = document.getElementById('toastAction');
-
         if (!toast) return;
-
-        // Actualizar contenido
-        if (toastProduct) {
-            toastProduct.textContent = producto;
-        }
-
-        // Mostrar toast
         toast.classList.add('toast--active');
-
-        // Ocultar después de 3 segundos
-        setTimeout(() => {
-            toast.classList.remove('toast--active');
-        }, 3000);
-
-        // Configurar botón de acción
-        if (toastAction) {
-            toastAction.onclick = () => {
-                this.abrirPanel();
-                toast.classList.remove('toast--active');
-            };
-        }
+        setTimeout(() => toast.classList.remove('toast--active'), 3000);
     }
 
     abrirPanel() {
