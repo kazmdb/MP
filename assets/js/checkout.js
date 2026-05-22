@@ -3,6 +3,16 @@
  * Handles multi-step checkout, guest validation, shipping logic, and UltraMsg integration.
  */
 
+// URL del backend serverless. En Vercel la ruta relativa funciona;
+// desde GitHub Pages u otro host estático se usa la URL absoluta de Vercel.
+const MP_API_URL = (function() {
+    const host = window.location.hostname;
+    if (host.includes('vercel.app') || host === 'localhost' || host === '127.0.0.1') {
+        return '/api/crear-preferencia';   // mismo dominio
+    }
+    return 'https://mp-ferreteria.vercel.app/api/crear-preferencia'; // GitHub Pages u otros
+})();
+
 const Checkout = {
     currentStep: 1,
     totalSteps: 3,
@@ -442,7 +452,7 @@ const Checkout = {
                 // 2. Llamar la función serverless de Vercel para crear la preferencia de pago
                 if (nextBtn) nextBtn.textContent = 'Conectando con MercadoPago...';
 
-                const response = await fetch('/api/crear-preferencia', {
+                const response = await fetch(MP_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
