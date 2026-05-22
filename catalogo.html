@@ -503,7 +503,7 @@
             </div>
         </div>
 
-        <!-- Barra de Búsqueda Móvil (Desplegable) -->
+        <!-- Barra de Búsqueda Móvil (legado desktop, oculta en mobile) -->
         <div class="header__search-mobile">
             <div class="header__search-mobile__container">
                 <input type="search" class="header__search-mobile__input" placeholder="Buscar productos..."
@@ -517,6 +517,7 @@
                 </button>
             </div>
         </div>
+
     </header>
 
     <!-- Panel del Carrito -->
@@ -936,7 +937,7 @@
                         </iframe>
                     </div>
                     <p class="footer__address">📍 Eduardo Pascual M2 S49, 80500 Ciudad del Plata, San José</p>
-                    <p class="footer__phone">📞 +598 0000 0000</p>
+                    <p class="footer__phone">📞 092 738 852</p>
                     <p class="footer__hours">⏰ Lun-Vie: 8:00-18:00 | Sáb: 9:00-13:00</p>
                 </div>
             </div>
@@ -1142,19 +1143,7 @@
                 });
             });
 
-            // Búsqueda móvil
-            const searchMobileBtn = document.querySelector('.header__btn--search-mobile');
-            const searchMobile = document.querySelector('.header__search-mobile');
-
-            if (searchMobileBtn && searchMobile) {
-                searchMobileBtn.addEventListener('click', function() {
-                    searchMobile.classList.toggle('header__search-mobile--active');
-                    const searchInput = searchMobile.querySelector('.header__search-mobile__input');
-                    if (searchInput) {
-                        searchInput.focus();
-                    }
-                });
-            }
+            // Búsqueda móvil — overlay full-screen (se inicializa tras cargar productos)
 
             // ============================================
             // FUNCIONES DE BÚSQUEDA
@@ -1239,56 +1228,8 @@
                 });
             }
 
-            // ── Inicialización del buscador mobile ───────────────────────────────
-            const searchMobileInput = document.querySelector('.header__search-mobile__input');
-            const searchMobileButton = document.querySelector('.header__search-mobile__button');
-            let mobileSearchTimeout;
-
-            function limpiarResultadosBusquedaMovil() {
-                if (searchMobile && window.BuscadorInteligente) window.BuscadorInteligente.limpiarMobile(searchMobile);
-            }
-
-            if (searchMobileInput && searchMobileButton) {
-                const handleMobileSearch = function(redirect) {
-                    const query = searchMobileInput.value.trim();
-                    if (query.length >= 2) {
-                        if (redirect) {
-                            if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
-                            window.location.href = 'catalogo.html?busqueda=' + encodeURIComponent(query);
-                        } else if (window.BuscadorInteligente) {
-                            const resultados = window.BuscadorInteligente.buscar(query);
-                            window.BuscadorInteligente.mostrarResultadosMobile(resultados, query, searchMobile);
-                        }
-                    } else {
-                        if (redirect) showNotification('Por favor ingresa al menos 2 caracteres para buscar');
-                        else limpiarResultadosBusquedaMovil();
-                    }
-                };
-
-                searchMobileInput.addEventListener('input', function() {
-                    clearTimeout(mobileSearchTimeout);
-                    mobileSearchTimeout = setTimeout(function() {
-                        if (searchMobileInput.value.trim().length >= 2) handleMobileSearch(false);
-                        else limpiarResultadosBusquedaMovil();
-                    }, 250);
-                });
-
-                searchMobileInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') { clearTimeout(mobileSearchTimeout); handleMobileSearch(true); }
-                });
-
-                searchMobileButton.addEventListener('click', function() {
-                    clearTimeout(mobileSearchTimeout);
-                    handleMobileSearch(true);
-                });
-            }
-
-            document.addEventListener('click', function(event) {
-                if (searchMobile && searchMobileBtn && !searchMobile.contains(event.target) && !searchMobileBtn.contains(event.target)) {
-                    searchMobile.classList.remove('header__search-mobile--active');
-                    limpiarResultadosBusquedaMovil();
-                }
-            });
+            // ── Overlay de búsqueda mobile (full-screen) ─────────────────────────
+            initMobileSearchOverlay(buscarProductos, 'catalogo.html');
 
         });
 
@@ -3435,5 +3376,25 @@
     </div>
     <!-- Overlay backdrop del flyout (mobile) -->
     <div class="cat-flyout-overlay" id="catFlyoutOverlay"></div>
+
+    <!-- Overlay de Búsqueda Mobile — fuera del header para evitar clipping -->
+    <div id="mobileSearchOverlay" class="mobile-search-overlay" role="dialog" aria-label="Búsqueda" aria-modal="true">
+        <div class="mobile-search-overlay__bar">
+            <button class="mobile-search-overlay__cancel" id="mobileOverlayCancel" aria-label="Cerrar búsqueda">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="mobile-search-overlay__input-wrap">
+                <svg class="mobile-search-overlay__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="search" id="mobileOverlayInput" class="mobile-search-overlay__input"
+                    placeholder="Buscar productos..." autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="mobile-search-overlay__clear-btn" id="mobileOverlayClear" aria-label="Limpiar">×</button>
+            </div>
+        </div>
+        <div class="mobile-search-overlay__body" id="mobileOverlayBody"></div>
+    </div>
 </body>
 </html>

@@ -414,7 +414,7 @@
             </div>
         </div>
 
-        <!-- Barra de Búsqueda Móvil (Desplegable) -->
+        <!-- Barra de Búsqueda Móvil (legado desktop, oculta en mobile) -->
         <div class="header__search-mobile">
             <div class="header__search-mobile__container">
                 <input type="search" class="header__search-mobile__input" placeholder="Buscar productos..."
@@ -428,6 +428,7 @@
                 </button>
             </div>
         </div>
+
 
         <!-- Menú Lateral Móvil -->
         <div class="header__mobile-menu">
@@ -1028,7 +1029,7 @@
                         </iframe>
                     </div>
                     <p class="footer__address">📍 Eduardo Pascual M2 S49, 80500 Ciudad del Plata, San José</p>
-                    <p class="footer__phone">📞 +598 0000 0000</p>
+                    <p class="footer__phone">📞 092 738 852</p>
                     <p class="footer__hours">⏰ Lun-Vie: 8:00-18:00 | Sáb: 9:00-13:00</p>
                 </div>
             </div>
@@ -2552,70 +2553,8 @@
                 });
             });
 
-            // ── Inicialización del buscador mobile ───────────────────────────────
-            const searchMobileToggle = document.querySelector('.header__btn--search-mobile');
-            const searchMobile = document.querySelector('.header__search-mobile');
-            const searchMobileInput = document.querySelector('.header__search-mobile__input');
-            const searchMobileButton = document.querySelector('.header__search-mobile__button');
-            let mobileSearchTimeout;
-
-            function limpiarResultadosBusquedaMovil() {
-                if (window.BuscadorInteligente) window.BuscadorInteligente.limpiarMobile(searchMobile);
-            }
-
-            function mostrarResultadosBusquedaMovil(resultados, query) {
-                if (window.BuscadorInteligente) {
-                    window.BuscadorInteligente.mostrarResultadosMobile(resultados, query, searchMobile);
-                }
-            }
-
-            searchMobileToggle.addEventListener('click', function () {
-                searchMobile.classList.toggle('header__search-mobile--active');
-                if (searchMobile.classList.contains('header__search-mobile--active')) {
-                    searchMobileInput.focus();
-                }
-            });
-
-            if (searchMobileInput && searchMobileButton) {
-                const handleMobileSearch = function (redirectToCatalog) {
-                    const query = searchMobileInput.value.trim();
-                    if (query.length >= 2) {
-                        if (redirectToCatalog) {
-                            if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
-                            window.location.href = `catalogo.html?busqueda=${encodeURIComponent(query)}`;
-                        } else {
-                            mostrarResultadosBusquedaMovil(buscarProductos(query), query);
-                        }
-                    } else {
-                        if (redirectToCatalog) showNotification('Por favor ingresa al menos 2 caracteres para buscar');
-                        else limpiarResultadosBusquedaMovil();
-                    }
-                };
-
-                searchMobileInput.addEventListener('input', function () {
-                    clearTimeout(mobileSearchTimeout);
-                    mobileSearchTimeout = setTimeout(() => {
-                        if (searchMobileInput.value.trim().length >= 2) handleMobileSearch(false);
-                        else limpiarResultadosBusquedaMovil();
-                    }, 250);
-                });
-
-                searchMobileInput.addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter') { clearTimeout(mobileSearchTimeout); handleMobileSearch(true); }
-                });
-
-                searchMobileButton.addEventListener('click', function () {
-                    clearTimeout(mobileSearchTimeout);
-                    handleMobileSearch(true);
-                });
-            }
-
-            document.addEventListener('click', function (event) {
-                if (!searchMobile.contains(event.target) && !searchMobileToggle.contains(event.target)) {
-                    searchMobile.classList.remove('header__search-mobile--active');
-                    limpiarResultadosBusquedaMovil();
-                }
-            });
+            // ── Overlay de búsqueda mobile (full-screen) ─────────────────────────
+            initMobileSearchOverlay(buscarProductos, 'catalogo.html');
 
             // ── Buscador del Hero ─────────────────────────────────────────────
             const heroInput = document.getElementById('heroSearchInput');
@@ -2633,6 +2572,15 @@
                 let heroTimeout;
 
                 heroInput.addEventListener('focus', function () {
+                    // En mobile: abrir el overlay en lugar del dropdown
+                    if (window.innerWidth <= 767) {
+                        heroInput.blur();
+                        const overlay = document.getElementById('mobileSearchOverlay');
+                        if (overlay) overlay.classList.add('mobile-search-overlay--active');
+                        const overlayInput = document.getElementById('mobileOverlayInput');
+                        if (overlayInput) { document.body.style.overflow = 'hidden'; setTimeout(function(){ overlayInput.focus(); }, 80); }
+                        return;
+                    }
                     if (heroInput.value.trim().length === 0 && window.BuscadorInteligente) {
                         window.BuscadorInteligente.mostrarHistorial(heroInput, function (q) {
                             heroInput.value = q;
@@ -2772,6 +2720,26 @@
         }
     })();
     </script>
+
+    <!-- Overlay de Búsqueda Mobile — fuera del header para evitar clipping -->
+    <div id="mobileSearchOverlay" class="mobile-search-overlay" role="dialog" aria-label="Búsqueda" aria-modal="true">
+        <div class="mobile-search-overlay__bar">
+            <button class="mobile-search-overlay__cancel" id="mobileOverlayCancel" aria-label="Cerrar búsqueda">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="mobile-search-overlay__input-wrap">
+                <svg class="mobile-search-overlay__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="search" id="mobileOverlayInput" class="mobile-search-overlay__input"
+                    placeholder="Buscar productos..." autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="mobile-search-overlay__clear-btn" id="mobileOverlayClear" aria-label="Limpiar">×</button>
+            </div>
+        </div>
+        <div class="mobile-search-overlay__body" id="mobileOverlayBody"></div>
+    </div>
 </body>
 
 </html>

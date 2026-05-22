@@ -322,6 +322,17 @@
     </div>
     <div class="cart-panel__overlay" id="cartOverlay"></div>
 
+    <!-- Mini-barra de subtotal (visible sin abrir el carrito) -->
+    <div class="cart-mini-bar" id="cartMiniBar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <span id="miniBarItems">0 arts.</span>
+        <span class="cart-mini-bar__sep">·</span>
+        <span class="cart-mini-bar__total" id="miniBarTotal">$0</span>
+        <button class="cart-mini-bar__btn" id="cartMiniBarBtn">Ver carrito ›</button>
+    </div>
+
     <!-- Panel de Favoritos -->
     <div class="cart-panel wishlist-panel" id="wishlistPanel">
         <div class="cart-panel__header">
@@ -518,7 +529,7 @@
                         </iframe>
                     </div>
                     <p class="footer__address">📍 Eduardo Pascual M2 S49, 80500 Ciudad del Plata, San José</p>
-                    <p class="footer__phone">📞 +598 0000 0000</p>
+                    <p class="footer__phone">📞 092 738 852</p>
                     <p class="footer__hours">⏰ Lun-Vie: 8:00-18:00 | Sáb: 9:00-13:00</p>
                 </div>
             </div>
