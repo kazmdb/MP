@@ -858,57 +858,12 @@
             // Inicializar contador del carrito
             updateCartCount();
 
-            // ── Buscador inteligente (mobile toggle) ────────────────────────────
-            const searchMobileToggle = document.querySelector('.header__btn--search-mobile');
-            const searchMobile = document.querySelector('.header__search-mobile');
-            const searchMobileInput = document.querySelector('.header__search-mobile__input');
-
-            if (searchMobileToggle && searchMobile) {
-                searchMobileToggle.addEventListener('click', function() {
-                    searchMobile.classList.toggle('header__search-mobile--active');
-                    if (searchMobile.classList.contains('header__search-mobile--active') && searchMobileInput) {
-                        searchMobileInput.focus();
-                    }
-                });
-
-                const executeMobileSearch = function() {
-                    const query = searchMobileInput ? searchMobileInput.value.trim() : '';
-                    if (query.length >= 2) {
-                        if (window.BuscadorInteligente) window.BuscadorInteligente.guardarHistorial(query);
-                        window.location.href = 'catalogo.html?busqueda=' + encodeURIComponent(query);
-                    }
-                };
-
-                if (searchMobileInput) {
-                    searchMobileInput.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter') executeMobileSearch();
-                    });
-
-                    let mobileSearchTimeout;
-                    searchMobileInput.addEventListener('input', function() {
-                        clearTimeout(mobileSearchTimeout);
-                        mobileSearchTimeout = setTimeout(function() {
-                            const query = searchMobileInput.value.trim();
-                            if (query.length >= 2 && window.BuscadorInteligente) {
-                                const results = buscarProductos(query);
-                                window.BuscadorInteligente.mostrarResultadosMobile(results, query, searchMobile);
-                            } else if (window.BuscadorInteligente) {
-                                window.BuscadorInteligente.limpiarMobile(searchMobile);
-                            }
-                        }, 250);
-                    });
+            // ── Overlay de búsqueda mobile — se inicializa tras cargar buscador.js
+            window._initMobileSearch = function() {
+                if (typeof initMobileSearchOverlay === 'function') {
+                    initMobileSearchOverlay(buscarProductos, 'catalogo.html');
                 }
-
-                const mobileSearchBtn = document.querySelector('.header__search-mobile__button');
-                if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', executeMobileSearch);
-
-                document.addEventListener('click', function(e) {
-                    if (!searchMobile.contains(e.target) && !searchMobileToggle.contains(e.target)) {
-                        searchMobile.classList.remove('header__search-mobile--active');
-                        if (window.BuscadorInteligente) window.BuscadorInteligente.limpiarMobile(searchMobile);
-                    }
-                });
-            }
+            };
 
             // ── Buscador inteligente (desktop) ───────────────────────────────────
             let searchTimeout;
@@ -1055,7 +1010,7 @@
             }
         });
     </script>
-    <script src="assets/js/buscador.js"></script>
+    <script src="assets/js/buscador.js" onload="if(window._initMobileSearch)window._initMobileSearch()"></script>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -1065,5 +1020,25 @@
     <script src="assets/js/wishlist.js"></script>
     <script src="assets/js/orders.js"></script>
     <script src="assets/js/checkout.js"></script>
+
+    <!-- Overlay de Búsqueda Mobile — fuera del header para evitar clipping -->
+    <div id="mobileSearchOverlay" class="mobile-search-overlay" role="dialog" aria-label="Búsqueda" aria-modal="true">
+        <div class="mobile-search-overlay__bar">
+            <button class="mobile-search-overlay__cancel" id="mobileOverlayCancel" aria-label="Cerrar búsqueda">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="mobile-search-overlay__input-wrap">
+                <svg class="mobile-search-overlay__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="search" id="mobileOverlayInput" class="mobile-search-overlay__input"
+                    placeholder="Buscar productos..." autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="mobile-search-overlay__clear-btn" id="mobileOverlayClear" aria-label="Limpiar">×</button>
+            </div>
+        </div>
+        <div class="mobile-search-overlay__body" id="mobileOverlayBody"></div>
+    </div>
 </body>
 </html>
