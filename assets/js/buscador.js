@@ -433,6 +433,185 @@
         container.appendChild(div);
     }
 
+    // ── Overlay mobile full-screen ────────────────────────────────────────────
+    function renderOverlayResultados(resultados, query, body, catalogUrl) {
+        body.innerHTML = '';
+
+        if (!resultados.length) {
+            body.innerHTML =
+                '<div class="msol-empty">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" width="40" height="40"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>' +
+                '<p>Sin resultados para <strong>' + esc(query) + '</strong></p>' +
+                '</div>';
+            return;
+        }
+
+        var frag = document.createDocumentFragment();
+
+        // Cabecera
+        var count = document.createElement('div');
+        count.className = 'msol-count';
+        count.textContent = resultados.length + ' resultado' + (resultados.length !== 1 ? 's' : '');
+        frag.appendChild(count);
+
+        // Items (máx 12 en overlay para aprovechar el espacio)
+        var limitados = resultados.slice(0, 12);
+        limitados.forEach(function (producto) {
+            var imagenSrc = window.getCloudinaryUrl
+                ? window.getCloudinaryUrl(producto.imagen)
+                : (producto.imagen || 'assets/images/placeholder-product.png');
+            var oferta = window.getOferta ? window.getOferta(producto.id) : null;
+            var precioFinal = oferta ? window.getPrecioConOferta(producto.precio, oferta.descuento) : producto.precio;
+
+            var item = document.createElement('div');
+            item.className = 'msol-item';
+            item.dataset.href = 'producto.html?id=' + producto.id;
+            item.innerHTML =
+                '<img class="msol-item__img" src="' + esc(imagenSrc) + '" alt="' + esc(producto.nombre) + '" loading="lazy">' +
+                '<div class="msol-item__info">' +
+                '<p class="msol-item__name">' + resaltar(producto.nombre, query) + '</p>' +
+                '<p class="msol-item__sku">SKU: ' + esc(producto.sku || '') + '</p>' +
+                '<p class="msol-item__price">' + formatPrecio(precioFinal) + '</p>' +
+                '</div>' +
+                '<button class="msol-item__add" data-id="' + producto.id + '" aria-label="Agregar al carrito">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path stroke-linecap="round" d="M12 4v16m8-8H4"/></svg>' +
+                '</button>';
+
+            item.addEventListener('click', function (e) {
+                if (e.target.closest('.msol-item__add')) return;
+                guardarHistorial(query);
+                window.location.href = item.dataset.href;
+            });
+            item.querySelector('.msol-item__add').addEventListener('click', function (e) {
+                e.stopPropagation();
+                var id = Number(this.dataset.id);
+                if (typeof window.agregarAlCarrito === 'function') window.agregarAlCarrito(id, 1);
+            });
+
+            frag.appendChild(item);
+        });
+
+        // Ver todos
+        if (resultados.length > 12) {
+            var btn = document.createElement('button');
+            btn.className = 'msol-ver-todos';
+            btn.textContent = 'Ver todos los ' + resultados.length + ' resultados →';
+            btn.addEventListener('click', function () {
+                guardarHistorial(query);
+                window.location.href = (catalogUrl || 'catalogo.html') + '?busqueda=' + encodeURIComponent(query);
+            });
+            frag.appendChild(btn);
+        }
+
+        body.appendChild(frag);
+    }
+
+    function renderOverlayHistorial(body, onSelect) {
+        var historial = getHistorial();
+        body.innerHTML = '';
+        if (!historial.length) return;
+
+        var titulo = document.createElement('div');
+        titulo.className = 'msol-history-title';
+        titulo.textContent = 'Búsquedas recientes';
+        body.appendChild(titulo);
+
+        historial.forEach(function (q) {
+            var item = document.createElement('div');
+            item.className = 'msol-history-item';
+            item.innerHTML =
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
+                '<span>' + esc(q) + '</span>' +
+                '<button class="msol-history-remove" aria-label="Eliminar">×</button>';
+
+            item.querySelector('span').addEventListener('click', function () { onSelect(q); });
+            item.querySelector('.msol-history-remove').addEventListener('click', function (e) {
+                e.stopPropagation();
+                eliminarDeHistorial(q);
+                item.remove();
+            });
+            body.appendChild(item);
+        });
+    }
+
+    // Función global: inicializa el overlay en la página actual
+    root.initMobileSearchOverlay = function (buscarFn, catalogUrl) {
+        var overlay  = document.getElementById('mobileSearchOverlay');
+        var input    = document.getElementById('mobileOverlayInput');
+        var clearBtn = document.getElementById('mobileOverlayClear');
+        var cancelBtn= document.getElementById('mobileOverlayCancel');
+        var body     = document.getElementById('mobileOverlayBody');
+        var toggle   = document.querySelector('.header__btn--search-mobile');
+
+        if (!overlay || !toggle) return;
+
+        var timeout;
+
+        function abrir() {
+            overlay.classList.add('mobile-search-overlay--active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function () { input.focus(); }, 80);
+            renderOverlayHistorial(body, function (q) {
+                input.value = q;
+                buscarYMostrar(q);
+            });
+        }
+
+        function cerrar() {
+            overlay.classList.remove('mobile-search-overlay--active');
+            document.body.style.overflow = '';
+            input.value = '';
+            body.innerHTML = '';
+            clearBtn.classList.remove('mobile-search-overlay__clear-btn--visible');
+        }
+
+        function buscarYMostrar(query) {
+            clearBtn.classList.toggle('mobile-search-overlay__clear-btn--visible', query.length > 0);
+            if (query.length < 2) {
+                renderOverlayHistorial(body, function (q) {
+                    input.value = q;
+                    buscarYMostrar(q);
+                });
+                return;
+            }
+            var resultados = buscarFn ? buscarFn(query) : (window.BuscadorInteligente ? window.BuscadorInteligente.buscar(query) : []);
+            renderOverlayResultados(resultados, query, body, catalogUrl);
+        }
+
+        toggle.addEventListener('click', abrir);
+        cancelBtn.addEventListener('click', cerrar);
+
+        clearBtn.addEventListener('click', function () {
+            input.value = '';
+            clearBtn.classList.remove('mobile-search-overlay__clear-btn--visible');
+            input.focus();
+            renderOverlayHistorial(body, function (q) {
+                input.value = q;
+                buscarYMostrar(q);
+            });
+        });
+
+        input.addEventListener('input', function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () { buscarYMostrar(input.value.trim()); }, 220);
+        });
+
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                clearTimeout(timeout);
+                var q = input.value.trim();
+                if (q.length >= 2) {
+                    guardarHistorial(q);
+                    window.location.href = (catalogUrl || 'catalogo.html') + '?busqueda=' + encodeURIComponent(q);
+                }
+            }
+            if (e.key === 'Escape') cerrar();
+        });
+
+        // Botón atrás del navegador cierra el overlay
+        window.addEventListener('popstate', cerrar);
+    };
+
     // ── API pública ────────────────────────────────────────────────────────────
     root.BuscadorInteligente = {
         buscar:                  buscar,
