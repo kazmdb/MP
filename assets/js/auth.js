@@ -179,7 +179,7 @@ class Auth {
                         <p class="auth-modal__subtitle">Ingresa tu teléfono para continuar</p>
                         <form id="loginForm" class="auth-modal__form">
                             <div class="auth-modal__group">
-                                <label for="loginPhone">Teléfono / WhatsApp</label>
+                                <label for="loginPhone">Número de Teléfono</label>
                                 <input type="tel" id="loginPhone" placeholder="Ej: 099123456" required>
                             </div>
                             <button type="submit" class="auth-modal__submit">INGRESAR</button>
