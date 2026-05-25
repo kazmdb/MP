@@ -5,8 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Ferretería profesional - Herramientas, construcción, electricidad y más. Encuentra todo lo que necesitas para tu proyecto.">
-    <title>Ferretería Profesional - Tu Tienda de Confianza</title>
+        content="Ferretería MP - Herramientas, construcción, electricidad y más. Encuentra todo lo que necesitas para tu proyecto.">
+    <title>MP Materiales Eléctricos - Tu Ferretería de Confianza</title>
+
+    <!-- Open Graph / WhatsApp / redes sociales -->
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="MP Materiales Eléctricos">
+    <meta property="og:title"       content="MP Materiales Eléctricos - Tu Ferretería de Confianza">
+    <meta property="og:description" content="Ferretería MP — Herramientas, construcción, electricidad y más. +5.000 productos.">
+    <meta property="og:url"         content="https://ferreteriamp.vercel.app/">
+    <meta property="og:image"       content="https://ferreteriamp.vercel.app/assets/icons/mplogo.png">
+    <meta property="og:image:alt"   content="Logo MP Materiales Eléctricos">
+    <meta name="twitter:card"       content="summary">
+    <meta name="twitter:image"      content="https://ferreteriamp.vercel.app/assets/icons/mplogo.png">
 
     <!-- Google Fonts -->
     <!-- CAMBIO DE FUENTES: Cambia las fuentes aquí modificando los nombres de las familias -->
@@ -17,7 +28,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="preload" href="data/productos.js" as="script">
+    <link rel="preload" href="data/productos.json" as="fetch" crossorigin="anonymous">
 
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/auth.css">
@@ -1040,7 +1051,6 @@
         </div>
     </footer>
 
-    <script defer src="data/productos.js"></script>
     <script defer src="assets/js/ofertas.js"></script>
     <script defer src="carrito.js"></script>
     <script defer src="assets/js/categorias.js"></script>
@@ -1063,70 +1073,51 @@
                 // Podemos esperar un poco o inicializarlo si auth.js no cargó
             }
 
-            // ── SISTEMA DE CACHE CON VERSIÓN ──────────────────────────────────────
-            // 1 sola lectura de Firestore por sesión (el doc de versión).
-            // Los productos se guardan en localStorage y solo se re-descargan
-            // cuando el admin modifica el catálogo (bumps la versión).
-            // ─────────────────────────────────────────────────────────────────────
-            const CACHE_KEY_DATA    = 'mp_productos_data';
-            const CACHE_KEY_VERSION = 'mp_productos_version';
+            // ── Limpiar claves de caché obsoletas (migración de Firestore → estático) ──
+            ['mp_productos_data','mp_productos_version','mp_todos_data'].forEach(k => localStorage.removeItem(k));
 
-            async function fetchFirebaseProducts() {
+            // ── PRODUCTOS DESDE ARCHIVO ESTÁTICO (Vercel CDN) ──────────────────
+            // Sin Firebase, sin cuotas, sin cache manual.
+            // El CDN de Vercel invalida automáticamente tras cada deploy.
+            // ──────────────────────────────────────────────────────────────────
+            async function fetchProducts() {
                 try {
-                    // 1 lectura: documento de versión
-                    const verDoc = await window.db.collection('config').doc('catalogo').get();
-                    const remoteVersion = verDoc.exists ? (verDoc.data().version || '0') : '0';
-                    const localVersion  = localStorage.getItem(CACHE_KEY_VERSION) || '';
-                    const cachedData    = localStorage.getItem(CACHE_KEY_DATA);
-
-                    if (remoteVersion === localVersion && cachedData) {
-                        // Cache válido → sin lecturas adicionales
-                        window.productos = JSON.parse(cachedData);
-                        console.log(`✅ ${window.productos.length} productos desde cache local (v${remoteVersion})`);
-                        return true;
-                    }
-
-                    // Cache desactualizado → descargar todo el catálogo
-                    console.log('📥 Catálogo actualizado, descargando desde Firestore...');
-                    const snapshot = await window.db.collection('productos')
-                        .orderBy('nombre')
-                        .get();
-
-                    window.productos = [];
-                    snapshot.forEach(doc => {
-                        const p = doc.data();
-                        p.id = doc.id;
-                        window.productos.push(p);
-                    });
-
-                    // Guardar en cache
-                    try {
-                        localStorage.setItem(CACHE_KEY_DATA, JSON.stringify(window.productos));
-                        localStorage.setItem(CACHE_KEY_VERSION, remoteVersion);
-                    } catch (e) {
-                        // localStorage lleno → continúa sin cache
-                        console.warn('⚠️ localStorage lleno, no se pudo cachear:', e.message);
-                    }
-
-                    console.log(`✅ ${window.productos.length} productos cargados y cacheados (v${remoteVersion})`);
+                    const res = await fetch('/data/productos.json');
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    window.productos = await res.json();
+                    console.log(`✅ ${window.productos.length} productos cargados`);
                     return true;
                 } catch (error) {
-                    // Sin conexión → intentar cache aunque esté desactualizado
-                    const cachedData = localStorage.getItem(CACHE_KEY_DATA);
-                    if (cachedData) {
-                        window.productos = JSON.parse(cachedData);
-                        console.warn(`⚠️ Sin conexión, usando cache local (${window.productos.length} productos)`);
-                        return true;
-                    }
-                    console.error('❌ Error al cargar productos y sin cache disponible:', error);
+                    console.error('❌ Error al cargar productos:', error);
                     return false;
                 }
             }
 
             // Cargar datos antes de iniciar la UI
-            const success = await fetchFirebaseProducts();
+            const success = await fetchProducts();
             if (!success) {
                 console.warn('⚠️ No se pudieron cargar productos');
+            }
+
+            // Cargar mapa de descuentos desde Firestore (una sola query pequeña)
+            // para que el carrusel de Ofertas muestre los precios con descuento
+            if (window.db) {
+                try {
+                    window._descuentoMap = window._descuentoMap || {};
+                    const snap = await window.db.collection('productos')
+                        .where('descuento', '>', 0).get();
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        if (d.sku)    window._descuentoMap[d.sku]  = d.descuento;
+                        if (doc.id)   window._descuentoMap[doc.id] = d.descuento;
+                        // Aplicar también al objeto en window.productos
+                        const p = (window.productos || []).find(x => x.sku === d.sku || String(x.id) === doc.id);
+                        if (p) p.descuento = d.descuento;
+                    });
+                    console.log(`✅ Mapa de descuentos cargado (${Object.keys(window._descuentoMap).length / 2} productos)`);
+                } catch(e) {
+                    console.log('ℹ️ Sin descuentos disponibles:', e.message);
+                }
             }
 
             // ============================================
@@ -2374,7 +2365,7 @@
 
                 checkoutWhatsApp() {
                     // Número de teléfono de la ferretería (debe configurarse)
-                    const phoneNumber = '59800000000'; // Reemplazar con el número real
+                    const phoneNumber = '598 92 738 852'; // Reemplazar con el número real
 
                     // Construir mensaje del pedido
                     let message = '🔧 *Nuevo Pedido - Ferretería*\n\n';
